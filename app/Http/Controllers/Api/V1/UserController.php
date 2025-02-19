@@ -31,7 +31,7 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8', Rules\Password::defaults()],
             'device_name' => ['required', 'string'],
             'identity_number' => ['required', 'string'],
-            'doctor' => ['required'],
+            //'doctor' => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -49,7 +49,7 @@ class UserController extends Controller
             'email_verified_at' => Carbon::now(),
             'email' => $data['email'],
             'identity_number' => $data['identity_number'],
-            'doctor' => $data['doctor'],
+            //'doctor' => $data['doctor'],
             'role' => Roles::USER,
             'status' => UserStatus::ACTIVE,
         ]);
