@@ -77,7 +77,7 @@ class UserController extends Controller
         $credentials = $request->only('mobile', 'password');
 
         if (!Auth::attempt($credentials)) {
-            return $this->errorResponse(trans('messages.phone_or_password_incorrect'), 401);
+            return $this->errorResponse(trans('messages.phone_or_password_incorrect'), 422);
         }
 
         $user = $request->user();
