@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\PacksStatus;
 use App\Enums\Roles;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
@@ -295,7 +296,7 @@ class UserController extends Controller
             'email' => $user->email,
             'mobile' => $user->mobile,
             'photo' => $image_url,
-            'took_starter_pack' => (bool) $user->starterPacks,
+            'took_starter_pack' => (bool) $user?->starterPacks?->where('verification_status', PacksStatus::APPROVED),
             'access_token' => $token,
         ];
     }

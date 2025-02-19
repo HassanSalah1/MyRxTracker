@@ -18,13 +18,16 @@ class PackController extends Controller
     public function activePack()
     {
         $pack = auth()->user()->pack;
-        $on_track = $pack?->onTrackPacks
+        if (!$pack){
+            return $this->errorResponse(trans('messages.no_starter_pack'),422 );
+        }
+        $on_track = $pack->onTrackPacks
                     ->where('verification_status', PacksStatus::APPROVED)
                     ->where('used_for_redemption', false)
                     ->count();
 
         $data = [
-          'name' => $pack->name,
+          'name' => $pack?->name,
           'image' => url(Storage::url($pack->image)),
           'on_track_count' => $on_track,
           'can_redeeming' => $on_track == 3
