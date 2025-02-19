@@ -19,8 +19,9 @@ class PackController extends Controller
     {
         $pack = auth()->user()->pack;
         $on_track = $pack->onTrackPacks
-                    ->where('verification_status', PacksStatus::APPROVED)
-                    ->where('used_for_redemption', false)->count();
+                    ?->where('verification_status', PacksStatus::APPROVED)
+                    ?->where('used_for_redemption', false)
+                    ?->count();
 
         $data = [
           'name' => $pack->name,
