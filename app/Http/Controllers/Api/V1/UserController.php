@@ -27,7 +27,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'mobile' => ['required', 'unique:users', ],
-            'email' => ['required', 'unique:users', 'email', 'max:255'],
+            //'email' => ['required', 'unique:users', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', Rules\Password::defaults()],
             'device_name' => ['required', 'string'],
             'identity_number' => ['required', 'string'],
@@ -47,7 +47,7 @@ class UserController extends Controller
             'image' => $data['image'] ?? null,
             'mobile' => $data['mobile'],
             'email_verified_at' => Carbon::now(),
-            'email' => $data['email'],
+            //'email' => $data['email'],
             'identity_number' => $data['identity_number'],
             //'doctor' => $data['doctor'],
             'role' => Roles::USER,
@@ -97,14 +97,14 @@ class UserController extends Controller
     public function forgetPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => ['required', 'email'],
+            'mobile' => ['required'],
         ]);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors()->first(), 422);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('mobile', $request->mobile)->first();
 
         if (!$user) {
             return $this->errorResponse(trans('messages.account_not_found'), 404);
@@ -143,7 +143,8 @@ class UserController extends Controller
     public function createPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => ['required', 'email'],
+            'mobile' => ['required'],
+            'code' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8', Rules\Password::defaults()],
         ]);
 
@@ -151,12 +152,15 @@ class UserController extends Controller
             return $this->errorResponse($validator->errors()->first(), 422);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('mobile', $request->mobile)->first();
+
 
         if (!$user) {
-            return $this->errorResponse(trans('messages.email_not_found'), 404);
+            return $this->errorResponse(trans('messages.account_not_found'), 404);
         }
-
+        if ($request->code != "0000") { // Replace with actual code verification logic
+            return $this->errorResponse(trans('messages.incorrect_code'), 422);
+        }
         $user->update(['password' => Hash::make($request->password)]);
         $accessToken = $user->createToken($user->device_name ?? 'default')->plainTextToken;
 
