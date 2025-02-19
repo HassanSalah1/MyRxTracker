@@ -291,6 +291,7 @@ class UserController extends Controller
             'email' => $user->email,
             'mobile' => $user->mobile,
             'photo' => $image_url,
+            'took_starter_pack' => (bool) $user->starterPacks,
             'access_token' => $token,
         ];
     }

@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function starterPacks()
     {
-        return $this->hasMany(StarterPack::class);
+        return $this->hasOne(StarterPack::class);
     }
 
     public function onTrackApplications()
