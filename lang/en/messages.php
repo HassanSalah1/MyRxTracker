@@ -5,7 +5,7 @@ return [
     'login_success' => 'Logged in successfully',
     'phone_or_password_incorrect' => 'The mobile number or password is incorrect',
     'account_not_found' => 'Account does not exist',
-    'code_sent_to_email' => 'The code has been sent to the Email',
+    'code_sent_to_email' => 'The code has been sent to the Mobile number',
     'incorrect_code' => 'The code is incorrect',
     'correct_code_enter_new_password' => 'The code is correct, please enter the new password',
     'email_not_found' => 'The email does not exist',
