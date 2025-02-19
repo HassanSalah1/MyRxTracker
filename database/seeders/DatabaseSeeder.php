@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-        $this->call(DoctorSeeder::class);
+        //$this->call(DoctorSeeder::class);
         User::updateOrCreate(
             ['email' => 'admin@admin.com'], // الشرط
             [
