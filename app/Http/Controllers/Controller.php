@@ -7,7 +7,7 @@ abstract class Controller
     /**
      * Return a success response.
      */
-    protected function successResponse($message, $data = null)
+    public function successResponse($message, $data = null)
     {
         return response()->json([
             'status' => true,
@@ -19,7 +19,7 @@ abstract class Controller
     /**
      * Return an error response.
      */
-    protected function errorResponse($message, $statusCode)
+    public function errorResponse($message, $statusCode)
     {
         return response()->json([
             'status' => false,
