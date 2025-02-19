@@ -18,6 +18,7 @@ return [
     'starter_pack_success' => 'Starter Pack Request created successfully',
     'on_track_pack_success' => 'On Track Request  created successfully',
     'redeeming_pack_success' => 'Redeeming Request created successfully',
+    'request_redeeming_pack_success' => 'Request Redeeming pack created successfully',
     'no_starter_pack' => 'You must have starter pack to continue',
     'unused_message' => 'You must have at least 3 unused On Track applications to redeem.',
 

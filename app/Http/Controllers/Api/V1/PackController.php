@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\RedeemingPacksStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Enums\PacksStatus;
@@ -17,7 +18,8 @@ class PackController extends Controller
 {
     public function activePack()
     {
-        $pack = auth()->user()->pack;
+        $user = auth()->user();
+        $pack = $user->pack;
         if (!$pack){
             return $this->errorResponse(trans('messages.no_starter_pack'),422 );
         }
@@ -30,7 +32,7 @@ class PackController extends Controller
           'name' => $pack?->name,
           'image' => url(Storage::url($pack->image)),
           'on_track_count' => $on_track,
-          'can_redeeming' => $on_track == 3
+          'can_redeeming' => (bool) $user->redeemingPacks?->where('status', RedeemingPacksStatus::READY)->count()
 
         ];
         return $this->successResponse(null, $data);
@@ -130,6 +132,30 @@ class PackController extends Controller
 
 
         return $this->successResponse(trans('messages.redeeming_pack_success'));
+    }
+    public function requestRedeemingPack(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'doctor_id' => 'required|exists:doctors,id',
+            'next_consultation_date' => 'required|date',
+
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->first(), 422);
+        }
+        $user = auth()->user();
+
+        RedeemingPack::create([
+            'user_id' => $user->id,
+            'pack_id' => $user->pack_id,
+            'doctor_id' => $request->doctor_id,
+            'next_consultation_date' => $request->next_consultation_date,
+
+        ]);
+
+
+        return $this->successResponse(trans('messages.request_redeeming_pack_success'));
     }
 
 

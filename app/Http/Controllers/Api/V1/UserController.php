@@ -193,23 +193,33 @@ class UserController extends Controller
         $user = auth()->user();
         $data = $request->all();
 
-        $rules = [
-            'name' => ['string', 'max:255'],
-            'gender' => ['string', 'in:male,female,other'],
-            'mobile' => [ Rule::unique('users')->ignore($user->id)],
-            'password' => ['nullable', 'string', 'min:8', Rules\Password::defaults()],
-        ];
+        if ($request->has('old_password')) {
+            $rules = [
+                'old_password' => [
+                    function ($attribute, $value, $fail) use ($user) {
+                        if (!Hash::check($value, $user->password)) {
+                            $fail(trans('messages.incorrect_password'));
+                        }
+                    }
+                ],
+                'password' => 'required|confirmed', // Simplified rule syntax
+            ];
 
+        } else {
+            $rules = [
+                'name' => 'string|max:255', // Simplified rule syntax
+                'mobile' => Rule::unique('users')->ignore($user->id),
+            ];
+        }
+        // Validate the data
         $validator = Validator::make($data, $rules);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors()->first(), 422);
         }
-
+        // Hash the password AFTER validation succeeds
         if ($request->has('password')) {
             $data['password'] = Hash::make($request->password);
-        } else {
-            unset($data['password']);
         }
 
         if ($request->file('image')) {

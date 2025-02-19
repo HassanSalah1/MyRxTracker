@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\RedeemingPacksStatus;
 use App\Filament\Resources\RedeemingPackResource\Pages;
 use App\Filament\Resources\RedeemingPackResource\RelationManagers;
 use App\Models\RedeemingPack;
@@ -35,13 +36,17 @@ class RedeemingPackResource extends Resource
                     ->relationship('doctor', 'name_en') // 'doctor' is the relationship method, 'name' is the column to display
                     ->searchable() // Optional: Allows searching
                     ->preload(), // Optional: Preloads options
-                Forms\Components\DatePicker::make('redemption_date')
+                Forms\Components\DatePicker::make('next_consultation_date')
                     ->required(),
+                Forms\Components\DatePicker::make('redemption_date'),
                 Forms\Components\TextInput::make('serial_number')
-                    ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('status')
+                    ->label('Status')
+                    ->options(RedeemingPacksStatus::class)
+                    ->required(),
                 Forms\Components\FileUpload::make('certificate_path')
-                    ->required()
+                    //->required()
 //                Forms\Components\TextInput::make('used_applications')
 //                    ->required(),
             ]);
@@ -56,6 +61,10 @@ class RedeemingPackResource extends Resource
 
                 Tables\Columns\TextColumn::make('doctor.name_en')
                     ->label('Doctor Name'),
+                Tables\Columns\TextColumn::make('next_consultation_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('redemption_date')
                     ->date()
                     ->sortable(),

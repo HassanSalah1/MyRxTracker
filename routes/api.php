@@ -43,6 +43,7 @@ Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
         Route::post('/starter-pack', [V1\PackController::class, 'starterPack']);
         Route::post('/on-track-pack', [V1\PackController::class, 'onTrackPack']);
         Route::post('/redeeming-pack', [V1\PackController::class, 'redeemingPack']);
+        Route::post('/request-redeeming-pack', [V1\PackController::class, 'requestRedeemingPack']);
 
     });
 

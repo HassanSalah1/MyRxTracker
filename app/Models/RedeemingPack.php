@@ -11,6 +11,8 @@ class RedeemingPack extends Model
         'doctor_id',
         'pack_id',
         'redemption_date',
+        'next_consultation_date',
+        'status',
         'serial_number',
         'certificate_path',
         'used_applications', // JSON array storing the IDs of LumirixOnTrack applications used
