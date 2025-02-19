@@ -38,6 +38,7 @@ Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
 
 
         Route::get('/doctors', [V1\DoctorController::class, 'getDoctors']);
+        Route::get('/banners', [V1\HomeController::class, 'banners']);
         Route::get('/active-pack', [V1\PackController::class, 'activePack']);
         Route::post('/starter-pack', [V1\PackController::class, 'starterPack']);
         Route::post('/on-track-pack', [V1\PackController::class, 'onTrackPack']);
