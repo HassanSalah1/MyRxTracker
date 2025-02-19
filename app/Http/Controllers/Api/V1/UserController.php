@@ -297,7 +297,7 @@ class UserController extends Controller
             'mobile' => $user->mobile,
             'photo' => $image_url,
             'request_starter_pack' => (bool) $user?->starterPacks,
-            'took_starter_pack' =>  (bool)$user->starterPacks->where('verification_status', PacksStatus::APPROVED)->count(),
+            'took_starter_pack' =>  (bool)$user?->starterPacks?->where('verification_status', PacksStatus::APPROVED)->count(),
             'access_token' => $token,
         ];
     }
