@@ -305,6 +305,7 @@ class UserController extends Controller
             'name' => $user->name,
             'email' => $user->email,
             'mobile' => $user->mobile,
+            'identity_number' => $user->identity_number,
             'photo' => $image_url,
             'request_starter_pack' => (bool) $user?->starterPacks,
             'took_starter_pack' =>  (bool)$user?->starterPacks?->where('verification_status', PacksStatus::APPROVED)->count(),

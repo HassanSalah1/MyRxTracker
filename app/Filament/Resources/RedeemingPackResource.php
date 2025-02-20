@@ -45,7 +45,7 @@ class RedeemingPackResource extends Resource
                     ->label('Status')
                     ->options(RedeemingPacksStatus::class)
                     ->required(),
-                Forms\Components\FileUpload::make('certificate_path')
+                //Forms\Components\FileUpload::make('certificate_path')
                     //->required()
 //                Forms\Components\TextInput::make('used_applications')
 //                    ->required(),
@@ -70,8 +70,8 @@ class RedeemingPackResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('serial_number')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('certificate_path')
-                    ->searchable(),
+//                Tables\Columns\TextColumn::make('certificate_path')
+//                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
