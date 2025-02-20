@@ -8,11 +8,16 @@ use App\Filament\Resources\OnTrackPackResource\RelationManagers;
 use App\Models\OnTrackPack;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\HtmlString;
+
 
 class OnTrackPackResource extends Resource
 {
@@ -41,13 +46,15 @@ class OnTrackPackResource extends Resource
                 Forms\Components\DatePicker::make('next_consultation_date')
                     ->required(),
                 Forms\Components\FileUpload::make('receipt_path')
+                    ->disk('public') // Store in the public disk
                     ->directory('receipts'),
+
                 Forms\Components\Select::make('verification_status')
                     ->label('Status')
                     ->options(PacksStatus::class)
                     ->required(),
-                Forms\Components\Toggle::make('used_for_redemption')
-                    ->required(),
+//                Forms\Components\Toggle::make('used_for_redemption')
+//                    ->required(),
             ]);
     }
 
@@ -71,6 +78,7 @@ class OnTrackPackResource extends Resource
                 Tables\Columns\TextColumn::make('verification_status'),
                 Tables\Columns\IconColumn::make('used_for_redemption')
                     ->boolean(),
+
 //                Tables\Columns\TextColumn::make('receipt_path'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -85,6 +93,18 @@ class OnTrackPackResource extends Resource
                 //
             ])
             ->actions([
+                Action::make('view_receipt')
+                    ->label('View Receipt')
+                    ->icon('heroicon-m-document-text')
+                    ->color('secondary')
+                    ->modalHeading('Receipt Preview') // Title of the modal
+                    ->modalSubheading('This is the uploaded receipt.')
+                    ->modalContent(fn ($record) => view('filament.receipt-modal', [
+                        'receiptUrl' => $record->receipt_path
+                            ? Storage::disk('public')->url($record->receipt_path)
+                            : null,
+                    ]))
+                    ->visible(fn ($record) => filled($record->receipt_path)),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
