@@ -310,6 +310,7 @@ class UserController extends Controller
             'photo' => $image_url,
             'request_starter_pack' => (bool) $user?->starterPacks,
             'took_starter_pack' =>  (bool)$user?->starterPacks?->where('verification_status', PacksStatus::APPROVED)->count(),
+            'fcm_token' => $user->fcm_token,
             'access_token' => $token,
         ];
     }
