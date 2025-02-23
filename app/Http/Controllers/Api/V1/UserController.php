@@ -278,7 +278,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'fcm_token' => ['required', 'string'],
-            'notification_permission' => ['required', 'boolean'],
+            //'notification_permission' => [ 'boolean'],
         ]);
 
         if ($validator->fails()) {
@@ -287,7 +287,7 @@ class UserController extends Controller
 
         $request->user()->update([
             'fcm_token' => $request->fcm_token,
-            'notification_permission' => $request->notification_permission,
+            //'notification_permission' => $request->notification_permission ?? ,
         ]);
 
         return $this->successResponse('FCM updated successfully');
