@@ -26,14 +26,15 @@
     @include("layouts.footer")
 
 
-    <script type="module">
-
 //const token = await getToken(messaging, { vapidKey: 'BKVWmuaJZX5-Hwd4zDkBl50STwIxmHrBJwOifEfMKudzozeKels1Trhzz6ZD1yTrjuKZBx6SDA7Y3Zw9WxIcT6Q' });
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js";
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js";
 
-// Firebase configuration
-const firebaseConfig = {
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
     apiKey: "AIzaSyAwSsX5fjKm4yMvVr6wD_amouC45gMKnQc",
     authDomain: "lumirix-bf498.firebaseapp.com",
     projectId: "lumirix-bf498",
@@ -43,59 +44,50 @@ const firebaseConfig = {
     measurementId: "G-910QCVYKQJ"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const messaging = getMessaging(app);
 
-// Request permission and get token
-async function requestPermissionAndGetToken() {
+    // Request permission and get token
+    async function requestPermissionAndGetToken() {
     try {
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-            console.log("Notification permission granted.");
+    // Request notification permission
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+    console.log('Notification permission granted.');
 
-            const token = await getToken(messaging, { vapidKey: "BKVWmuaJZX5-Hwd4zDkBl50STwIxmHrBJwOifEfMKudzozeKels1Trhzz6ZD1yTrjuKZBx6SDA7Y3Zw9WxIcT6Q" });
-            if (token) {
-                console.log("FCM Token:", token);
-                // Send the token to your server
-            } else {
-                console.log("No token available.");
-            }
-        } else {
-            console.log("Permission denied.");
-        }
-    } catch (error) {
-        console.error("Error getting token:", error);
-    }
+    // Get the FCM token
+    const token = await getToken(messaging, { vapidKey: 'BKVWmuaJZX5-Hwd4zDkBl50STwIxmHrBJwOifEfMKudzozeKels1Trhzz6ZD1yTrjuKZBx6SDA7Y3Zw9WxIcT6Q' });
+    if (token) {
+    console.log('FCM Token:', token);
+    // Send the token to your server for further use
+} else {
+    console.log('No registration token available. Request permission to generate one.');
+}
+} else {
+    console.log('Unable to get permission to notify.');
+}
+} catch (error) {
+    console.error('Error getting permission or token:', error);
+}
 }
 
-// Listen for foreground messages
-onMessage(messaging, (payload) => {
-    console.log("Foreground message received:", payload);
+    // Call the function to request permission and get token
+    requestPermissionAndGetToken();
 
+    // Handle incoming messages
+    onMessage(messaging, (payload) => {
+    console.log('Message received. ', payload);
+    // Customize notification here
     const notificationTitle = payload.notification.title;
     const notificationOptions = {
-        body: payload.notification.body,
-        //icon: payload.notification.icon || "/icon.png",
-    };
+    body: payload.notification.body,
+    icon: payload.notification.icon
+};
 
     new Notification(notificationTitle, notificationOptions);
 });
-
-// Register the service worker
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker
-        .register("/firebase-messaging-sw.js")
-        .then((registration) => {
-            console.log("Service Worker registered with scope:", registration.scope);
-        })
-        .catch((error) => {
-            console.error("Service Worker registration failed:", error);
-        });
-}
-
-// Call the function to request permission and get token
-requestPermissionAndGetToken();
     </script>
 </body>
 

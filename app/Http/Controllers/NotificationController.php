@@ -23,10 +23,10 @@ class NotificationController extends Controller
         ]);
 
         $this->firebaseService->sendNotification(
-            $request->title,
-            $request->body,
+            "Notification Title",
+            "notification Body",
             $request->token,
-            $request->data ?? []
+            ['type' => 'starter_pack']
         );
 
         return response()->json(['message' => 'Notification sent successfully']);
