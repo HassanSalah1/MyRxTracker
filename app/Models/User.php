@@ -28,6 +28,7 @@ class User extends Authenticatable
         'status',
         'image',
         'mobile',
+        'identity_number',
         'pack_id',
         'fcm_token',
         'notification_permission',
