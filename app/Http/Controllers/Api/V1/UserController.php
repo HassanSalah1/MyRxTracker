@@ -47,6 +47,7 @@ class UserController extends Controller
             'password' => Hash::make($data['password']),
             'image' => $data['image'] ?? null,
             'mobile' => $data['mobile'],
+            'fcm_token' => $data['fcm_token'],
             'email_verified_at' => Carbon::now(),
             //'email' => $data['email'],
             'identity_number' => $data['identity_number'],
@@ -69,6 +70,7 @@ class UserController extends Controller
             'mobile' => ['required', ],
             'password' => ['required', 'string', 'min:8'],
             'device_name' => ['required', 'string'],
+            'fcm_token' => ['required', 'string'],
         ]);
 
         if ($validator->fails()) {
