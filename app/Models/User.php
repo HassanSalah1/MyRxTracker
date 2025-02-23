@@ -29,6 +29,8 @@ class User extends Authenticatable
         'image',
         'mobile',
         'pack_id',
+        'fcm_token',
+        'notification_permission',
     ];
 
     protected $casts = [

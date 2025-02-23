@@ -77,9 +77,9 @@ class PackController extends Controller
             ->get();
 
         if ($onTrackRequests->count() < 1) {
-            return $this->errorResponse(trans('messages.no_starter_pack'), 400);
+            return $this->errorResponse(trans('messages.no_starter_pack'), 422);
         }
-        $receiptPath = $request->file('receipt')->store('receipts');
+        $receiptPath = $request->file('receipt')->store('receipts', 'public');
         OnTrackPack::create([
             'user_id' => $user->id,
             'pack_id' => $user->pack_id,
@@ -112,7 +112,7 @@ class PackController extends Controller
             ->get();
 
         if ($onTrackRequests->count() < 3) {
-            return $this->errorResponse(trans('messages.unused_message'), 400);
+            return $this->errorResponse(trans('messages.unused_message'), 422);
         }
 
         $usedApplicationIds = [];

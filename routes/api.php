@@ -31,6 +31,7 @@ Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
 
+        Route::post('/add-fcm-token', [V1\UserController::class, 'updateFcmToken']);
         Route::get('/profile', [V1\UserController::class, 'profile']);
         Route::post('/update-profile', [V1\UserController::class, 'updateProfile']);
         Route::post('/logout', [V1\UserController::class, 'logout']);

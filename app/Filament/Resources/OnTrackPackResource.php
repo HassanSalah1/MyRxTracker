@@ -8,15 +8,11 @@ use App\Filament\Resources\OnTrackPackResource\RelationManagers;
 use App\Models\OnTrackPack;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 use Filament\Tables\Actions\Action;
-use Illuminate\Support\HtmlString;
 
 
 class OnTrackPackResource extends Resource
@@ -104,6 +100,9 @@ class OnTrackPackResource extends Resource
                             ? Storage::disk('public')->url($record->receipt_path)
                             : null,
                     ]))
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(false)
+                    ->modalCloseButton()
                     ->visible(fn ($record) => filled($record->receipt_path)),
                 Tables\Actions\EditAction::make(),
             ])

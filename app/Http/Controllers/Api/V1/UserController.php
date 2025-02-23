@@ -293,6 +293,7 @@ class UserController extends Controller
         return $this->successResponse('FCM updated successfully');
     }
 
+
     /**
      * Prepare user data for response.
      */
