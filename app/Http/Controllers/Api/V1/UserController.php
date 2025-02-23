@@ -239,19 +239,19 @@ class UserController extends Controller
      */
     public function delete(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'password' => ['required', 'string'],
-        ]);
-
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors()->first(), 422);
-        }
+//        $validator = Validator::make($request->all(), [
+//            //'password' => ['required', 'string'],
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return $this->errorResponse($validator->errors()->first(), 422);
+//        }
 
         $user = auth()->user();
 
-        if (!Hash::check($request->password, $user->password)) {
-            return $this->errorResponse(trans('messages.incorrect_password'), 422);
-        }
+//        if (!Hash::check($request->password, $user->password)) {
+//            return $this->errorResponse(trans('messages.incorrect_password'), 422);
+//        }
 
         $user->delete();
 
