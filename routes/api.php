@@ -38,6 +38,7 @@ Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
         Route::post('/update-profile', [V1\UserController::class, 'updateProfile']);
         Route::post('/logout', [V1\UserController::class, 'logout']);
         Route::post('/delete-account', [V1\UserController::class, 'delete']);
+        Route::get('/notifications', [V1\NotificationController::class, 'index']);
 
 
         Route::get('/doctors', [V1\DoctorController::class, 'getDoctors']);
