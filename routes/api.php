@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::post('/send-notification', [\App\Http\Controllers\NotificationController::class, 'sendNotification']);
 
 Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
     Route::post('/register', [V1\UserController::class, 'register']);

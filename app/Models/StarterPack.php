@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\PacksStatus;
+use App\Services\FirebaseService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class StarterPack extends Model
 {
@@ -20,10 +23,12 @@ class StarterPack extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function doctor()
     {
         return $this->belongsTo(Doctor::class);
     }
+
     public function pack()
     {
         return $this->belongsTo(Pack::class);

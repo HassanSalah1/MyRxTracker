@@ -14,7 +14,7 @@ class NotificationController extends Controller
         $this->firebaseService = $firebaseService;
     }
 
-    public function sendNotification(Request $request): \Illuminate\Http\JsonResponse
+    public function sendNotification(Request $request)
     {
         $request->validate([
             'title' => 'required|string',

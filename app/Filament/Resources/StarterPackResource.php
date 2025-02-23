@@ -7,13 +7,17 @@ use App\Filament\Resources\StarterPackResource\Pages;
 use App\Filament\Resources\StarterPackResource\RelationManagers;
 use App\Models\StarterPack;
 use App\Models\User;
+use App\Services\FirebaseService;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Actions\Action;
 
 class StarterPackResource extends Resource
 {
@@ -78,22 +82,27 @@ class StarterPackResource extends Resource
                     ->label('Doctor Name'),
                 Tables\Columns\TextColumn::make('pack.name_en')
                     ->label('Pack Name'),
-                Tables\Columns\TextColumn::make('verification_status')
-                    ->searchable(),
+                SelectColumn::make('verification_status')
+                    ->label('Status')
+                    ->options(PacksStatus::class)
+                    ->sortable()
+                    ->afterStateUpdated(function ($record, $state) {
+
+                    }),
                 Tables\Columns\TextColumn::make('date_of_application')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('serial_no')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('certificate_path')
-                    ->label('Certificate')
-                    ->formatStateUsing(function ($state) {
-                        return "Click Here"; // عرض اسم الملف فقط
-                    })
-                    ->url(function ($record) {
-                        return url('storage/' . $record->certificate_path); // رابط تنزيل الملف
-                    }, true) // true لفتح الرابط في علامة تبويب جديدة
-                    ->openUrlInNewTab(),
+//                Tables\Columns\TextColumn::make('certificate_path')
+//                    ->label('Certificate')
+//                    ->formatStateUsing(function ($state) {
+//                        return "Click Here"; // عرض اسم الملف فقط
+//                    })
+//                    ->url(function ($record) {
+//                        return url('storage/' . $record->certificate_path); // رابط تنزيل الملف
+//                    }, true) // true لفتح الرابط في علامة تبويب جديدة
+//                    ->openUrlInNewTab(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
