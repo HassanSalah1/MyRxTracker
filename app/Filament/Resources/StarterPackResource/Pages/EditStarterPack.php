@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\StarterPackResource\Pages;
 
+use App\Enums\NotificationStatus;
 use App\Enums\PacksStatus;
 use App\Filament\Resources\StarterPackResource;
+use App\Notifications\VerificationApprovedNotification;
 use App\Services\FirebaseService;
 use Filament\Actions;
 use Filament\Notifications\Notification;
@@ -23,19 +25,26 @@ class EditStarterPack extends EditRecord
     {
         $record = $this->record;
         if ($record->verification_status == PacksStatus::APPROVED->value) {
-            $firebaseService = new FirebaseService();
-
+            //$firebaseService = new FirebaseService();
             // Fetch the user
+//            $user = $record->user;
+//            if ($user && $user->fcm_token) {
+//                // Send Firebase Notification
+//                $firebaseService->sendNotification(
+//                    'Verification Approved',
+//                    'Your verification status has been updated to OK!',
+//                    $user->fcm_token,
+//                    ['pack_id' => $record->id]
+//                );
+//            }
             $user = $record->user;
-            if ($user && $user->fcm_token) {
-                // Send Firebase Notification
-                $firebaseService->sendNotification(
+            if ($user) {
+                $user->notify(new VerificationApprovedNotification(
                     'Verification Approved',
                     'Your verification status has been updated to OK!',
-                    $user->fcm_token,
-                    ['pack_id' => $record->id]
-                );
-            }
+                    ['type' => NotificationStatus::HOME->value]
+                ));
+                }
         }
     }
 }
