@@ -31,7 +31,7 @@ class UserController extends Controller
             //'email' => ['required', 'unique:users', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', Rules\Password::defaults()],
             'device_name' => ['required', 'string'],
-            'identity_number' => ['required', 'string'],
+            'identity_number' => ['required', 'string','digits:5', 'unique:users'],
             //'doctor' => ['required'],
         ]);
 
