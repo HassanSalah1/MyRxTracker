@@ -26,7 +26,6 @@
     @include("layouts.footer")
 
 
-//const token = await getToken(messaging, { vapidKey: 'BKVWmuaJZX5-Hwd4zDkBl50STwIxmHrBJwOifEfMKudzozeKels1Trhzz6ZD1yTrjuKZBx6SDA7Y3Zw9WxIcT6Q' });
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
