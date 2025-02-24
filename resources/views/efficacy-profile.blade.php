@@ -1,21 +1,23 @@
 @extends('layouts.app')
 @section("content")
     <header>
-        @include('layouts.header')
-        <div class="row mt-4">
-            <div class="col-lg-6 my-auto pe-lg-5 text-center px-lg-5">
-                <h1 class="gradient-text fs-5 fw-bold text-uppercase">
-                    Efficacy PROFILE
-                </h1>
-                <h1 class="default-color lh-base text-center px-lg-5">
-                    Understand the Study Design
-                </h1>
-                <img src="{{asset('front-end/images/EfficacyProfile2.png')}}" class="img-fluid headar-img" alt="headerImg"
-                     title="headerImg" loading="lazy" decoding="async">
-            </div>
-            <div class="col-lg-6">
-                <img src="{{asset('front-end/images/EfficacyProfile.png')}}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
-                     loading="lazy" decoding="async">
+        <div class="container px-lg-5">
+            @include('layouts.header')
+            <div class="row mt-4">
+                <div class="col-lg-6 my-auto pe-lg-5 text-center px-lg-5">
+                    <h1 class="gradient-text fs-5 fw-bold text-uppercase">
+                        Efficacy PROFILE
+                    </h1>
+                    <h1 class="default-color lh-base text-center px-lg-5">
+                        Understand the Study Design
+                    </h1>
+                    <img src="{{asset('front-end/images/EfficacyProfile2.png')}}" class="img-fluid headar-img" alt="headerImg"
+                         title="headerImg" loading="lazy" decoding="async">
+                </div>
+                <div class="col-lg-6">
+                    <img src="{{asset('front-end/images/EfficacyProfile.png')}}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
+                         loading="lazy" decoding="async">
+                </div>
             </div>
         </div>
     </header>
