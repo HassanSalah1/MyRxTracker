@@ -29,7 +29,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'mobile' => ['required', 'unique:users', ],
             //'email' => ['required', 'unique:users', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:8', Rules\Password::defaults()],
+            'password' => ['required', 'string'],
             'device_name' => ['required', 'string'],
             'identity_number' => ['required', 'string','digits:5', 'unique:users'],
             //'doctor' => ['required'],
