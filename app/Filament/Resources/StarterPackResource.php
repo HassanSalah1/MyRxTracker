@@ -82,13 +82,15 @@ class StarterPackResource extends Resource
                     ->label('Doctor Name'),
                 Tables\Columns\TextColumn::make('pack.name_en')
                     ->label('Pack Name'),
-                SelectColumn::make('verification_status')
-                    ->label('Status')
-                    ->options(PacksStatus::class)
-                    ->sortable()
-                    ->afterStateUpdated(function ($record, $state) {
-
-                    }),
+                Tables\Columns\TextColumn::make('verification_status')
+                    ->label('Status'),
+//                SelectColumn::make('verification_status')
+//                    ->label('Status')
+//                    ->options(PacksStatus::class)
+//                    ->sortable()
+//                    ->afterStateUpdated(function ($record, $state) {
+//
+//                    }),
                 Tables\Columns\TextColumn::make('date_of_application')
                     ->date()
                     ->sortable(),
