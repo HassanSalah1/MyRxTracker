@@ -308,6 +308,7 @@ class UserController extends Controller
             'name' => $user->name,
             'email' => $user->email,
             'mobile' => $user->mobile,
+            'qr_code' => url('/images/avatar.png'),
             'identity_number' => $user->identity_number,
             'photo' => $image_url,
             'request_starter_pack' => (bool) $user?->starterPacks,
