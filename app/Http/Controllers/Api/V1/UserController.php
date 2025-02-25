@@ -70,7 +70,7 @@ class UserController extends Controller
             'mobile' => ['required', ],
             'password' => ['required', 'string', 'min:8'],
             'device_name' => ['required', 'string'],
-            'fcm_token' => [ 'string'],
+            //'fcm_token' => [ 'string'],
         ]);
 
         if ($validator->fails()) {
