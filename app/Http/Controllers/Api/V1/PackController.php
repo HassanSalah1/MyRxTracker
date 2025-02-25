@@ -50,6 +50,7 @@ class PackController extends Controller
             return $this->errorResponse($validator->errors()->first(), 422);
         }
         $user = auth()->user();
+
         StarterPack::create([
             'user_id' => $user->id,
             'doctor_id' => $request->doctor_id,

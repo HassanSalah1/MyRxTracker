@@ -70,7 +70,7 @@ class UserController extends Controller
             'mobile' => ['required', ],
             'password' => ['required', 'string', 'min:8'],
             'device_name' => ['required', 'string'],
-            'fcm_token' => ['required', 'string'],
+            'fcm_token' => [ 'string'],
         ]);
 
         if ($validator->fails()) {
@@ -311,7 +311,7 @@ class UserController extends Controller
             'identity_number' => $user->identity_number,
             'photo' => $image_url,
             'request_starter_pack' => (bool) $user?->starterPacks,
-            'took_starter_pack' =>  (bool)$user?->starterPacks?->where('verification_status', PacksStatus::APPROVED)->count(),
+            'took_starter_pack' => (bool) $user?->starterPacks()?->where('verification_status', PacksStatus::APPROVED)->count(),
             'fcm_token' => $user->fcm_token,
             'access_token' => $token,
         ];
