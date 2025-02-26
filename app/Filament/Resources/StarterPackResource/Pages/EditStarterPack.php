@@ -10,6 +10,8 @@ use App\Services\FirebaseService;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EditStarterPack extends EditRecord
 {
@@ -37,6 +39,13 @@ class EditStarterPack extends EditRecord
                     ['pack_id' => $record->id]
                 );
             }
+            if (!$record->certificate_path){
+                $record->update([
+                    'certificate_path' => $this->generateQrcode($user->id)
+                ]);
+            }
+
+
 //            $user = $record->user;
 //            if ($user) {
 //                $user->notify(new VerificationApprovedNotification(
@@ -46,5 +55,21 @@ class EditStarterPack extends EditRecord
 //                ));
 //                }
         }
+    }
+
+    private function generateQrcode($user_id)
+    {
+        $url = url('profile/' .$user_id);
+        // Generate the QR code
+        $qrCode = QrCode::format('png')->size(300)->generate($url);
+
+        // Save the QR code to the public disk
+        $qrFileName = 'qrcodes/' . time() . '.png';
+
+        Storage::disk('public')->put($qrFileName, $qrCode);
+
+        return  $qrFileName;
+        // Get the QR code URL
+        //return url(Storage::url($qrFileName));
     }
 }

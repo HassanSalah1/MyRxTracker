@@ -26,7 +26,6 @@ class VerificationApprovedNotification extends Notification
         return ['database', 'firebase'];
     }
 
-    // تخزين الإشعار في قاعدة البيانات
     public function toDatabase($notifiable): array
     {
         return [
@@ -34,7 +33,7 @@ class VerificationApprovedNotification extends Notification
         ];
     }
 
-    // إرسال الإشعار عبر Firebase
+
     public function toFirebase($notifiable): void
     {
         if ($notifiable->fcm_token) {

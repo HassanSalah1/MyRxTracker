@@ -302,17 +302,17 @@ class UserController extends Controller
     private function userData($user, $token)
     {
         $image_url = $user->image ? (str_contains($user->image, 'http') ? $user->image : url(Storage::url($user->image))) : url('/images/avatar.png');
-
+        $took_start_back = (bool) $user?->starterPacks()?->where('verification_status', PacksStatus::APPROVED)->count();
         return [
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
             'mobile' => $user->mobile,
-            'qr_code' => url('/images/avatar.png'),
+            'qr_code' => $took_start_back ? url(Storage::url($user?->starterPacks?->certificate_path)) : NULL,
             'identity_number' => $user->identity_number,
             'photo' => $image_url,
             'request_starter_pack' => (bool) $user?->starterPacks,
-            'took_starter_pack' => (bool) $user?->starterPacks()?->where('verification_status', PacksStatus::APPROVED)->count(),
+            'took_starter_pack' => $took_start_back,
             'fcm_token' => $user->fcm_token,
             'access_token' => $token,
         ];

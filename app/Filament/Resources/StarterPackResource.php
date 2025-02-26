@@ -66,6 +66,10 @@ class StarterPackResource extends Resource
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('certificate_path')
+                    ->label('QR Code')
+                    ->directory('qrcodes')
+                    //->activeUrl()
+                    ->disabled()
 
                 ,
             ]);
