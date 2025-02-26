@@ -25,7 +25,10 @@ class StarterPackResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
     protected static ?int $navigationSort = 3;
-
+    public static function canCreate(): bool
+    {
+        return  false;
+    }
     public static function form(Form $form): Form
     {
         return $form

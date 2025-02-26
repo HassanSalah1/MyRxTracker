@@ -20,7 +20,10 @@ class OnTrackPackResource extends Resource
     protected static ?string $model = OnTrackPack::class;
     protected static ?string $navigationIcon = 'heroicon-o-cube';
     protected static ?int $navigationSort = 4;
-
+    public static function canCreate(): bool
+    {
+        return  false;
+    }
     public static function form(Form $form): Form
     {
         return $form
