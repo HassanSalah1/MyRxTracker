@@ -6,6 +6,7 @@ use App\Enums\Roles;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
+use App\Models\Slider;
 use App\Models\StarterPack;
 use App\Models\User;
 use Carbon\Carbon;
@@ -27,13 +28,11 @@ class HomeController extends Controller
     public function banners()
     {
 
+        $data = Slider::all()
+            ->map(function ($map){
+                return url(Storage::url($map->image));
+            })->toArray();
 
-        $data = [
-            asset('images/1.png'),
-            asset('images/2.png'),
-            asset('images/3.png'),
-        ];
-        // Return the response with pagination metadata
         return $this->successResponse(null, $data);
     }
 
