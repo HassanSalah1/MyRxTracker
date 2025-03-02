@@ -39,7 +39,7 @@ class DoctorController extends Controller
         }
 
         // Paginate the results
-        $doctors = $query->paginate(10); // Adjust the number per page as needed
+        $doctors = $query->get(); // Adjust the number per page as needed
 
         // Transform the results
         $transformedDoctors = $doctors->map(function ($doctor) {
@@ -51,14 +51,14 @@ class DoctorController extends Controller
 
         $data = [
             'doctors' => $transformedDoctors,
-            'pagination' => [
-                'total' => $doctors->total(),
-                'per_page' => $doctors->perPage(),
-                'current_page' => $doctors->currentPage(),
-                'last_page' => $doctors->lastPage(),
-                'from' => $doctors->firstItem(),
-                'to' => $doctors->lastItem(),
-            ]
+//            'pagination' => [
+//                'total' => $doctors->total(),
+//                'per_page' => $doctors->perPage(),
+//                'current_page' => $doctors->currentPage(),
+//                'last_page' => $doctors->lastPage(),
+//                'from' => $doctors->firstItem(),
+//                'to' => $doctors->lastItem(),
+//            ]
         ];
         // Return the response with pagination metadata
         return $this->successResponse(null, $data);
