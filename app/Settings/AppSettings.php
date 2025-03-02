@@ -17,6 +17,7 @@ class AppSettings extends Settings
         public string $site_url;
         public string $x;
         public string $youtube;
+        public string $mode;
 
     public static function group(): string
     {

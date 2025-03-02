@@ -38,7 +38,6 @@ class PageResource extends Resource
                 //RichEditor::make('body')->label(__('body'))
                 TiptapEditor::make('content')->label(__('body'))
                     ->required()
-
                     ->columnSpanFull()
             ]);
     }
@@ -47,7 +46,9 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                //
+                 Tables\Columns\TextColumn::make('id'),
+                 Tables\Columns\TextColumn::make('title'),
+                 Tables\Columns\TextColumn::make('slug'),
             ])
             ->filters([
                 //

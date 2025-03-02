@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use App\Models\Slider;
 use App\Models\StarterPack;
 use App\Models\User;
+use App\Settings\AppSettings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,5 +37,26 @@ class HomeController extends Controller
         return $this->successResponse(null, $data);
     }
 
+    public function settings(AppSettings $appSettings)
+    {
+
+        $data = [
+
+            'days'      => $appSettings->days,
+            'time'      => $appSettings->time,
+            'address'   => $appSettings->address,
+            'phone'     => $appSettings->phone,
+            'email' => $appSettings->email,
+            'app_version' => $appSettings->app_version,
+            'instagram' => $appSettings->instagram,
+            'facebook' => $appSettings->facebook,
+            'site_url' => $appSettings->site_url,
+            'x' => $appSettings->x,
+            'youtube' => $appSettings->youtube,
+            'mode' => $appSettings->mode
+        ];
+
+        return $this->successResponse(null, $data);
+    }
 
 }

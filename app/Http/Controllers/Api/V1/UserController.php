@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\ApplicationMode;
 use App\Enums\PacksStatus;
 use App\Enums\Roles;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Settings\AppSettings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -299,7 +301,7 @@ class UserController extends Controller
     /**
      * Prepare user data for response.
      */
-    private function userData($user, $token)
+    private function userData($user, $token, AppSettings $appSettings)
     {
         $image_url = $user->image ? (str_contains($user->image, 'http') ? $user->image : url(Storage::url($user->image))) : url('/images/avatar.png');
         $took_start_back = (bool) $user?->starterPacks()?->where('verification_status', PacksStatus::APPROVED)->count();
@@ -313,6 +315,7 @@ class UserController extends Controller
             'photo' => $image_url,
             'request_starter_pack' => (bool) $user?->starterPacks,
             'took_starter_pack' => $took_start_back,
+            'application_mode' => $appSettings->mode == ApplicationMode::STARTER_PACK->value,
             'fcm_token' => $user->fcm_token,
             'access_token' => $token,
         ];
