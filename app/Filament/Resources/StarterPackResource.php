@@ -38,12 +38,14 @@ class StarterPackResource extends Resource
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload()
+                    ->disabled()
                     ->required(),
                 Forms\Components\Select::make('doctor_id')
                     ->label('Doctor Name')
                     ->required()
                     ->relationship('doctor', 'name_en')
                     ->searchable()
+                    ->disabled()
                     ->preload(),
                 Forms\Components\Select::make('pack_id')
                     ->label('Pack Name')

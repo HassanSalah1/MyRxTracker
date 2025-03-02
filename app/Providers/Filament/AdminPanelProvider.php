@@ -26,6 +26,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandLogo('/images/logo.png')
             ->login()
             ->viteTheme('resources/css/filament/theme.css')
             ->colors([
@@ -39,7 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                //Widgets\AccountWidget::class,
 //                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([

@@ -12,6 +12,7 @@ use App\Models\StarterPack;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class PackController extends Controller
@@ -56,11 +57,28 @@ class PackController extends Controller
             'doctor_id' => $request->doctor_id,
             'date_of_application' => $request->application_date,
             'serial_no' => $request->serial_no,
+            'verification_status' => PacksStatus::APPROVED,
+            'certificate_path' => $this->generateQrcode($user->id)
         ]);
 
         return $this->successResponse(trans('messages.starter_pack_success'));
     }
 
+    private function generateQrcode($user_id)
+    {
+        $url = url('profile/' .$user_id);
+        // Generate the QR code
+        $qrCode = QrCode::format('png')->size(300)->generate($url);
+
+        // Save the QR code to the public disk
+        $qrFileName = 'qrcodes/' . time() . '.png';
+
+        Storage::disk('public')->put($qrFileName, $qrCode);
+
+        return  $qrFileName;
+        // Get the QR code URL
+        //return url(Storage::url($qrFileName));
+    }
     public function onTrackPack(Request $request)
     {
         $validator = Validator::make($request->all(), [

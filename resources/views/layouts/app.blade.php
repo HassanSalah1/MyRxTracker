@@ -24,8 +24,18 @@
     @yield("content")
 
     @include("layouts.footer")
+    <div style="position: fixed; width: 100%; height: 100%;">
+        <div class="card" style="width: 400px; margin: 0 auto;">
+            <img src="{{asset('front-end/images/popup.png')}}" class="img-fluid" title="Clinically Proven Results"
+                 loading="lazy" decoding="async" alt="Clinically Proven Results">
+            <h3 class="fs-6 bold default-color">
+                Are you a healthcare professional <br> from Hong Kong?
+            </h3>
+            <p class="default-color">
 
-
+            </p>
+        </div>
+    </div>
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";

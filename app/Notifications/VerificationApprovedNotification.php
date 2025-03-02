@@ -23,11 +23,12 @@ class VerificationApprovedNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['database', 'firebase'];
+        return ['database'];
     }
 
     public function toDatabase($notifiable): array
     {
+        $this->toFirebase($notifiable);
         return [
             'data' => $this->title . $this->body,
         ];

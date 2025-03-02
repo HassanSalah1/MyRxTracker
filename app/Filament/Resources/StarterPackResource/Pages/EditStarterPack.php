@@ -26,27 +26,27 @@ class EditStarterPack extends EditRecord
     protected function afterSave(): void
     {
         $record = $this->record;
-        if ($record->verification_status == PacksStatus::APPROVED->value) {
-            $firebaseService = new FirebaseService();
-             //Fetch the user
-            $user = $record->user;
-            if ($user && $user->fcm_token) {
-                // Send Firebase Notification
-                $firebaseService->sendNotification(
-                    'Verification Approved',
-                    'Your verification status has been updated to OK!',
-                    $user->fcm_token,
-                    ['pack_id' => $record->id]
-                );
-            }
-            if (!$record->certificate_path){
-                $record->update([
-                    'certificate_path' => $this->generateQrcode($user->id)
-                ]);
-            }
-
-
+//        if ($record->verification_status == PacksStatus::APPROVED->value) {
+//            $firebaseService = new FirebaseService();
+//             //Fetch the user
 //            $user = $record->user;
+////            if ($user && $user->fcm_token) {
+////                // Send Firebase Notification
+////                $firebaseService->sendNotification(
+////                    'Verification Approved',
+////                    'Your verification status has been updated to OK!',
+////                    $user->fcm_token,
+////                    ['pack_id' => $record->id]
+////                );
+////            }
+//            if (!$record->certificate_path){
+//                $record->update([
+//                    'certificate_path' => $this->generateQrcode($user->id)
+//                ]);
+//            }
+//
+//
+////            $user = $record->user;
 //            if ($user) {
 //                $user->notify(new VerificationApprovedNotification(
 //                    'Verification Approved',
@@ -54,7 +54,7 @@ class EditStarterPack extends EditRecord
 //                    ['type' => NotificationStatus::HOME->value]
 //                ));
 //                }
-        }
+//        }
     }
 
     private function generateQrcode($user_id)

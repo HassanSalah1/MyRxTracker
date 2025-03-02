@@ -45,7 +45,7 @@ class DoctorController extends Controller
         $transformedDoctors = $doctors->map(function ($doctor) {
             return [
                 'id' => $doctor->id,
-                'name' => $doctor->name
+                'name' => $doctor->name_en . ' - ' . $doctor->name_zh
             ];
         });
 

@@ -16,6 +16,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\DoctorImport;
 
 class DoctorResource extends Resource
 {
@@ -23,6 +27,7 @@ class DoctorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?int $navigationSort = 6;
+
 
     public static function form(Form $form): Form
     {
@@ -61,11 +66,12 @@ class DoctorResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                //Tables\Actions\DeleteAction::make(),
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

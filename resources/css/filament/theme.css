@@ -31,7 +31,7 @@
 
 :is(.dark .fi-body) {
     position: relative;
-    background-color: #573991;
+    background-color: #E37D83;
     z-index: 1;
 }
 
@@ -41,7 +41,7 @@
     top: 0;
     right: 0;
     background-image: radial-gradient(
-        ellipse at top right,
+        ellipse at bottom right,
         rgba(var(--primary-950), 1) 0%,
         rgba(var(--primary-950), 0.9) 15%,
         rgba(var(--primary-900), 0.7) 30%,
