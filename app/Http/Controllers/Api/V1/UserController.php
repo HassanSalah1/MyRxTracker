@@ -301,10 +301,13 @@ class UserController extends Controller
     /**
      * Prepare user data for response.
      */
-    private function userData($user, $token, AppSettings $appSettings)
+    private function userData($user, $token)
     {
         $image_url = $user->image ? (str_contains($user->image, 'http') ? $user->image : url(Storage::url($user->image))) : url('/images/avatar.png');
         $took_start_back = (bool) $user?->starterPacks()?->where('verification_status', PacksStatus::APPROVED)->count();
+
+        $appSettings = app(AppSettings::class);
+        //return  $appSettings;
         return [
             'id' => $user->id,
             'name' => $user->name,
