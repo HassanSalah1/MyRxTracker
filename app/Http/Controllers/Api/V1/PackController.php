@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Enums\RedeemingPacksStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Pack;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Enums\PacksStatus;
 use App\Models\OnTrackPack;
@@ -61,9 +62,10 @@ class PackController extends Controller
             'verification_status' => PacksStatus::APPROVED,
             'certificate_path' => $this->generateQrcode($user->id)
         ]);
-        $user->update([
-           'pack_id' => Pack::first()?->id ?? 1,
-        ]);
+
+       $pack_id = Pack::first()?->id ?? 1;
+
+        User::find($user->id)->update(['pack_id' => $pack_id]);
         return $this->successResponse(trans('messages.starter_pack_success'));
     }
 
