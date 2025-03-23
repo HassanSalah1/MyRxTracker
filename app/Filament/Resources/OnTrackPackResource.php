@@ -64,7 +64,7 @@ class OnTrackPackResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Patient Name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('doctor.name_en')
+                Tables\Columns\TextColumn::make('doctor_name')
                     ->label('Doctor Name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('application_date')

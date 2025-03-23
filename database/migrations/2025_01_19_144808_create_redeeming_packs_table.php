@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('redeeming_packs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
+            $table->foreignId('doctor_id')->nullable()->constrained('doctors')->onDelete('cascade');
             $table->foreignId('pack_id')->constrained('packs');
             $table->date('redemption_date');
             $table->string('serial_number')->unique();

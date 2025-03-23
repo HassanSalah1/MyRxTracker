@@ -42,7 +42,8 @@ class PackController extends Controller
     public function starterPack(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'doctor_id' => 'required|exists:doctors,id',
+            //'doctor_id' => 'required|exists:doctors,id',
+            'doctor_name' => 'required',
             'application_date' => 'required|date',
             'serial_no' => 'required|string|unique:starter_packs,serial_no,unique:redeeming_packs',
 
@@ -55,7 +56,8 @@ class PackController extends Controller
            $pack_id = Pack::first()?->id ?? 1;
         StarterPack::create([
             'user_id' => $user->id,
-            'doctor_id' => $request->doctor_id,
+            'doctor_name' => $request->doctor_name,
+            //'doctor_id' => $request->doctor_id,
             'date_of_application' => $request->application_date,
             'serial_no' => $request->serial_no,
             'verification_status' => PacksStatus::APPROVED,
@@ -86,7 +88,8 @@ class PackController extends Controller
     public function onTrackPack(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'doctor_id' => 'required|exists:doctors,id',
+            //'doctor_id' => 'required|exists:doctors,id',
+            'doctor_name' => 'required',
             'application_date' => 'required|date',
             'next_consultation_date' => 'required|date',
             'receipt' => 'required|file|mimes:pdf,jpg,png',
@@ -106,7 +109,8 @@ class PackController extends Controller
         OnTrackPack::create([
             'user_id' => $user->id,
             'pack_id' => $user->pack_id,
-            'doctor_id' => $request->doctor_id,
+            'doctor_name' => $request->doctor_name,
+            //'doctor_id' => $request->doctor_id,
             'application_date' => $request->application_date,
             'next_consultation_date' => $request->next_consultation_date,
             'receipt_path' => $receiptPath,
@@ -119,7 +123,8 @@ class PackController extends Controller
     public function redeemingPack(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'doctor_id' => 'required|exists:doctors,id',
+            //'doctor_id' => 'required|exists:doctors,id',
+            'doctor_name' => 'required',
             'application_date' => 'required|date',
             'serial_no' => 'required|string|unique:starter_packs,serial_no,unique:redeeming_packs',
 
@@ -147,7 +152,8 @@ class PackController extends Controller
         RedeemingPack::create([
             'user_id' => $user->id,
             'pack_id' => $user->pack_id,
-            'doctor_id' => $request->doctor_id,
+            'doctor_name' => $request->doctor_name,
+            //'doctor_id' => $request->doctor_id,
             'redemption_date' => $request->application_date,
             'serial_number' => $request->serial_no,
             'used_applications' => json_encode($usedApplicationIds),
@@ -159,7 +165,8 @@ class PackController extends Controller
     public function requestRedeemingPack(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'doctor_id' => 'required|exists:doctors,id',
+            //'doctor_id' => 'required|exists:doctors,id',
+            'doctor_name' => 'required',
             'next_consultation_date' => 'required|date',
 
         ]);
@@ -172,7 +179,8 @@ class PackController extends Controller
         RedeemingPack::create([
             'user_id' => $user->id,
             'pack_id' => $user->pack_id,
-            'doctor_id' => $request->doctor_id,
+            'doctor_name' => $request->doctor_name,
+            //'doctor_id' => $request->doctor_id,
             'next_consultation_date' => $request->next_consultation_date,
 
         ]);

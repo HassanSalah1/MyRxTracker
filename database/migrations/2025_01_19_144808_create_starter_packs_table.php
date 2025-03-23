@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('starter_packs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('doctor_id')->constrained('doctors');
+            $table->foreignId('doctor_id')->nullable()->constrained('doctors');
             $table->foreignId('pack_id')->nullable()->constrained('packs');
             $table->enum('verification_status', PacksStatus::values())->default(PacksStatus::PENDING->value);
             $table->date('date_of_application');

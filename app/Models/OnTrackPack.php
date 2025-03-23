@@ -10,6 +10,7 @@ class OnTrackPack extends Model
     protected $fillable = [
         'user_id',
         'doctor_id',
+        'doctor_name',
         'pack_id',
         'application_date',
         'next_consultation_date',

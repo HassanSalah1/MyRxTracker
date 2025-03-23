@@ -10,6 +10,7 @@ class RedeemingPack extends Model
         'user_id',
         'doctor_id',
         'pack_id',
+        'doctor_name',
         'redemption_date',
         'next_consultation_date',
         'status',

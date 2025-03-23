@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('on_track_packs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
+            $table->foreignId('doctor_id')->nullable()->constrained('doctors')->onDelete('cascade');
             $table->foreignId('pack_id')->constrained('packs');
             $table->date('application_date');
             $table->date('next_consultation_date');

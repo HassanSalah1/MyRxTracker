@@ -87,7 +87,7 @@ class StarterPackResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Patient Name'),
 
-                Tables\Columns\TextColumn::make('doctor.name_en')
+                Tables\Columns\TextColumn::make('doctor_name')
                     ->label('Doctor Name'),
                 Tables\Columns\TextColumn::make('pack.name_en')
                     ->label('Pack Name'),

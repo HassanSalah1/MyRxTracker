@@ -17,6 +17,7 @@ class StarterPack extends Model
         'verification_status',
         'serial_no',
         'certificate_path',
+        'doctor_name'
     ];
 
     public function user()
