@@ -28,10 +28,11 @@ class HomeController extends Controller
      */
     public function banners()
     {
-
+        $locale = app()->getLocale();
         $data = Slider::all()
-            ->map(function ($map){
-                return url(Storage::url($map->image));
+            ->map(function ($map) use ($locale){
+                $image = $locale == 'en' ?  $map->image : $map->image_zh;
+                return url(Storage::url($image));
             })->toArray();
 
         return $this->successResponse(null, $data);

@@ -21,7 +21,13 @@ class SliderResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('image')
-                    ->label('Slider Image')
+                    ->label('Image English')
+                    ->image()
+                    ->columnSpanFull()
+                    ->directory('sliders')
+                    ->required(),
+                Forms\Components\FileUpload::make('image_zh')
+                    ->label('Image chinese')
                     ->image()
                     ->columnSpanFull()
                     ->directory('sliders')
@@ -35,8 +41,11 @@ class SliderResource extends Resource
             ->columns([
                 TextColumn::make('id')->sortable(),
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Image')
-                    ->disk('public'), // Ensure it's served correctly
+                    ->label('Image English')
+                    ->disk('public'),
+                Tables\Columns\ImageColumn::make('image_zh')
+                    ->label('Image Chinese')
+                    ->disk('public'), //
             ])
             ->actions([
                 Tables\Actions\EditAction::make() // Opens Edit in Modal
