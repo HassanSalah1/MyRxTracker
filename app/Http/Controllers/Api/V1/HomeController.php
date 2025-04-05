@@ -33,6 +33,7 @@ class HomeController extends Controller
             ->map(function ($map) use ($locale){
                 $image = $locale == 'en' ?  $map->image : $map->image_zh;
                 return url(Storage::url($image));
+
             })->toArray();
 
         return $this->successResponse(null, $data);
