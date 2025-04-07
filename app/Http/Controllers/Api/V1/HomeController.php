@@ -43,7 +43,6 @@ class HomeController extends Controller
     {
 
         $data = [
-
             'days'      => $appSettings->days,
             'time'      => $appSettings->time,
             'address'   => $appSettings->address,

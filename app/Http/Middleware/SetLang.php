@@ -16,9 +16,14 @@ class SetLang
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $lang = $request->header('lang', 'en'); // string
 
-        App::setLocale($lang);
+        $lang = $request->header('accept-language', 'en-US'); // string
+        $langArray =[
+            'zh-CN' => 'zh' ,
+            'en-US' => 'en'
+        ];
+
+        App::setLocale($langArray[$lang]);
         return $next($request);
     }
 }
