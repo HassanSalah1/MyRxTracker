@@ -18,6 +18,87 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PackController extends Controller
 {
+    public function history()
+    {
+        $userId = auth()->id();
+
+        $starterPacks = StarterPack::where('user_id', $userId)->get()->map(function ($pack) {
+            return [
+                'type' => 'starter_pack',
+                'id' => $pack->id,
+                'title' => $pack->pack?->name,
+                'created_at' => $pack->created_at->format('d F Y'),
+                'status' => $pack->verification_status,
+                'doctor_name' => $pack->doctor_name,
+            ];
+        });
+
+        $onTrackPacks = OnTrackPack::where('user_id', $userId)->get()->map(function ($pack) {
+            return [
+                'type' => 'on_track_pack',
+                'id' => $pack->id,
+                'title' => $pack->pack?->name,
+                'created_at' => $pack->created_at->format('d F Y'),
+                'status' => $pack->verification_status,
+                'doctor_name' => $pack->doctor_name,
+            ];
+        });
+
+        $redeemingPacks = RedeemingPack::where('user_id', $userId)->get()->map(function ($pack) {
+            return [
+                'type' => 'redeeming_pack',
+                'id' => $pack->id,
+                'title' => $pack->pack?->name,
+                'created_at' => $pack->created_at->format('d F Y'),
+                'status' => $pack->status,
+                'doctor_name' => $pack->doctor_name,
+            ];
+        });
+
+        $history = collect()
+            ->merge($starterPacks)
+            ->merge($onTrackPacks)
+            ->merge($redeemingPacks)
+            ->sortByDesc('created_at')
+            ->values(); // reset indexes
+
+        return $this->successResponse(null, $history);
+    }
+
+    public function historyDetails($id, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'type' => 'required|in:starter_pack,on_track_pack,redeeming_pack',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->first(), 422);
+        }
+
+        // based on type $request->type starter_pack or on_track_pack or redeeming_pack get date from model
+        $pack = null;
+
+        if ($request->type === 'starter_pack') {
+            $pack = StarterPack::find($id);
+        } elseif ($request->type === 'on_track_pack') {
+            $pack = OnTrackPack::find($id);
+        } elseif ($request->type === 'redeeming_pack') {
+            $pack = RedeemingPack::find($id);
+        }
+
+        if (!$pack) {
+            return $this->errorResponse(trans('messages.pack_not_found'), 404);
+        }
+
+        return $this->successResponse(null, [
+            'type' => $request->type,
+            'id' => $pack->id,
+            'created_at' => $pack->created_at->format('d F Y'),
+            'status' => $pack->verification_status ?? $pack->status,
+            'doctor_name' => $pack->doctor_name,
+        ]);
+
+    }
     public function activePack()
     {
         $user = auth()->user();

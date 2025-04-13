@@ -21,5 +21,9 @@ return [
     'request_redeeming_pack_success' => 'Request Redeeming pack created successfully',
     'no_starter_pack' => 'You must have starter pack to continue',
     'unused_message' => 'You must have at least 3 unused On Track applications to redeem.',
+    'already_attending' => 'Already attending',
+    'attending' => 'You are now attending this event',
+    'photo_added_successfully' => 'Photo stored successfully',
+    'photo_deleted_successfully' => 'Photo deleted successfully',
 
 ];

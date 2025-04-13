@@ -18,4 +18,6 @@ return [
     'starter_pack_success' => '启动包请求创建成功',
     'on_track_pack_success' => '跟踪请求创建成功',
     'redeeming_pack_success' => '兑换请求创建成功',
+    'already_attending' => '已经参加',
+    'attending' => '你现在正在参加这个活动',
 ];

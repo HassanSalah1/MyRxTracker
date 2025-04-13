@@ -84,4 +84,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(RedeemingPack::class);
     }
+    public function attendingEvents()
+    {
+        return $this->belongsToMany(Event::class)->withTimestamps();
+    }
+    public function photos()
+    {
+        return $this->hasMany(UserPhoto::class, 'user_id');
+    }
+
 }

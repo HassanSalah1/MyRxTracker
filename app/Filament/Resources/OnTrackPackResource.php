@@ -34,7 +34,7 @@ class OnTrackPackResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                Forms\Components\Select::make('doctor_id')
+                Forms\Components\Select::make('doctor_name')
                     ->label('Doctor Name')
                     ->required()
                     ->relationship('doctor', 'name_en')
