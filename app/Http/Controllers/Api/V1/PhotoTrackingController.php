@@ -26,6 +26,7 @@ class PhotoTrackingController extends Controller
         foreach ($photos as $photo){
             $data[] = [
                 'id' => $photo->id,
+                'date' => $photo->created_at->format('d F Y h:i A'),
                 'image' => url(Storage::url($photo->photo_path)),
             ];
         }
