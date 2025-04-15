@@ -82,8 +82,10 @@ class PackController extends Controller
             $pack = StarterPack::find($id);
         } elseif ($request->type === 'on_track_pack') {
             $pack = OnTrackPack::find($id);
+            $image = url(Storage::url($pack->receipt_path));
         } elseif ($request->type === 'redeeming_pack') {
             $pack = RedeemingPack::find($id);
+            $image = url(Storage::url($pack->certificate_path));
         }
 
         if (!$pack) {
@@ -93,9 +95,12 @@ class PackController extends Controller
         return $this->successResponse(null, [
             'type' => $request->type,
             'id' => $pack->id,
+            'title' => $pack->pack?->name,
             'created_at' => $pack->created_at->format('d F Y'),
             'status' => $pack->verification_status ?? $pack->status,
             'doctor_name' => $pack->doctor_name,
+            'next_consultation_date' => $pack->next_consultation_date,
+            'file' => $image ?? null,
         ]);
 
     }
