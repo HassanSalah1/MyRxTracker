@@ -28,7 +28,7 @@ Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
     Route::post('/check-code', [V1\UserController::class, 'checkCode']);
     Route::post('/create-password', [V1\UserController::class, 'createPassword']);
 
-    //Route::get('/setting', [V1\SettingController::class, 'index']);
+    Route::get('/settings', [V1\HomeController::class, 'settings']);
 
 
     Route::group(['middleware' => 'auth:sanctum'], function () {

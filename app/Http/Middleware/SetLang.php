@@ -23,7 +23,7 @@ class SetLang
             'en-US' => 'en'
         ];
 
-        App::setLocale($langArray[$lang]);
+        App::setLocale($langArray[$lang] ?? 'en');
         return $next($request);
     }
 }
