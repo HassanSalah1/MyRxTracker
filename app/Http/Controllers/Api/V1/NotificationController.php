@@ -26,26 +26,45 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $data = [
-                [
-                 'body' => 'Your Lumirix® Starter Pack application has been approved. Please visit any participating clinic to redeem your pack.',
-                 'date' => Carbon::now()->format('h:i A, j F Y')
-                ],
-            [
-                'body' => 'Reminder: Upload your invoice for Lumirix® cream to continue tracking your progress.',
-                'date' => Carbon::now()->subDays(2)->format('h:i A, j F Y')
-            ],
-            [
-                'body' => 'Your refill request for Lumirix® cream is being processed. We’ll notify you when it’s ready.',
-                'date' => Carbon::now()->subDays(3)->format('h:i A, j F Y')
-            ],
-            [
-                'body' => 'Your Lumirix® Starter Pack application has been approved. Please visit any participating clinic to redeem your pack.',
-                'date' => Carbon::now()->subDays(5)->format('h:i A, j F Y')
-            ]
-            ];
-        // Return the response with pagination metadata
-        return $this->successResponse(null, $data);
+
+        $user = Auth::user();
+
+        $notifications = $user->notifications()
+            ->select(['id', 'data', 'created_at', 'read_at'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($notification) {
+                return [
+                    'id' => $notification->id,
+                    'body' => $notification->data['data'] ?? '',
+                    'date' => $notification->created_at->format('h:i A, j F Y'),
+                    'read' => !is_null($notification->read_at)
+                ];
+            });
+
+        return $this->successResponse(null, $notifications);
     }
 
+    /**
+     * Mark a notification as read
+     */
+    public function markAsRead($id)
+    {
+        $user = Auth::user();
+        $notification = $user->notifications()->findOrFail($id);
+        $notification->markAsRead();
+
+        return $this->successResponse('Notification marked as read');
+    }
+
+    /**
+     * Mark all notifications as read
+     */
+    public function markAllAsRead()
+    {
+        $user = Auth::user();
+        $user->unreadNotifications->markAsRead();
+
+        return $this->successResponse('All notifications marked as read');
+    }
 }
