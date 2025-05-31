@@ -14,12 +14,7 @@ Route::get('/dosing', function () {return view('dosing');})->name('dosing');
 Route::get('/setting-expectations', function () {return view('setting-expectations');})->name('setting-expectations');
 Route::get('/download', function () {return view('download');})->name('download');
 Route::get('/patient-support', function () {return view('patient-support');})->name('patient-support');
-
-
-
-
-
-
+Route::get('/terms-policy', function () {return view('terms-policy');})->name('terms-policy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

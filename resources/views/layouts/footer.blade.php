@@ -59,6 +59,11 @@
                             Rewards Program
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('terms-policy') }}">
+                            Terms & Policy
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-lg-3 my-2 mt-auto mb-lg-5">
