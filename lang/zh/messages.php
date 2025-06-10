@@ -20,4 +20,5 @@ return [
     'redeeming_pack_success' => '兑换请求创建成功',
     'already_attending' => '已经参加',
     'attending' => '你现在正在参加这个活动',
+    'login_first' => '请先登录',
 ];

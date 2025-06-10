@@ -25,5 +25,13 @@ return [
     'attending' => 'You are now attending this event',
     'photo_added_successfully' => 'Photo stored successfully',
     'photo_deleted_successfully' => 'Photo deleted successfully',
+    'login_first' => 'You must login first',
+    'no_photo_found' => 'No photo found',
+    'no_event_found' => 'No event found',
+    'no_starter_pack_found' => 'No starter pack found',
+    'no_on_track_pack_found' => 'No on track pack found',
+    'no_redeeming_pack_found' => 'No redeeming pack found',
+    'no_request_redeeming_pack_found' => 'No request redeeming pack found',
+    'no_attending_found' => 'No attending found',
 
 ];
