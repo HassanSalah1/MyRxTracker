@@ -18,6 +18,8 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -67,10 +69,30 @@ class PatientResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->width('80px'),
+                TextColumn::make('created_at')
+                    ->label('Sign Up Date')
+                    ->dateTime('M j, Y')
+                    ->sortable()
+                    ->searchable(),
 //                ImageColumn::make('image')->rounded(),
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->label('Export Patients')
+                    ->color('success')
+                    ->exports([
+                        ExcelExport::make('Excel')
+                            ->fromTable()
+                            ->withFilename(fn () => 'patients-' . date('Y-m-d'))
+                            ->withWriterType(\Maatwebsite\Excel\Excel::XLSX),
+                        ExcelExport::make('csv')
+                            ->fromTable()
+                            ->withFilename(fn () => 'patients-' . date('Y-m-d'))
+                            ->withWriterType(\Maatwebsite\Excel\Excel::CSV),
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
