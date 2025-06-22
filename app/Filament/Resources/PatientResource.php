@@ -47,10 +47,10 @@ class PatientResource extends Resource
                 Select::make('status')
                     ->options(UserStatus::class)
                     ->required(),
-                FileUpload::make('image')
-                    ->image()
-                    ->directory('users')
-                    ->nullable(),
+                // FileUpload::make('image')
+                //     ->image()
+                //     ->directory('users')
+                //     ->nullable(),
             ]);
     }
 
@@ -65,7 +65,8 @@ class PatientResource extends Resource
                 SelectColumn::make('status')
                     ->options(UserStatus::class)
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->width('80px'),
 //                ImageColumn::make('image')->rounded(),
             ])
             ->filters([
