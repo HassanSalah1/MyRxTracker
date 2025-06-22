@@ -24,7 +24,55 @@
     @yield("content")
 
     @include("layouts.footer")
-    <div style="position: fixed; width: 100%; height: 100%;">
+
+<!--  -->
+<div class="modal fade" id="enteranceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body text-center p-lg-5 p-4">
+                    <img src="{{asset('front-end/images/icon.png')}}" class="img-fluid" alt="icon">
+                    <h4 class="my-4 py-2 lh-lg">
+                        Are you a healthcare professional from Hong Kong?
+                    </h4>
+                    <div class="d-flex gap-3">
+                        <button type="button" class="btn btn-secondary w-100 text-uppercase"
+                            data-bs-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-primary w-100 text-uppercase" data-bs-toggle="modal"
+                            data-bs-target="#gotModal">No</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--  -->
+    <div class="modal fade" id="gotModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body text-center px-4 py-5  p-4">
+                    <img src="{{asset('front-end/images/icon.png')}}" class="img-fluid" alt="icon">
+                    <h4 class="my-4 py-2 lh-lg fs-5">
+                        This site is intended for healthcare professionals practising in Hong Kong only.
+                    </h4>
+                    <div class="d-flex gap-3">
+                        <button type="button" class="btn btn-secondary w-100 text-uppercase" data-bs-dismiss="modal">Got
+                            it</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<!--scripts -->
+<script type="text/javascript " src="{{asset('front-end/js/jquery-3.5.1.min.js')}}"></script>
+<script type="text/javascript " src="{{asset('front-end/js/bootstrap.bundle.min.js ')}}"></script>
+
+<script type="text/javascript " src="{{asset('front-end/js/scripts.js ')}}"></script>
+
+    <!-- <div style="position: fixed; width: 100%; height: 100%;">
         <div class="card" style="width: 400px; margin: 0 auto;">
             <img src="{{asset('front-end/images/popup.png')}}" class="img-fluid" title="Clinically Proven Results"
                  loading="lazy" decoding="async" alt="Clinically Proven Results">
@@ -35,7 +83,7 @@
 
             </p>
         </div>
-    </div>
+    </div> -->
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";

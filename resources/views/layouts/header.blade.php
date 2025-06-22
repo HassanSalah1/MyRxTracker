@@ -23,7 +23,8 @@
                 </li>
                 <li class="nav-item  mx-2 dropdown
                 {{Route::currentRouteName() === 'efficacy-profile' ? 'active' : '' }}
-                {{Route::currentRouteName() === 'explore-lumirix-efficacy' ? 'active' : '' }}
+                {{Route::currentRouteName() === 'explore-lumirix-efficacy-f-vasi' ? 'active' : '' }}
+                {{Route::currentRouteName() === 'explore-lumirix-efficacy-t-vasi' ? 'active' : '' }}
                 {{Route::currentRouteName() === 'ruxolitinib-reports' ? 'active' : '' }}
                 ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -32,7 +33,8 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{{route('efficacy-profile')}}"> Efficacy Profile</a></li>
-                        <li><a class="dropdown-item" href="{{route('explore-lumirix-efficacy')}}">Explore Lumirix Efficacy</a></li>
+                        <li><a class="dropdown-item" href="{{route('explore-lumirix-efficacy-f-vasi')}}">Efficacy F-VASI</a></li>
+                        <li><a class="dropdown-item" href="{{route('explore-lumirix-efficacy-t-vasi')}}">Efficacy T-VASI</a></li>
                         <li><a class="dropdown-item" href="{{route('ruxolitinib-reports')}}">Ruxolitinib Cream Case Reports</a>
                         </li>
                     </ul>

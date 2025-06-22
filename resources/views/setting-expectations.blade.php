@@ -7,15 +7,15 @@
 
                 <div class="col-lg-6 my-auto pe-lg-5 text-center px-lg-5">
 
-                    <h1 class="default-color lh-base text-center px-lg-5">
+                    <h1 class="default-color lh-base text-center px-lg-5 din-next">
                         Setting Expectations
                     </h1>
                     <img src="{{asset('front-end/images/EfficacyProfile2.png')}}" class="img-fluid headar-img" alt="headerImg"
-                         title="headerImg" loading="lazy" decoding="async">
+                        title="headerImg" loading="lazy" decoding="async">
                 </div>
                 <div class="col-lg-6 mt-4">
-                    <img src="{{asset('front-end/images/EfficacyProfile.png')}}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
-                         loading="lazy" decoding="async">
+                    <img src="{{asset('front-end/images/Patient.png')}}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
+                        loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="px-lg-5 d-flex align-items-center">
                     <i class="fas fa-check-circle dark-purple fs-1 me-3"></i>
-                    Treat for maintenance.3
+                    After successful re-pigmentation discuss maintenance strategies with patients.
                 </div>
             </div>
         </div>
@@ -63,29 +63,33 @@
                         </p>
                         <div class="row">
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="dark-purple">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{asset('front-end/images/lumirix-icon-face.png')}}" class="img-fluid w-icon" alt="face">
+                                    <h6 class="dark-purple mb-0">
                                         Face
                                     </h6>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="dark-purple">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{asset('front-end/images/lumirix-icon-arms.png')}}" class="img-fluid w-icon" alt="Arms">
+                                    <h6 class="dark-purple mb-0">
                                         Arms
                                     </h6>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="dark-purple">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{asset('front-end/images/lumirix-icon-legs.png')}}" class="img-fluid w-icon" alt="Legs">
+                                    <h6 class="dark-purple mb-0">
                                         Legs
                                     </h6>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="dark-purple">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{asset('front-end/images/lumirix-icon-torso.png')}}" class="img-fluid w-icon" alt="Torso">
+                                    <h6 class="dark-purple mb-0">
                                         Torso
                                     </h6>
                                 </div>
@@ -105,15 +109,17 @@
                         </p>
                         <div class="row">
                             <div class="col-12">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="dark-purple">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{asset('front-end/images/lumirix-icon-backhand.png')}}" class="img-fluid w-icon" alt="hands">
+                                    <h6 class="dark-purple mb-0">
                                         M Back of hands & fingers
                                     </h6>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="dark-purple">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{asset('front-end/images/lumirix-icon-feet.png')}}" class="img-fluid w-icon" alt="Feet">
+                                    <h6 class="dark-purple mb-0">
                                         Feet & toes
                                     </h6>
                                 </div>
@@ -134,16 +140,18 @@
                         </p>
                         <div class="row">
                             <div class="col-12">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="dark-purple">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{asset('front-end/images/lumirix-icon-palms.png')}}" class="img-fluid w-icon" alt="Palms">
+                                    <h6 class="dark-purple mb-0">
                                         Palms
 
                                     </h6>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="d-flex align-items-center">
-                                    <h6 class="dark-purple">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{asset('front-end/images/lumirix-icon-soles.png')}}" class="img-fluid w-icon" alt="Soles">
+                                    <h6 class="dark-purple mb-0">
                                         Soles
                                     </h6>
                                 </div>
@@ -171,7 +179,7 @@
                     </div>
 
                     <img src="{{asset('front-end/images/Perifollicular.png')}}" class="img-fluid br-24" alt="Perifollicular"
-                         title="Perifollicular" loading="lazy" decoding="async">
+                        title="Perifollicular" loading="lazy" decoding="async">
                 </div>
                 <div class="col-lg-6 my-3 d-flex flex-column justify-content-between">
                     <div>
@@ -184,7 +192,7 @@
                     </div>
 
                     <img src="{{asset('front-end/images/Marginal.png')}}" class="img-fluid br-24" alt="Marginal" title="Marginal"
-                         loading="lazy" decoding="async">
+                        loading="lazy" decoding="async">
                 </div>
             </div>
             <p class="text-center din-next my-5 pb-5">
@@ -197,38 +205,37 @@
         <!--References  -->
         <div class="References mb-lg-5">
             <h6>
-                References
+                References:
             </h6>
-            <ol class="px-0 mx-3">
+            <ol class="px-0 mx-1 noType">
                 <li>
-                    Howell MD, Kuo FI, Smith PA. Targeting the Janus kinase family in autoimmune skin
-                    diseases.
-                    Front Immunol. 2019; 10: 2342 [Internet]. 2019.
+                    3.Lumirix® Prescribing Information for Hong Kong.
                 </li>
-                <li>Lumirix. Approved leaflet 29 August 2024.
-                </li>
-                <li>
-                    Howell MD,
-                    Kuo
-                    FI, Smith PA. Targeting the Janus kinase family in autoimmune skin diseases. Front Immunol. 2019;
-                    10:
-                    2342 [Internet]. 2019.
+                <li> 8. Birlea SA, Goldstein NB, Norris DA. Repigmentation through melanocyte regeneration in vitiligo.
+                    Dermatologic clinics. 2017 Apr 1;35(2):205-18.
+
                 </li>
                 <li>
-                    Lumirix. Approved leaflet 29 August 2024.
-                </li>
-                <li> Smith P, Yao W, Shepard S,
-                    Covington M,
-                    Lee J, Lofland J, Naim A, Sheth T, Parikh B, Yeleswaram S. Developing a JAK inhibitor for targeted
-                    local
-                    delivery: ruxolitinib cream. Pharmaceutics. 2021 Jul 8;13(7):1044.
+                    10. Rosmarin D, Sebastian M, Amster M, et al. Facial and total vitiligo area scoring index response
+                    shift during 104 weeks of Ruxolitinib cream treatment for vitiligo: results from the open-label arm
+                    of the TRuE-V long-term extension phase 3 study. Presented at the American Academy of Dermatology
+                    Annual Meeting; March 17–21, 2023; New Orleans, LA.
+
                 </li>
                 <li>
-                    Birlea SA, Goldstein NB, Norris
-                    DA.
-                    Repigmentation through melanocyte regeneration in vitiligo. Dermatologic clinics. 2017 Apr
-                    1;35(2):205-18.
+                    12. Harris JE, Papp K, Forman SB, et al. Relapse and maintenance of clinical response in the
+                    randomized withdrawal arm of the TRuE-V long-term extension phase 3 study of ruxolitinib cream in
+                    vitiligo. Presented at the American Academy of Dermatology Annual Meeting; March 17–21, 2023; New
+                    Orleans, LA.
+
                 </li>
+                <li> 13. Yang K, Xiong X, Pallavi G, Ling Y, Ding F, Duan W, Sun W, Ding G, Gong Q, Zhu W, Lu Y. The
+                    early repigmentation pattern of vitiligo is related to the source of melanocytes and by the choice
+                    of therapy: a retrospective cohort study. International Journal of Dermatology. 2018
+                    Mar;57(3):324-31.
+
+                </li>
+
             </ol>
         </div>
 

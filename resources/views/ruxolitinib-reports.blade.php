@@ -9,11 +9,11 @@
                     <h1 class="gradient-text fs-5 fw-bold text-uppercase">
                         Efficacy PROFILE
                     </h1>
-                    <h1 class="default-color lh-base text-center px-lg-5">
+                    <h1 class="default-color lh-base text-center px-lg-5 din-next">
                         Ruxolitinib Cream Case Reports
                     </h1>
                     <img src="{{asset('front-end/images/EfficacyProfile2.png')}}" class="img-fluid headar-img" alt="headerImg"
-                         title="headerImg" loading="lazy" decoding="async">
+                        title="headerImg" loading="lazy" decoding="async">
                 </div>
 
             </div>
@@ -221,38 +221,19 @@
         <!--References  -->
         <div class="References mb-lg-5">
             <h6>
-                References
+                Reference:
+
             </h6>
-            <ol class="px-0 mx-3">
+            <ol class="px-0 mx-1 noType">
                 <li>
-                    Howell MD, Kuo FI, Smith PA. Targeting the Janus kinase family in autoimmune skin
-                    diseases.
-                    Front Immunol. 2019; 10: 2342 [Internet]. 2019.
+                   9.  Rosmarin D, Passeron T, Pandya AG, Grimes P, Harris JE, Desai SR, Lebwohl M, Ruer-Mulard M,
+                    Seneschal J, Wolkerstorfer A, Kornacki D. Two phase 3, randomized, controlled trials of Ruxolitinib
+                    cream for vitiligo. New England Journal of Medicine. 2022 Oct 20;387(16):1445-55. Supplementary
+                    available at:
+                    https://www.nejm.org/doi/suppl/10.1056/NEJMoa2118828/suppl_file/nejmoa2118828_appendix.pdf. Last
+                    accessed: 4.12.2024.
                 </li>
-                <li>Lumirix. Approved leaflet 29 August 2024.
-                </li>
-                <li>
-                    Howell MD,
-                    Kuo
-                    FI, Smith PA. Targeting the Janus kinase family in autoimmune skin diseases. Front Immunol. 2019;
-                    10:
-                    2342 [Internet]. 2019.
-                </li>
-                <li>
-                    Lumirix. Approved leaflet 29 August 2024.
-                </li>
-                <li> Smith P, Yao W, Shepard S,
-                    Covington M,
-                    Lee J, Lofland J, Naim A, Sheth T, Parikh B, Yeleswaram S. Developing a JAK inhibitor for targeted
-                    local
-                    delivery: ruxolitinib cream. Pharmaceutics. 2021 Jul 8;13(7):1044.
-                </li>
-                <li>
-                    Birlea SA, Goldstein NB, Norris
-                    DA.
-                    Repigmentation through melanocyte regeneration in vitiligo. Dermatologic clinics. 2017 Apr
-                    1;35(2):205-18.
-                </li>
+
             </ol>
         </div>
 

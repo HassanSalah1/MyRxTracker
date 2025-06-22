@@ -2,7 +2,7 @@
 @section("content")
 <header>
         <div class="container px-lg-5">
-            <div class="row mt-4">
+        <div class="row mt-4">
                 <div class="col-lg-12 text-center my-auto pe-lg-5 text-center px-lg-5 mb-5">
                         <img src="{{asset('front-end/images/logo.png')}}" class="img-fluid logo" alt="logo">
 
@@ -278,6 +278,5 @@
         </div>
 
     </div>
-
 
 @endsection 
