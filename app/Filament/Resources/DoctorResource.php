@@ -91,4 +91,9 @@ class DoctorResource extends Resource
             'edit' => Pages\EditDoctor::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('view-doctors');
+    }
 }

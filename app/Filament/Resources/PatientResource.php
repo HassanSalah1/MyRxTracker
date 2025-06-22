@@ -119,4 +119,9 @@ class PatientResource extends Resource
             'edit' => Pages\EditPatient::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('manage-patients');
+    }
 }

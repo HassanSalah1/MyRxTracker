@@ -112,4 +112,9 @@ class RedeemingPackResource extends Resource
             'edit' => Pages\EditRedeemingPack::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('manage-redeeming-packs');
+    }
 }

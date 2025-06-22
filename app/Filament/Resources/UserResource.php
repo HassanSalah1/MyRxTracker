@@ -19,6 +19,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\CheckboxList;
 
 class UserResource extends Resource
 {
@@ -44,6 +45,10 @@ class UserResource extends Resource
                     ->image()
                     ->directory('users')
                     ->nullable(),
+                CheckboxList::make('roles')
+                    ->relationship('roles', 'display_name')
+                    ->columns(2)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -57,6 +62,11 @@ class UserResource extends Resource
                 TextColumn::make('role')->sortable()->searchable(),
                 TextColumn::make('status')->sortable()->searchable(),
                 ImageColumn::make('image')->rounded(),
+                TextColumn::make('roles.display_name')
+                    ->badge()
+                    ->separator(',')
+                    ->color('primary')
+                    ->label('Roles'),
             ])
             ->filters([
                 //
@@ -85,5 +95,10 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('view-users');
     }
 }

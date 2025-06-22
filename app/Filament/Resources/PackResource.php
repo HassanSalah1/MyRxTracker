@@ -113,4 +113,9 @@ class PackResource extends Resource
             'edit' => Pages\EditPack::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('view-packs');
+    }
 }

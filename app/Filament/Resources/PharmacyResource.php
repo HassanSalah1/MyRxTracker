@@ -85,4 +85,9 @@ class PharmacyResource extends Resource
             'edit' => Pages\EditPharmacy::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('view-pharmacies');
+    }
 }

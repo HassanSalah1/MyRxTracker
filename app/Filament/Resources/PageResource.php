@@ -78,4 +78,9 @@ class PageResource extends Resource
             'edit' => Pages\EditPage::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('view-pages');
+    }
 }

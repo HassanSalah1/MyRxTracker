@@ -67,4 +67,9 @@ class ApplicationSettings extends SettingsPage
             ];
 
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('manage-settings');
+    }
 }

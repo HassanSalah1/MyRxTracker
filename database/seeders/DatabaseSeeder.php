@@ -17,10 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        //$this->call(DoctorSeeder::class);
-        User::updateOrCreate(
-            ['email' => 'admin@admin.com'], // الشرط
+        // First seed roles and permissions
+        $this->call(RolePermissionSeeder::class);
+        
+        // Create super admin user
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@admin.com'],
             [
                 'name' => 'Super Admin',
                 'password' => Hash::make('password'),
@@ -30,5 +32,11 @@ class DatabaseSeeder extends Seeder
                 'status' => UserStatus::ACTIVE->value,
             ]
         );
+        
+        // Assign admin role to the super admin user
+        $adminRole = \App\Models\Role::findByName('admin');
+        if ($adminRole) {
+            $admin->assignRole($adminRole);
+        }
     }
 }

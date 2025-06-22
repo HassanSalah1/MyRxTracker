@@ -131,4 +131,9 @@ class OnTrackPackResource extends Resource
             'edit' => Pages\EditOnTrackPack::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('manage-ontrack-packs');
+    }
 }

@@ -171,4 +171,9 @@ class StarterPackResource extends Resource
             'edit' => Pages\EditStarterPack::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('manage-starter-packs');
+    }
 }

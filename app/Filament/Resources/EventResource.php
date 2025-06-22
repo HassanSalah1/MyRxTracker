@@ -28,9 +28,9 @@ class EventResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function shouldRegisterNavigation(): bool
+    public static function canAccess(): bool
     {
-        return auth()->user()?->role == Roles::ADMIN ?? false;
+        return auth()->user() && auth()->user()->hasPermission('view-events');
     }
     
     public static function getEloquentQuery(): Builder

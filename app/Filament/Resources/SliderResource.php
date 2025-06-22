@@ -69,4 +69,9 @@ class SliderResource extends Resource
 //            'edit' => Pages\EditSlider::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user() && auth()->user()->hasPermission('view-sliders');
+    }
 }
