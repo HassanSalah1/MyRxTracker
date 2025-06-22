@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
+use App\Enums\Roles;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -26,6 +27,12 @@ class EventResource extends Resource
     protected static ?string $model = Event::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->role == Roles::ADMIN ?? false;
+    }
+    
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->withCount('attendees')->with('attendees');

@@ -4,7 +4,7 @@
 
 .fi-logo{
     height: 3.5rem !important;
-    border-radius: 50% !important;
+    /* border-radius: 50% !important; */
 }
 .fi-body {
     position: relative;

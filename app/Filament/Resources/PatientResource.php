@@ -15,6 +15,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,9 +38,9 @@ class PatientResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->required(),
-                TextInput::make('email')->email()->required(),
+//                TextInput::make('email')->email()->required(),
                 TextInput::make('mobile')->required()->unique(ignoreRecord: true),
-                TextInput::make('password')->password()->required()->visibleOn('create'),
+                TextInput::make('password')->password(),
 //                Select::make('role')
 //                    ->options(Roles::class)
 //                    ->required(),
@@ -58,11 +59,14 @@ class PatientResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('email')->sortable()->searchable(),
+//                TextColumn::make('email')->sortable()->searchable(),
                 TextColumn::make('mobile')->sortable()->searchable(),
-                //TextColumn::make('role')->sortable()->searchable(),
-                TextColumn::make('status')->sortable()->searchable(),
-                ImageColumn::make('image')->rounded(),
+                TextColumn::make('identity_number')->sortable()->searchable(),
+                SelectColumn::make('status')
+                    ->options(UserStatus::class)
+                    ->sortable()
+                    ->searchable(),
+//                ImageColumn::make('image')->rounded(),
             ])
             ->filters([
                 //
