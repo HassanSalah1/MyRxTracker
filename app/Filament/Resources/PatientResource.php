@@ -64,16 +64,16 @@ class PatientResource extends Resource
 //                TextColumn::make('email')->sortable()->searchable(),
                 TextColumn::make('mobile')->sortable()->searchable(),
                 TextColumn::make('identity_number')->sortable()->searchable(),
-                SelectColumn::make('status')
-                    ->options(UserStatus::class)
-                    ->sortable()
-                    ->searchable()
-                    ->width('80px'),
                 TextColumn::make('created_at')
                     ->label('Sign Up Date')
                     ->dateTime('M j, Y')
                     ->sortable()
                     ->searchable(),
+                    SelectColumn::make('status')
+                    ->options(UserStatus::class)
+                    ->sortable()
+                    ->searchable()
+                    ->width('80px'),
 //                ImageColumn::make('image')->rounded(),
             ])
             ->filters([

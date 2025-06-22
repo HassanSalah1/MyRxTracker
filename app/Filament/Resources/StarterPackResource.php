@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Actions\Action;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class StarterPackResource extends Resource
 {
@@ -40,13 +42,16 @@ class StarterPackResource extends Resource
                     ->preload()
                     ->disabled()
                     ->required(),
-                Forms\Components\Select::make('doctor_id')
-                    ->label('Doctor Name')
+                    Forms\Components\TextInput::make('doctor_name')
                     ->required()
-                    ->relationship('doctor', 'name_en')
-                    ->searchable()
-                    ->disabled()
-                    ->preload(),
+                    ->maxLength(255),
+                // Forms\Components\Select::make('doctor_id')
+                //     ->label('Doctor Name')
+                //     ->required()
+                //     ->relationship('doctor', 'name_en')
+                //     ->searchable()
+                //     ->disabled()
+                //     ->preload(),
                 Forms\Components\Select::make('pack_id')
                     ->label('Pack Name')
                     ->required()
@@ -125,6 +130,21 @@ class StarterPackResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->label('Export Starter Packs')
+                    ->color('success')
+                    ->exports([
+                        ExcelExport::make('Excel')
+                            ->fromTable()
+                            ->withFilename(fn () => 'starter-packs-' . date('Y-m-d'))
+                            ->withWriterType(\Maatwebsite\Excel\Excel::XLSX),
+                        ExcelExport::make('CSV')
+                            ->fromTable()
+                            ->withFilename(fn () => 'starter-packs-' . date('Y-m-d'))
+                            ->withWriterType(\Maatwebsite\Excel\Excel::CSV),
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
