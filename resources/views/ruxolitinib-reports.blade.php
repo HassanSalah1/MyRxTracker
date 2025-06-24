@@ -20,7 +20,7 @@
         </div>
     </header>
 
-    <div class="container px-lg-5 py-5">
+    <div class="container py-5">
         <!-- cases -->
         <!-- <div class="dark-purple-bg p-lg-5 p-3 br-24 mb-4">
             <h5 class="fw-bold  text-white mb-4">
