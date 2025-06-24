@@ -20,7 +20,7 @@
         </div>
     </header>
 
-    <div class="container py-5">
+    <div class="container px-lg-5 py-5">
         <!-- cases -->
         <!-- <div class="dark-purple-bg p-lg-5 p-3 br-24 mb-4">
             <h5 class="fw-bold  text-white mb-4">
@@ -217,12 +217,12 @@
                 </div>
             </div>
         </div> -->
-        <img src="{{asset('front-end/images/Asset 16.png')}}" class="img-fluid mb-4" alt="">
-        <img src="{{asset('front-end/images/Asset 17.png')}}" class="img-fluid mb-4" alt="">
+        <img src="{{asset('front-end/images/Asset 16.png')}}" class="img-fluid w-100 mb-4" alt="">
+        <img src="{{asset('front-end/images/Asset 17.png')}}" class="img-fluid w-100 mb-4" alt="">
 
-        <img src="{{asset('front-end/images/Asset 19.png')}}" class="img-fluid mb-4" alt="">
+        <img src="{{asset('front-end/images/Asset 19.png')}}" class="img-fluid w-100 mb-4" alt="">
 
-        <img src="{{asset('front-end/images/Asset 18.png')}}" class="img-fluid mb-4" alt="">
+        <img src="{{asset('front-end/images/Asset 18.png')}}" class="img-fluid w-100 mb-4" alt="">
 
         <!--References  -->
         <div class="References mb-lg-5">
