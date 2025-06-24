@@ -18,6 +18,12 @@ Route::get('/patient-support', function () {return view('patient-support');})->n
 Route::get('/terms-policy', function () {return view('terms-policy');})->name('terms-policy');
 Route::get('/privacy-policy', function () {return view('privacy-policy');})->name('privacy-policy');
 
+// Set access session
+Route::post('/set-access-session', function () {
+    session(['hcp_access_granted' => true]);
+    return response()->json(['success' => true]);
+})->name('set-access-session');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
