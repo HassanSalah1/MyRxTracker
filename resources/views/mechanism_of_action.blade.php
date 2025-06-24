@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-lg-6">
                     <img src="{{asset('front-end/images/MechanismofAction.png')}}" class="img-fluid headar-img" alt="headerImg"
-                        title="headerImg" loading="lazy" decoding="async">
+                        title="headerImg" loading="lazy" decoding="async" >
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
             </div>
             <div class="col-lg-6 my-3 text-center">
                 <img src="{{asset('front-end/images/Asset.png')}}" class="img-fluid" alt="Inflammation" title="Inflammation" loading="lazy"
-                    decoding="async">
+                    decoding="async" style=" border: solid 2px #c1dcc9; border-radius: 50px;">
                 <h6 class="gray-color text-center mt-4 f-16">
                    Adapted from ref. 4
                 </h6>
