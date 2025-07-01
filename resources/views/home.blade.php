@@ -17,7 +17,7 @@
                     <p class="default-color pe-lg-5 lh-base my-4 me-lg-5 fs-6 pb-lg-3">
                         Lumirix® is the first topical treatment approved for vitiligo.
                     </p>
-                    <a href="" class="btn default-btn">
+                    <a href="{{route('mechanism-of-action')}}" class="btn default-btn">
                         Learn more
                     </a>
                 </div>
@@ -49,7 +49,9 @@
                         </p>
                         <div class="mt-auto">
                             <p class="bold default-color text-end mb-3">
-                                Find out more >>
+                            <a href="{{route('ruxolitinib-reports')}}" class="default-color text-decoration-none find-out-more-link">
+                                    Find out more >>
+                                </a>
                             </p>
                             <img src="{{asset('front-end/images/choose/image (27).png')}}" class="img-fluid" title="Clinically Proven Results"
                                 loading="lazy" decoding="async" alt="Clinically Proven Results">
@@ -71,7 +73,9 @@
                         </p>
                         <div class="mt-auto">
                             <p class="bold default-color text-end mb-3">
-                                Find out more >>
+                            <a href="{{route('dosing')}}" class="default-color text-decoration-none find-out-more-link">
+                                    Find out more >>
+                                </a>                                
                             </p>
                             <img src="{{asset('front-end/images/choose/image (28).png')}}" class="img-fluid" title="Clinically Proven Results"
                                 loading="lazy" decoding="async" alt="Clinically Proven Results">
@@ -92,7 +96,9 @@
                         </p>
                         <div class="mt-auto">
                             <p class="bold default-color text-end mb-3">
-                                Find out more >>
+                            <a href="{{route('safety-profile')}}" class="default-color text-decoration-none find-out-more-link">
+                                    Find out more >>
+                                </a>                                
                             </p>
                             <img src="{{asset('front-end/images/choose/image (29).png')}}" class="img-fluid" title="Clinically Proven Results"
                                 loading="lazy" decoding="async" alt="Clinically Proven Results">
@@ -113,7 +119,9 @@
                         </p>
                         <div class="mt-auto">
                             <p class="bold default-color text-end mb-3">
-                                Find out more >>
+                                <a href="{{route('patient-support')}}" class="default-color text-decoration-none find-out-more-link">
+                                    Find out more >>
+                                </a>
                             </p>
                             <img src="{{asset('front-end/images/choose/Rectangle 5.png')}}" class="img-fluid" title="Clinically Proven Results"
                                 loading="lazy" decoding="async" alt="Clinically Proven Results">
@@ -149,3 +157,9 @@
         </div>
     </div>
 @endsection
+
+<style>
+.card:hover .find-out-more-link {
+    color: #ffffff !important;
+}
+</style>
