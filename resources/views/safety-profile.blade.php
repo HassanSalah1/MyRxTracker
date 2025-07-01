@@ -36,7 +36,7 @@
         <!--  -->
         <div class="pb-lg-5 pt-5">
             <h4 class="din-next text-center  mt-lg-5">
-                Adverse Reactions Associated with Ruxolitinib at 52 Weeks
+                Adverse Reactions Associated with Ruxolitinib at 52 Weeks⁹
             </h4>
             <p class="text-center">
                 Adverse Reactions Occurring in Patients Treated with Ruxolitinib through Week 52 In TRuE-V1 and TRuE-V2
@@ -59,10 +59,7 @@
             </h6>
             <ol class="px-0 mx-1 noType">
                 <li>
-                   10.  Rosmarin D, Sebastian M, Amster M, et al. Facial and total vitiligo area scoring index response
-                    shift during 104 weeks of Ruxolitinib cream treatment for vitiligo: results from the open-label arm
-                    of the TRuE-V long-term extension phase 3 study. Presented at the American Academy of Dermatology
-                    Annual Meeting; March 17–21, 2023; New Orleans, LA.
+                    9. Rosmarin D, Passeron T, Pandya AG, Grimes P, Harris JE, Desai SR, Lebwohl M, Ruer-Mulard M, Seneschal J, Wolkerstorfer A, Kornacki D. Two phase 3, randomized, controlled trials of ruxolitinib cream for vitiligo. New England Journal of Medicine. 2022 Oct 20;387(16):1445-55. Supplementary material.
                 </li>
                 
             </ol>

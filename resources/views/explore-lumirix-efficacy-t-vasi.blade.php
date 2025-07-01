@@ -62,7 +62,7 @@
                         </h5>
                         <img src="{{asset('front-end/images/ProportionofPatients.png')}}" class="img-fluid" alt="">
                         <h6 class="gray-color text-center mt-4 f-16">
-                            Adapted from ref. 9
+                            Adapted from ref. 11
                         </h6>
                     </div>
                 </div>
@@ -108,12 +108,14 @@
             </h6>
             <ol class="px-0 mx-1 noType">
                 <li>
-                    10. Rosmarin D, Sebastian M, Amster M, et al. Facial and total vitiligo area scoring index response
-                    shift during 104 weeks of Ruxolitinib cream treatment for vitiligo: results from the open-label arm
-                    of the TRuE-V long-term extension phase 3 study. Presented at the American Academy of Dermatology
-                    Annual Meeting; March 17–21, 2023; New Orleans, LA.
+                    2. Rosmarin D, Passeron T, Pandya AG, Grimes P, Harris JE, Desai SR, Lebwohl M, Ruer-Mulard M, Seneschal J, Wolkerstorfer A, Kornacki D. Two phase 3, randomized, controlled trials of Ruxolitinib cream for vitiligo. New England Journal of Medicine. 2022;387(16):1445-55
                 </li>
-
+                <li>
+                    9. Rosmarin D, Passeron T, Pandya AG, Grimes P, Harris JE, Desai SR, Lebwohl M, Ruer-Mulard M, Seneschal J, Wolkerstorfer A, Kornacki D. Two phase 3, randomized, controlled trials of Ruxolitinib cream for vitiligo. New England Journal of Medicine. 2022 Oct 20;387(16):1445-55. Supplementary available at:  https://www.nejm.org/doi/suppl/10.1056/NEJMoa2118828/suppl_file/nejmoa2118828_appendix.pdf. Last accessed: 4.12.2024. 
+                </li>
+                <li>
+                    11.  Hamzavi I, et al. ‘Efficacy of Ruxolitinib Cream in Vitiligo by Patient Characteristics and Affected Body Areas: Descriptive Subgroup Analyses from a Phase 2, Randomized, Double-Blind Trial’. Journal of the American Academy of Dermatology, 2022;86:1398–401
+                </li>
             </ol>
         </div>
     </div>

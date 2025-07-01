@@ -9,7 +9,7 @@
                     <p class="default-color mb-3">
                         At Rxilient, we believe in empowering patients and healthcare providers with the tools and
                         information needed to achieve the best outcomes. Explore our collection of downloadable guides,
-                        tips, and educational materials to stay informed and confident throughout your treatment.
+                        tips, and educational materials to stay informed and confident throughout your treatment journey.
                     </p>
                     <p class="bold default-color fs-6">
                         Leave your contact details and we will get in touch with you as soon as we can.

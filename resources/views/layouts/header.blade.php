@@ -7,7 +7,7 @@
             <i class="fas fa-stream default-color"></i>
         </button>
         <a href="{{route('home')}}">
-            <img src="{{asset('/front-end/images/logo.png')}}" class="img-fluid logo" alt="logo">
+            <img src="{{asset('/front-end/images/logo.png')}}" class="img-fluid logo" style="width: 172px; height: 32px;" alt="logo">
         </a>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ms-auto">
