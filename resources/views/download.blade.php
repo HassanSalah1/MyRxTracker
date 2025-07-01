@@ -42,20 +42,20 @@
                 <div class="tab-pane fade show active" id="Prescribing" role="tabpanel"
                     aria-labelledby="Prescribing-tab">
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, inventore. Ab explicabo,
-                        quibusdam dignissimos magni ex nam error fugiat minus autem enim eos, alias velit quae
-                        molestiae. Distinctio voluptas facere porro iure sapiente sunt quas! Magni deleniti sint ab,
-                        mollitia illum et temporibus nam obcaecati, sapiente iste maxime, dolorum laborum.
+                       Please download the pdf from the link below:
+                       <a href="{{url('pdf/HK-RXILIENT-Lumirix-Product-Insert-102524.pdf')}}" target="_blank">
+                        Here
+                       </a>
                     </p>
 
                 </div>
                 <div class="tab-pane fade" id="Brochure" role="tabpanel" aria-labelledby="Brochure-tab">
 
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, inventore. Ab explicabo,
-                        quibusdam dignissimos magni ex nam error fugiat minus autem enim eos, alias velit quae
-                        molestiae. Distinctio voluptas facere porro iure sapiente sunt quas! Magni deleniti sint ab,
-                        mollitia illum et temporibus nam obcaecati, sapiente iste maxime, dolorum laborum.
+                        Please download the pdf from the link below:
+                       <a href="{{url('pdf/250121_RXLNT_Broch-Pres-Patient.pdf')}}" target="_blank">
+                        Here
+                       </a>
                     </p>
                 </div>
             </div>
