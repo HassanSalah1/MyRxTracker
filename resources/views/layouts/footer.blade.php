@@ -59,7 +59,7 @@
                         <p class="bold default-color f-14 text-uppercase">
                             Scan to download Lumirix® Prescribing Information
                         </p>
-                        <img src="{{asset('front-end/images/scan.png')}}" class="img-fluid" alt="QRCode">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{url('pdf/250121_RXLNT_Broch-Pres-Patient.pdf')}}" class="img-fluid" alt="QRCode">
                     </div>
 
                 </div>
