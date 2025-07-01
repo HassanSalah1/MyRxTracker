@@ -37,11 +37,24 @@
         body.access-granted {
             overflow: auto !important;
         }
+
+        #siteLoader {
+            transition: opacity 0.3s ease;
+        }
+        #siteLoader.hide {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
     </style>
 </head>
 
 <body>
-    
+    <div id="siteLoader" style="position: fixed; z-index: 99999; top: 0; left: 0; width: 100vw; height: 100vh; background: #fff; display: flex; align-items: center; justify-content: center;">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 
     <!-- Hide main content until user is verified -->
     <div id="mainContent" style="{{ session('hcp_access_granted') ? 'display: block;' : 'display: none;' }}">
@@ -282,6 +295,18 @@
                 const entranceModal = new bootstrap.Modal(document.getElementById('enteranceModal'));
                 entranceModal.show();
             @endif
+        });
+    </script>
+
+    <script>
+        window.addEventListener('load', function() {
+            var loader = document.getElementById('siteLoader');
+            if (loader) {
+                loader.classList.add('hide');
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                }, 300); // matches the CSS transition
+            }
         });
     </script>
 </body>
