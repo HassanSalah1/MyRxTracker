@@ -41,7 +41,7 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="Prescribing" role="tabpanel"
                     aria-labelledby="Prescribing-tab">
-                    <p>
+                    <p class="text-center">
                        Please download the pdf from the link below:
                        <a href="{{url('pdf/HK-RXILIENT-Lumirix-Product-Insert-102524.pdf')}}" target="_blank">
                         Here
@@ -51,7 +51,7 @@
                 </div>
                 <div class="tab-pane fade" id="Brochure" role="tabpanel" aria-labelledby="Brochure-tab">
 
-                    <p>
+                    <p class="text-center">
                         Please download the pdf from the link below:
                        <a href="{{url('pdf/250121_RXLNT_Broch-Pres-Patient.pdf')}}" target="_blank">
                         Here
