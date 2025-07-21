@@ -2,9 +2,9 @@
 
 @section("content")
     <header id="home-header" class="position-relative">
-        <video autoplay muted loop>
+        <!-- <video autoplay muted loop>
             <source src="{{asset('front-end/images/header-bg.webm')}}" type="video/webm">
-        </video>
+        </video> -->
         <div class="container position-relative px-lg-5">
 
             @include('layouts.header')

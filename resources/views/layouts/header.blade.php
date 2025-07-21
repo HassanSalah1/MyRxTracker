@@ -11,17 +11,17 @@
         </a>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-2 {{Route::currentRouteName() === 'home' ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'home' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('home')}}">
                         Home
                     </a>
                 </li>
-                <li class="nav-item mx-2 {{Route::currentRouteName() === 'mechanism-of-action' ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'mechanism-of-action' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('mechanism-of-action')}}">
                         Mechanism of Action
                     </a>
                 </li>
-                <li class="nav-item  mx-2 dropdown
+                <li class="nav-item  mx-2 mx-lg-1 dropdown
                 {{Route::currentRouteName() === 'efficacy-profile' ? 'active' : '' }}
                 {{Route::currentRouteName() === 'explore-lumirix-efficacy-f-vasi' ? 'active' : '' }}
                 {{Route::currentRouteName() === 'explore-lumirix-efficacy-t-vasi' ? 'active' : '' }}
@@ -40,27 +40,27 @@
                     </ul>
                 </li>
 
-                <li class="nav-item mx-2 {{Route::currentRouteName() === 'safety-profile' ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'safety-profile' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('safety-profile')}}">
                         Safety Profile
                     </a>
                 </li>
-                <li class="nav-item mx-2 {{Route::currentRouteName() === 'dosing' ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'dosing' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('dosing')}}">
                         Dosing
                     </a>
                 </li>
-                <li class="nav-item mx-2 {{Route::currentRouteName() === 'setting-expectations' ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'setting-expectations' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('setting-expectations')}}">
                         Setting Expectations
                     </a>
                 </li>
-                <li class="nav-item mx-2 {{Route::currentRouteName() === 'download' ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'download' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('download')}}">
                         Download
                     </a>
                 </li>
-                <li class="nav-item mx-2 {{Route::currentRouteName() === 'patient-support' ? 'active' : '' }}">
+                <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'patient-support' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('patient-support')}}">
                         Patient Support
                     </a>

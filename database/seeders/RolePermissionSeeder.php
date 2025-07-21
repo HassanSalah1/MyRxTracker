@@ -67,6 +67,11 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'edit-sliders', 'display_name' => 'Edit Sliders', 'module' => 'sliders'],
             ['name' => 'delete-sliders', 'display_name' => 'Delete Sliders', 'module' => 'sliders'],
             
+             // Message management
+             ['name' => 'view-messages', 'display_name' => 'View Messages', 'module' => 'messages'],
+             ['name' => 'create-messages', 'display_name' => 'Create Messages', 'module' => 'messages'],
+             ['name' => 'edit-messages', 'display_name' => 'Edit Messages', 'module' => 'messages'],
+             ['name' => 'delete-messages', 'display_name' => 'Delete Messages', 'module' => 'messages'],
             // Dashboard
             ['name' => 'view-dashboard', 'display_name' => 'View Dashboard', 'module' => 'dashboard'],
             ['name' => 'view-charts', 'display_name' => 'View Charts', 'module' => 'dashboard'],

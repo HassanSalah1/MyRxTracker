@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessageController;
 
 Route::get('/', function () {return view('home');})->name('home');
 Route::get('/mechanism-of-action', function () {return view('mechanism_of_action');})->name('mechanism-of-action');
@@ -23,6 +24,8 @@ Route::post('/set-access-session', function () {
     session(['hcp_access_granted' => true]);
     return response()->json(['success' => true]);
 })->name('set-access-session');
+
+Route::post('/contact-message', [MessageController::class, 'store'])->name('contact.message');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

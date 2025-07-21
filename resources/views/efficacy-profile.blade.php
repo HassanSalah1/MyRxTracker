@@ -26,7 +26,7 @@
             <div class="col-lg-9 mx-auto">
                 <div class="mt-4">
                     <h6 class="fw-bold text-center mb-4">
-                        Two Phase 3, double-blind, vehicle-controlled trials (Topical Ruxolitinib Evaluation in Vitiligo
+                        Two Phase 3, double-blind, vehicle-controlled trials Topical Ruxolitinib Evaluation in Vitiligo
                         Study 1
                         [TRuE-V1] and [TRuE-V2] examined the efficacy of ruxolitinib cream for repigmentation of skin
                         lesions in

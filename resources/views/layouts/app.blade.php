@@ -46,6 +46,11 @@
             pointer-events: none;
             visibility: hidden;
         }
+        @media (min-width: 1200px) and (max-width: 1400px) {
+            header nav .nav-link{
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 
