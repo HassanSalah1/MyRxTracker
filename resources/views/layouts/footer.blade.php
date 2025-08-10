@@ -93,8 +93,8 @@
                     <div>
                         <img src="{{asset('front-end/images/footerLogo.png')}}" class="img-fluid" alt="footerLogo">
                         <p class="pe-lg-5 me-lg-5 my-4">
-                            Rxilient Medical (Hong Kong) Limited
-                            Room 1005, 10/F, International Enterprise Centre I, 11-15 Chai Wan Kok Street, Tsuen Wan, New Territories, Hong Kong
+                            Rxilient Medical (Hong Kong) Limited <br>
+                            Unit 2106, 21st Floor, Island Place Tower, No.510 King’s Road, North Point, Hong Kong <br>
                             Tel: +852 2369 3889
                         </p>
                         <p class="bold default-color fs-6 my-5">
