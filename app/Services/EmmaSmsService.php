@@ -262,19 +262,24 @@ class EmmaSmsService
      */
     protected function formatMobileNumber(string $mobile): string
     {
-        // Remove any non-digit characters
-        $mobile = preg_replace('/[^0-9]/', '', $mobile);
+        // Remove any non-digit characters except +
+        $mobile = preg_replace('/[^0-9+]/', '', $mobile);
+        
+        // If it already has a +, return as is
+        if (str_starts_with($mobile, '+')) {
+            return $mobile;
+        }
         
         // Handle different country codes
         if (str_starts_with($mobile, '20')) {
             // Egypt (+20)
-            return $mobile;
+            return '+' . $mobile;
         } elseif (str_starts_with($mobile, '966')) {
             // Saudi Arabia (+966)
-            return $mobile;
+            return '+' . $mobile;
         } elseif (str_starts_with($mobile, '852')) {
             // Hong Kong (+852)
-            return $mobile;
+            return '+' . $mobile;
         } else {
             // Add country code based on the first digit
             if (str_starts_with($mobile, '0')) {
@@ -282,15 +287,15 @@ class EmmaSmsService
                 $mobile = substr($mobile, 1);
                 if (strlen($mobile) === 10) {
                     // Likely Egyptian number
-                    return '20' . $mobile;
+                    return '+20' . $mobile;
                 } elseif (strlen($mobile) === 9) {
                     // Likely Saudi number
-                    return '966' . $mobile;
+                    return '+966' . $mobile;
                 }
             }
             
             // Default to Saudi Arabia if we can't determine
-            return '966' . $mobile;
+            return '+966' . $mobile;
         }
     }
 
