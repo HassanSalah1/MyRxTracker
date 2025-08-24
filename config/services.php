@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'emma_sms' => [
+        'username' => env('EMMA_SMS_USERNAME'),
+        'password' => env('EMMA_SMS_PASSWORD'),
+        'login_url' => env('EMMA_SMS_LOGIN_URL', 'http://api.emma.hk/sms/login.jsp'),
+        'send_url' => env('EMMA_SMS_SEND_URL', 'http://sms.emma.hk/sms/emmasmsjson.jsp'),
+        'sender_id' => env('EMMA_SMS_SENDER_ID', 'LUMIRIX'),
+        'enabled' => env('EMMA_SMS_ENABLED', true),
+    ],
+
 ];

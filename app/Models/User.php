@@ -34,6 +34,10 @@ class User extends Authenticatable
         'pack_id',
         'fcm_token',
         'notification_permission',
+        'otp_code',
+        'otp_expires_at',
+        'otp_attempts',
+        'otp_locked_until',
     ];
 
     protected $casts = [

@@ -8,6 +8,7 @@ use App\Enums\Roles;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\OtpService;
 use App\Settings\AppSettings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,6 +23,13 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class UserController extends Controller
 {
+    protected $otpService;
+
+    public function __construct(OtpService $otpService)
+    {
+        $this->otpService = $otpService;
+    }
+
     /**
      * Register a new user.
      */
@@ -115,10 +123,14 @@ class UserController extends Controller
             return $this->errorResponse(trans('messages.account_not_found'), 404);
         }
 
-        // Send reset code to email (mock code for now)
-        $code = 123456; // Replace with actual code generation and email sending logic
+        // Generate and send OTP via SMS
+        $result = $this->otpService->generateAndSendOtp($request->mobile, 'password_reset');
 
-        return $this->successResponse(trans('messages.code_sent_to_email'));
+        if ($result['success']) {
+            return $this->successResponse(trans('messages.code_sent_to_email'));
+        } else {
+            return $this->errorResponse($result['message'], 422);
+        }
     }
 
     /**
@@ -127,7 +139,7 @@ class UserController extends Controller
     public function checkCode(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => ['required', 'email'],
+            'mobile' => ['required'],
             'code' => ['required', 'string'],
         ]);
 
@@ -135,11 +147,29 @@ class UserController extends Controller
             return $this->errorResponse($validator->errors()->first(), 422);
         }
 
-        if ($request->code != 123456) { // Replace with actual code verification logic
-            return $this->errorResponse(trans('messages.incorrect_code'), 422);
-        }
+        // Verify OTP using the service
+        $result = $this->otpService->verifyOtp($request->mobile, $request->code);
 
-        return $this->successResponse(trans('messages.correct_code_enter_new_password'));
+        if ($result['success']) {
+            return $this->successResponse(trans('messages.correct_code_enter_new_password'));
+        } else {
+            $response = $this->errorResponse($result['message'], 422);
+            
+            // Add additional information if available
+            if (isset($result['remaining_attempts'])) {
+                $response->setData(array_merge($response->getData(true), [
+                    'remaining_attempts' => $result['remaining_attempts']
+                ]));
+            }
+            
+            if (isset($result['locked_until'])) {
+                $response->setData(array_merge($response->getData(true), [
+                    'locked_until' => $result['locked_until']
+                ]));
+            }
+            
+            return $response;
+        }
     }
 
     /**
@@ -163,8 +193,26 @@ class UserController extends Controller
         if (!$user) {
             return $this->errorResponse(trans('messages.account_not_found'), 404);
         }
-        if ($request->code != "0000") { // Replace with actual code verification logic
-            return $this->errorResponse(trans('messages.incorrect_code'), 422);
+        // Verify OTP using the service
+        $result = $this->otpService->verifyOtp($request->mobile, $request->code);
+        
+        if (!$result['success']) {
+            $response = $this->errorResponse($result['message'], 422);
+            
+            // Add additional information if available
+            if (isset($result['remaining_attempts'])) {
+                $response->setData(array_merge($response->getData(true), [
+                    'remaining_attempts' => $result['remaining_attempts']
+                ]));
+            }
+            
+            if (isset($result['locked_until'])) {
+                $response->setData(array_merge($response->getData(true), [
+                    'locked_until' => $result['locked_until']
+                ]));
+            }
+            
+            return $response;
         }
         $user->update(['password' => Hash::make($request->password)]);
         $accessToken = $user->createToken($user->device_name ?? 'default')->plainTextToken;
@@ -289,6 +337,144 @@ class UserController extends Controller
         ]);
 
         return $this->successResponse('FCM updated successfully');
+    }
+
+    /**
+     * Resend OTP code.
+     */
+    public function resendOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->first(), 422);
+        }
+
+        $result = $this->otpService->resendOtp($request->mobile);
+
+        if ($result['success']) {
+            return $this->successResponse(trans('messages.verification_code_resent'));
+        } else {
+            $response = $this->errorResponse($result['message'], 422);
+            
+            if (isset($result['retry_after'])) {
+                $response->setData(array_merge($response->getData(true), [
+                    'retry_after' => $result['retry_after']
+                ]));
+            }
+            
+            if (isset($result['locked_until'])) {
+                $response->setData(array_merge($response->getData(true), [
+                    'locked_until' => $result['locked_until']
+                ]));
+            }
+            
+            return $response;
+        }
+    }
+
+    /**
+     * Send OTP for mobile verification (for new registrations or profile updates).
+     */
+    public function sendMobileVerificationOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->first(), 422);
+        }
+
+        // Check if mobile number already exists for another user
+        $existingUser = User::where('mobile', $request->mobile)->first();
+        if ($existingUser && $existingUser->id !== auth()->id()) {
+            return $this->errorResponse('This mobile number is already registered with another account.', 422);
+        }
+
+        $result = $this->otpService->generateAndSendOtp($request->mobile, 'mobile_verification');
+
+        if ($result['success']) {
+            return $this->successResponse(trans('messages.otp_sent_successfully'));
+        } else {
+            return $this->errorResponse($result['message'], 422);
+        }
+    }
+
+    /**
+     * Verify mobile number with OTP.
+     */
+    public function verifyMobileNumber(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile' => ['required'],
+            'code' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->first(), 422);
+        }
+
+        $result = $this->otpService->verifyOtp($request->mobile, $request->code);
+
+        if ($result['success']) {
+            // Update user's mobile verification status if needed
+            $user = auth()->user();
+            if ($user && $user->mobile === $request->mobile) {
+                // You can add a mobile_verified_at field if needed
+                // $user->update(['mobile_verified_at' => now()]);
+            }
+
+            return $this->successResponse(trans('messages.mobile_verified_successfully'));
+        } else {
+            $response = $this->errorResponse($result['message'], 422);
+            
+            if (isset($result['remaining_attempts'])) {
+                $response->setData(array_merge($response->getData(true), [
+                    'remaining_attempts' => $result['remaining_attempts']
+                ]));
+            }
+            
+            if (isset($result['locked_until'])) {
+                $response->setData(array_merge($response->getData(true), [
+                    'locked_until' => $result['locked_until']
+                ]));
+            }
+            
+            return $response;
+        }
+    }
+
+    /**
+     * Check SMS Gateway balance (Admin/Support function)
+     */
+    public function checkSmsBalance(Request $request)
+    {
+        // This endpoint should be protected by admin middleware in production
+        // For now, we'll allow authenticated users to check balance
+        
+        try {
+            $emmaService = new \App\Services\EmmaSmsService();
+            $balanceResult = $emmaService->getBalance();
+
+            if ($balanceResult['success']) {
+                return $this->successResponse(trans('messages.sms_balance_retrieved'), [
+                    'balance' => $balanceResult['balance'] ?? 'N/A',
+                    'currency' => $balanceResult['currency'] ?? 'N/A',
+                    'data' => $balanceResult['data'] ?? null
+                ]);
+            } else {
+                return $this->errorResponse($balanceResult['message'], 422);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error checking SMS balance', [
+                'error' => $e->getMessage()
+            ]);
+
+            return $this->errorResponse(trans('messages.sms_balance_check_failed'), 500);
+        }
     }
 
     /**

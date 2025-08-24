@@ -27,6 +27,14 @@ Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
     Route::post('/forget-password', [V1\UserController::class, 'forgetPassword']);
     Route::post('/check-code', [V1\UserController::class, 'checkCode']);
     Route::post('/create-password', [V1\UserController::class, 'createPassword']);
+    
+    // OTP Management Routes
+    Route::post('/send-otp', [V1\UserController::class, 'sendMobileVerificationOtp']);
+    Route::post('/verify-mobile', [V1\UserController::class, 'verifyMobileNumber']);
+    Route::post('/resend-otp', [V1\UserController::class, 'resendOtp']);
+    
+    // SMS Gateway Management Routes
+    Route::post('/check-sms-balance', [V1\UserController::class, 'checkSmsBalance']);
 
     Route::get('/settings', [V1\HomeController::class, 'settings']);
 
