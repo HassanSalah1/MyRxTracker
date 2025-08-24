@@ -36,6 +36,13 @@ Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
     // SMS Gateway Management Routes
     Route::post('/check-sms-balance', [V1\UserController::class, 'checkSmsBalance']);
 
+    // SMS Delivery Status API Routes
+    Route::prefix('sms')->group(function () {
+        Route::post('/check-delivery-status', [V1\SmsDeliveryController::class, 'checkDeliveryStatus']);
+        Route::post('/send-test', [V1\SmsDeliveryController::class, 'sendTestSms']);
+        Route::get('/delivery-stats', [V1\SmsDeliveryController::class, 'getDeliveryStats']);
+    });
+
     Route::get('/settings', [V1\HomeController::class, 'settings']);
 
 
