@@ -37,11 +37,13 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'mobile' => ['required', 'unique:users', ],
+            // Allow re-attempts: don't hard-block here; handle uniqueness manually below
+            'mobile' => ['required'],
             //'email' => ['required', 'unique:users', 'email', 'max:255'],
             'password' => ['required', 'string'],
             'device_name' => ['required', 'string'],
-            'identity_number' => ['required', 'string','size:5', 'unique:users'],
+            // Allow re-attempts: don't hard-block here; handle uniqueness manually below
+            'identity_number' => ['required', 'string','size:5'],
             //'doctor' => ['required'],
         ]);
 
@@ -51,6 +53,22 @@ class UserController extends Controller
 
         $data = $request->all();
         Log::info('User registration data:', $data);
+
+        // Check if a user already exists with the same mobile or identity_number
+        $existingUser = User::where('mobile', $data['mobile'])
+            ->orWhere('identity_number', $data['identity_number'])
+            ->first();
+
+        if ($existingUser) {
+            // If the same account already exists, do NOT create a duplicate. Resend OTP to continue verification/login.
+            $result = $this->otpService->generateAndSendOtp($data['mobile'], 'mobile_verification');
+
+            if ($result['success']) {
+                return $this->successResponse(trans('messages.otp_sent_successfully'));
+            } else {
+                return $this->errorResponse($result['message'], 422);
+            }
+        }
 
         $user = User::create([
             'name' => $data['name'],
@@ -202,9 +220,9 @@ class UserController extends Controller
         $result = $this->otpService->verifyOtp($request->mobile, $request->code);
         
         if (!$result['success']) {
-            $response = $this->errorResponse($result['message'], 422);
+            $message = $result['message'];
+            $response = $this->errorResponse($message, 422);
             
-            // Add additional information if available
             if (isset($result['remaining_attempts'])) {
                 $response->setData(array_merge($response->getData(true), [
                     'remaining_attempts' => $result['remaining_attempts']
@@ -212,11 +230,22 @@ class UserController extends Controller
             }
             
             if (isset($result['locked_until'])) {
+                $humanSeconds = (int) $result['locked_until'];
+                $humanReadable = $humanSeconds >= 60
+                    ? trans('messages.time_in_minutes', ['minutes' => ceil($humanSeconds / 60)])
+                    : trans('messages.time_in_seconds', ['seconds' => $humanSeconds]);
+                $message = trans('messages.locked_until_message', [
+                    'base' => $result['message'],
+                    'time' => $humanReadable,
+                ]);
                 $response->setData(array_merge($response->getData(true), [
                     'locked_until' => $result['locked_until']
                 ]));
             }
             
+            $response->setData(array_merge($response->getData(true), [
+                'message' => $message,
+            ]));
             return $response;
         }
         $user->update(['password' => Hash::make($request->password)]);
