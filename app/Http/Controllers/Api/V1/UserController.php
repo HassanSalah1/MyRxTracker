@@ -68,9 +68,9 @@ class UserController extends Controller
 
         //$accessToken = $user->createToken($request->device_name)->plainTextToken;
         $result = $this->otpService->generateAndSendOtp($data['mobile'], 'mobile_verification');
-        
+
         if ($result['success']) {
-            return $this->successResponse(trans('messages.register_success'));
+            return $this->successResponse(trans('messages.code_sent_to_email'));
         } else {
             return $this->errorResponse($result['message'], 422);
         }
@@ -362,20 +362,41 @@ class UserController extends Controller
         if ($result['success']) {
             return $this->successResponse(trans('messages.verification_code_resent'));
         } else {
-            $response = $this->errorResponse($result['message'], 422);
+            $message = $result['message'] ;
+            $response = $this->errorResponse($message, 422);
             
             if (isset($result['retry_after'])) {
+                $humanSeconds = (int) $result['retry_after'];
+                $humanReadable = $humanSeconds >= 60
+                    ? trans('messages.time_in_minutes', ['minutes' => ceil($humanSeconds / 60)])
+                    : trans('messages.time_in_seconds', ['seconds' => $humanSeconds]);
+                $message = trans('messages.retry_after_message', [
+                    'base' => $result['message'],
+                    'time' => $humanReadable,
+                ]);
                 $response->setData(array_merge($response->getData(true), [
                     'retry_after' => $result['retry_after']
                 ]));
+
             }
             
             if (isset($result['locked_until'])) {
+                $humanSeconds = (int) $result['locked_until'];
+                $humanReadable = $humanSeconds >= 60
+                    ? trans('messages.time_in_minutes', ['minutes' => ceil($humanSeconds / 60)])
+                    : trans('messages.time_in_seconds', ['seconds' => $humanSeconds]);
+                $message = trans('messages.locked_until_message', [
+                    'base' => $result['message'],
+                    'time' => $humanReadable,
+                ]);
                 $response->setData(array_merge($response->getData(true), [
                     'locked_until' => $result['locked_until']
                 ]));
             }
-            
+            // Override the response message with the humanized/translated one
+            $response->setData(array_merge($response->getData(true), [
+                'message' => $message,
+            ]));
             return $response;
         }
     }
@@ -431,8 +452,8 @@ class UserController extends Controller
                 // You can add a mobile_verified_at field if needed
                 // $user->update(['mobile_verified_at' => now()]);
             }
-
-            return $this->successResponse(trans('messages.mobile_verified_successfully'));
+            $accessToken = $user->createToken($user->device_name ?? 'default')->plainTextToken;
+            return $this->successResponse(trans('messages.mobile_verified_successfully'), $this->userData($user, $accessToken));
         } else {
             $response = $this->errorResponse($result['message'], 422);
             

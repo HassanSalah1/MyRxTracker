@@ -61,4 +61,10 @@ return [
     'unknown_error' => '未知错误',
     'sms_balance_retrieved' => '余额获取成功',
     'sms_balance_check_failed' => '检查短信余额失败',
+
+    // Humanized time/messages
+    'time_in_seconds' => ':seconds 秒',
+    'time_in_minutes' => ':minutes 分钟',
+    'retry_after_message' => ':base 请在 :time 后重试。',
+    'locked_until_message' => ':base 请在 :time 后重试。',
 ];

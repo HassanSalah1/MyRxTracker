@@ -74,4 +74,10 @@ return [
     'sms_balance_retrieved' => 'Balance retrieved successfully',
     'sms_balance_check_failed' => 'Failed to check SMS balance',
 
+    // Humanized time/messages
+    'time_in_seconds' => ':seconds seconds',
+    'time_in_minutes' => ':minutes minutes',
+    'retry_after_message' => ':base Please try again after :time.',
+    'locked_until_message' => ':base Please try again after :time.',
+
 ];
