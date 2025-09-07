@@ -261,8 +261,9 @@ class OtpService
     protected function setRateLimit(string $mobile): void
     {
         $cacheKey = "otp_rate_limit:{$mobile}";
-        // Rate limit: 1 OTP per 2 minutes
-        Cache::put($cacheKey, true, now()->addMinutes(2));
+        // Rate limit: 1 OTP per 2 minutes. Store expiry timestamp to compute retry time portably across cache stores.
+        $expiresAt = now()->addMinutes(2);
+        Cache::put($cacheKey, $expiresAt->toISOString(), $expiresAt);
     }
 
     /**
@@ -274,8 +275,12 @@ class OtpService
     protected function getRateLimitRetryTime(string $mobile): int
     {
         $cacheKey = "otp_rate_limit:{$mobile}";
-        $ttl = Cache::getTimeToLive($cacheKey);
-        return $ttl > 0 ? $ttl : 0;
+        $expiresAtIso = Cache::get($cacheKey);
+        if (!$expiresAtIso) {
+            return 0;
+        }
+        $expiresAt = Carbon::parse($expiresAtIso);
+        return Carbon::now()->lt($expiresAt) ? Carbon::now()->diffInSeconds($expiresAt) : 0;
     }
 
     /**
