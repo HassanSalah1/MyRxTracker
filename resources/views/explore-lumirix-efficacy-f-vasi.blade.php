@@ -1,4 +1,15 @@
 @extends('layouts.app')
+
+@section('meta')
+<meta name="description" content="{{ $exploreEfficacyFvasiSettings->getMetaDescription() }}">
+<meta name="keywords" content="{{ $exploreEfficacyFvasiSettings->getMetaKeywords() }}">
+<meta property="og:title" content="{{ $exploreEfficacyFvasiSettings->getOgTitle() }}">
+<meta property="og:description" content="{{ $exploreEfficacyFvasiSettings->getOgDescription() }}">
+<meta property="og:image" content="{{ asset($exploreEfficacyFvasiSettings->og_image) }}">
+<meta property="og:type" content="website">
+<title>{{ $exploreEfficacyFvasiSettings->getMetaTitle() }}</title>
+@endsection
+
 @section("content")
     <header>
         <div class="container px-lg-5">
@@ -7,16 +18,16 @@
                 <div class="col-lg-6 my-auto pe-lg-5 text-center px-lg-5">
 
                     <h1 class="gradient-text fs-5 fw-bold text-uppercase">
-                        Efficacy PROFILE
+                        {{ $exploreEfficacyFvasiSettings->getHeaderTitle() }}
                     </h1>
                     <h1 class="default-color lh-base text-center mb-5">
-                        Explore Lumirix Efficacy
+                        {{ $exploreEfficacyFvasiSettings->getHeaderSubtitle() }}
                     </h1>
-                    <img src="{{asset('front-end/images/EfficacyProfile2.png')}}" class="img-fluid headar-img" alt="headerImg"
+                    <img src="{{ asset($exploreEfficacyFvasiSettings->getHeaderImage()) }}" class="img-fluid headar-img" alt="headerImg"
                         title="headerImg" loading="lazy" decoding="async">
                 </div>
                 <div class="col-lg-6">
-                    <img src="{{asset('front-end/images/f-vasi.png')}}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
+                    <img src="{{ asset($exploreEfficacyFvasiSettings->getHeaderSecondaryImage()) }}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
                         loading="lazy" decoding="async">
                 </div>
             </div>
@@ -28,13 +39,13 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="week-tab" data-bs-toggle="tab" data-bs-target="#week"
                         type="button" role="tab" aria-controls="week" aria-selected="true">
-                        24- & 52-week data
+                        {{ $exploreEfficacyFvasiSettings->getTabTitle(1) }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="year-tab" data-bs-toggle="tab" data-bs-target="#year" type="button"
                         role="tab" aria-controls="year" aria-selected="false">
-                        2-year data
+                        {{ $exploreEfficacyFvasiSettings->getTabTitle(2) }}
                     </button>
                 </li>
 
@@ -45,37 +56,36 @@
 
                         <div class="gradient-bg br-24 p-3 w-66 mx-auto mb-5">
                             <p class="text-center fw-bold mb-0 py-2 fs-5">
-                                Half the patients who applied Ruxolitinib reached F-VASI75 at week 52.
+                                {{ $exploreEfficacyFvasiSettings->getHighlightText() }}
                             </p>
                         </div>
                         <p class="mb-5">
-                            Efficacy of Ruxolitinib Application on the Primary Endpoint F-VASI75 Response.
+                            {{ $exploreEfficacyFvasiSettings->getEfficacyTitle() }}
                         </p>
-                        <img src="{{asset('front-end/images/weekData.png')}}" class="img-fluid" alt="weekData" title="weekData" loading="lazy"
+                        <img src="{{ asset($exploreEfficacyFvasiSettings->getStudyDesignImage()) }}" class="img-fluid" alt="weekData" title="weekData" loading="lazy"
                             decoding="async">
 
                     </div>
                     <div class="text-center  pt-5">
                         <h5 class="text-center mb-5 bold f-14 gray-color">
-                            ᵃ Percentage calculated from pooled figures of the identical TRuE-V1 and TRuE-V2 study,
-                            rounded off to the nearest whole number.
+                            {{ $exploreEfficacyFvasiSettings->getPercentageNote() }}
                         </h5>
 
                     </div>
                 </div>
                 <div class="tab-pane fade" id="year" role="tabpanel" aria-labelledby="year-tab">
                     <div class="my-5 text-center">
-                        <img src="{{asset('front-end/images/StudyDesign2.png')}}" class="img-fluid" alt="StudyDesign" title="StudyDesign"
+                        <img src="{{ asset($exploreEfficacyFvasiSettings->getStudyDesignImage()) }}" class="img-fluid" alt="StudyDesign" title="StudyDesign"
                             loading="lazy" decoding="async">
                     </div>
                     <div class="text-center">
                         <p class="text-center mb-4 bold">
-                            Efficacy of Ruxolitinib Treatment in Achieving an F-VASI75 Response at Week 52 to 104 ¹⁰
+                            {{ $exploreEfficacyFvasiSettings->getYearDataTitle() }}
                         </p>
-                        <img src="{{asset('front-end/images/yearData.png')}}" class="img-fluid" alt="yearData" title="yearData" loading="lazy"
+                        <img src="{{ asset($exploreEfficacyFvasiSettings->getYearDataImage()) }}" class="img-fluid" alt="yearData" title="yearData" loading="lazy"
                             decoding="async">
                         <p class="text-center mb-5 mt-4 bold">
-                            F-VASI: Facial Vitiligo Area Scoring Index.
+                            {{ $exploreEfficacyFvasiSettings->getFVasiDefinition() }}
                         </p>
                     </div>
                     <div class="row">
@@ -85,16 +95,13 @@
                                     <div class="col-lg-3 text-center">
                                         <div id="chart-container" class="bg-white rounded-circle shadow">
                                             <canvas id="donutChart"></canvas>
-                                            <div id="chart-percentage">66.1%</div>
+                                            <div id="chart-percentage">{{ $exploreEfficacyFvasiSettings->getChartPercentage() }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-9 my-auto">
                                         <h5 class="bold lh-lg mb-lg-0">
-                                            of patients who applied Ruxolitinib cream since day 1 achieved F-VASI75 at
-                                            week 104
-                                            (LTE
-                                            end-of-treatment).
+                                            {{ $exploreEfficacyFvasiSettings->getChartDescription() }}
                                         </h5>
                                     </div>
                                 </div>
@@ -107,14 +114,12 @@
         <!--References  -->
         <div class="References mb-lg-5">
             <h6>
-                Reference:
-
+                {{ $exploreEfficacyFvasiSettings->getReferencesTitle() }}
             </h6>
             <ol class="px-0 mx-1 noType">
                 <li>
-                    9. Rosmarin D, Passeron T, Pandya AG, Grimes P, Harris JE, Desai SR, Lebwohl M, Ruer-Mulard M, Seneschal J, Wolkerstorfer A, Kornacki D. Two phase 3, randomized, controlled trials of ruxolitinib cream for vitiligo. New England Journal of Medicine. 2022 Oct 20;387(16):1445-55. Supplementary material.
+                    {{ $exploreEfficacyFvasiSettings->getReference(1) }}
                 </li>
-
             </ol>
         </div>
     </div>

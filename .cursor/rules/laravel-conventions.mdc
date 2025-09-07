@@ -1,0 +1,361 @@
+---
+globs: *.php
+description: Laravel-specific coding conventions and best practices for Lumirix
+---
+
+# Laravel Coding Conventions & Best Practices
+
+## Code Style & Standards
+
+### PSR-4 Autoloading
+- Follow PSR-4 autoloading standards
+- Use proper namespaces matching directory structure
+- Example: `App\Http\Controllers\Api\V1\UserController`
+
+### Class Structure
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class ModelName extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        // Mass assignable attributes
+    ];
+
+    protected $casts = [
+        // Attribute casting
+    ];
+
+    protected $hidden = [
+        // Hidden attributes
+    ];
+
+    // Relationships
+    // Accessors/Mutators
+    // Scopes
+    // Methods
+}
+```
+
+## Model Conventions
+
+### Model Relationships
+Follow the established relationship patterns in [app/Models/User.php](mdc:app/Models/User.php):
+
+```php
+// Belongs to relationship
+public function pack()
+{
+    return $this->belongsTo(Pack::class);
+}
+
+// Has many relationship
+public function onTrackApplications()
+{
+    return $this->hasMany(OnTrackPack::class);
+}
+
+// Many-to-many with timestamps
+public function attendingEvents()
+{
+    return $this->belongsToMany(Event::class)->withTimestamps();
+}
+```
+
+### Enum Usage
+Use enums for status fields as shown in [app/Models/User.php](mdc:app/Models/User.php):
+
+```php
+protected $casts = [
+    'role' => Roles::class,
+    'status' => UserStatus::class,
+];
+```
+
+### Mass Assignment Protection
+Always define `$fillable` arrays for mass assignment protection:
+
+```php
+protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'role',
+    'status',
+    // ... other fields
+];
+```
+
+## Controller Conventions
+
+### API Controller Structure
+Follow the pattern in [app/Http/Controllers/Api/V1/UserController.php](mdc:app/Http/Controllers/Api/V1/UserController.php):
+
+```php
+<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class ResourceController extends Controller
+{
+    protected $service;
+
+    public function __construct(ServiceClass $service)
+    {
+        $this->service = $service;
+    }
+
+    public function methodName(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            // Validation rules
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->first(), 422);
+        }
+
+        try {
+            // Business logic
+            return $this->successResponse('Success message', $data);
+        } catch (\Exception $e) {
+            Log::error('Error description', [
+                'error' => $e->getMessage()
+            ]);
+            return $this->errorResponse('Error message', 500);
+        }
+    }
+}
+```
+
+### Response Format
+Use consistent response format:
+
+```php
+// Success response
+return $this->successResponse('Message', $data);
+
+// Error response
+return $this->errorResponse('Error message', $statusCode);
+```
+
+## Service Layer Pattern
+
+### Service Class Structure
+Follow the pattern in [app/Services/OtpService.php](mdc:app/Services/OtpService.php):
+
+```php
+<?php
+
+namespace App\Services;
+
+use App\Models\Model;
+use Illuminate\Support\Facades\Log;
+
+class ServiceName
+{
+    protected $dependency;
+
+    public function __construct(DependencyClass $dependency)
+    {
+        $this->dependency = $dependency;
+    }
+
+    public function publicMethod($param): array
+    {
+        try {
+            // Business logic
+            return [
+                'success' => true,
+                'message' => 'Success message',
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            Log::error('Error description', [
+                'param' => $param,
+                'error' => $e->getMessage()
+            ]);
+
+            return [
+                'success' => false,
+                'message' => 'Error message'
+            ];
+        }
+    }
+
+    protected function privateMethod($param)
+    {
+        // Private helper methods
+    }
+}
+```
+
+## Validation Conventions
+
+### Request Validation
+Use Laravel's validation with proper error handling:
+
+```php
+$validator = Validator::make($request->all(), [
+    'email' => 'required|email|unique:users,email',
+    'mobile' => 'required|string|unique:users,mobile',
+    'password' => ['required', 'confirmed', Rules\Password::defaults()],
+]);
+
+if ($validator->fails()) {
+    return $this->errorResponse($validator->errors()->first(), 422);
+}
+```
+
+### Custom Validation Rules
+Create custom validation rules when needed:
+
+```php
+use Illuminate\Validation\Rule;
+
+$rules = [
+    'role' => ['required', Rule::in(Roles::cases())],
+    'status' => ['required', Rule::in(UserStatus::cases())],
+];
+```
+
+## Error Handling & Logging
+
+### Exception Handling
+Always wrap business logic in try-catch blocks:
+
+```php
+try {
+    // Business logic
+    Log::info('Success message', ['context' => $data]);
+    return $this->successResponse('Success', $data);
+} catch (\Exception $e) {
+    Log::error('Error description', [
+        'error' => $e->getMessage(),
+        'trace' => $e->getTraceAsString()
+    ]);
+    return $this->errorResponse('User-friendly error message', 500);
+}
+```
+
+### Logging Best Practices
+- Use appropriate log levels (info, warning, error)
+- Include relevant context in log messages
+- Don't log sensitive information (passwords, tokens)
+
+## Database Conventions
+
+### Migration Structure
+Follow the migration patterns in [database/migrations/](mdc:database/migrations/):
+
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('table_name', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('table_name');
+    }
+};
+```
+
+### Seeder Structure
+Follow the seeder pattern in [database/seeders/](mdc:database/seeders/):
+
+```php
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Model;
+
+class ModelSeeder extends Seeder
+{
+    public function run(): void
+    {
+        Model::create([
+            'field' => 'value',
+        ]);
+    }
+}
+```
+
+## Configuration Management
+
+### Environment Variables
+Use environment variables for configuration:
+
+```php
+// In config files
+'api_key' => env('SERVICE_API_KEY'),
+'enabled' => env('SERVICE_ENABLED', false),
+```
+
+### Settings Management
+Use Spatie Settings for application settings as in [app/Settings/AppSettings.php](mdc:app/Settings/AppSettings.php):
+
+```php
+<?php
+
+namespace App\Settings;
+
+use Spatie\LaravelSettings\Settings;
+
+class SettingsClass extends Settings
+{
+    public string $setting_name;
+
+    public static function group(): string
+    {
+        return 'group_name';
+    }
+}
+```
+
+## Security Best Practices
+
+### Authentication
+- Use Laravel Sanctum for API authentication
+- Implement proper middleware for protected routes
+- Use strong password validation rules
+
+### Data Protection
+- Never log sensitive information
+- Use proper validation for all inputs
+- Implement rate limiting for sensitive operations
+- Use HTTPS in production
+
+### OTP Security
+Follow the security patterns in [app/Services/OtpService.php](mdc:app/Services/OtpService.php):
+- Rate limiting (2 minutes between requests)
+- Attempt limiting (5 failed attempts)
+- Automatic lockout (15 minutes)
+- OTP expiry (10 minutes)

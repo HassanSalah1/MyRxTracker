@@ -1,0 +1,435 @@
+---
+globs: app/Http/Controllers/Api/**/*.php,app/Services/*.php
+description: API development guidelines and OTP system implementation
+---
+
+# API Development & OTP System
+
+## API Structure
+
+### Route Organization
+API routes are organized in [routes/api.php](mdc:routes/api.php) with versioned endpoints:
+
+```php
+Route::group(['prefix' => 'v1', 'middleware' => "setlang"], function () {
+    // Public routes
+    Route::post('/register', [V1\UserController::class, 'register']);
+    Route::post('/login', [V1\UserController::class, 'login']);
+    Route::post('/forget-password', [V1\UserController::class, 'forgetPassword']);
+    
+    // Protected routes
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::get('/profile', [V1\UserController::class, 'profile']);
+        Route::post('/update-profile', [V1\UserController::class, 'updateProfile']);
+    });
+});
+```
+
+### Controller Structure
+Follow the pattern in [app/Http/Controllers/Api/V1/UserController.php](mdc:app/Http/Controllers/Api/V1/UserController.php):
+
+```php
+<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Controllers\Controller;
+use App\Services\OtpService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class ResourceController extends Controller
+{
+    protected $service;
+
+    public function __construct(ServiceClass $service)
+    {
+        $this->service = $service;
+    }
+
+    public function methodName(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'field' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->service->methodName($request->all());
+            
+            if ($result['success']) {
+                return $this->successResponse($result['message'], $result['data']);
+            } else {
+                return $this->errorResponse($result['message'], 422);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error description', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return $this->errorResponse('Error message', 500);
+        }
+    }
+}
+```
+
+## OTP System Implementation
+
+### OTP Service Architecture
+The OTP system is implemented in [app/Services/OtpService.php](mdc:app/Services/OtpService.php) with comprehensive security features:
+
+#### Key Features
+- **Rate Limiting**: 1 OTP per 2 minutes
+- **Attempt Limiting**: 5 failed attempts before lockout
+- **Automatic Lockout**: 15-minute lockout period
+- **OTP Expiry**: 10-minute validity period
+- **Secure Generation**: Cryptographically secure random OTP
+
+#### OTP Generation
+```php
+public function generateAndSendOtp(string $mobile, string $purpose = 'verification'): array
+{
+    // Check if mobile is locked
+    if ($this->isMobileLocked($mobile)) {
+        return [
+            'success' => false,
+            'message' => trans('messages.otp_too_many_attempts'),
+            'locked_until' => $this->getLockoutTime($mobile)
+        ];
+    }
+
+    // Check rate limiting
+    if ($this->isRateLimited($mobile)) {
+        return [
+            'success' => false,
+            'message' => trans('messages.otp_rate_limited'),
+            'retry_after' => $this->getRateLimitRetryTime($mobile)
+        ];
+    }
+
+    // Generate and send OTP
+    $otp = $this->generateOtp();
+    $smsResult = $this->emmaSmsService->sendOtp($mobile, $otp);
+    
+    return $smsResult;
+}
+```
+
+#### OTP Verification
+```php
+public function verifyOtp(string $mobile, string $otp): array
+{
+    $user = User::where('mobile', $mobile)->first();
+    
+    // Check if OTP exists and is not expired
+    if (!$user->otp_code || Carbon::now()->isAfter($user->otp_expires_at)) {
+        return [
+            'success' => false,
+            'message' => trans('messages.otp_not_found_or_expired')
+        ];
+    }
+
+    // Verify OTP and handle attempts
+    if ($user->otp_code === $otp) {
+        // Clear OTP after successful verification
+        $user->update([
+            'otp_code' => null,
+            'otp_expires_at' => null,
+            'otp_attempts' => 0,
+            'otp_locked_until' => null
+        ]);
+        
+        return [
+            'success' => true,
+            'message' => trans('messages.otp_verified_successfully')
+        ];
+    } else {
+        // Increment failed attempts and check for lockout
+        $newAttempts = $user->otp_attempts + 1;
+        $user->update(['otp_attempts' => $newAttempts]);
+        
+        if ($newAttempts >= $this->maxAttempts) {
+            $user->update([
+                'otp_locked_until' => Carbon::now()->addMinutes($this->lockoutMinutes)
+            ]);
+            
+            return [
+                'success' => false,
+                'message' => trans('messages.otp_account_locked_temporarily'),
+                'locked_until' => $user->otp_locked_until
+            ];
+        }
+        
+        return [
+            'success' => false,
+            'message' => trans('messages.otp_invalid'),
+            'remaining_attempts' => $this->maxAttempts - $newAttempts
+        ];
+    }
+}
+```
+
+### SMS Service Integration
+The SMS service is implemented in [app/Services/EmmaSmsService.php](mdc:app/Services/EmmaSmsService.php):
+
+#### SMS Sending
+```php
+public function sendOtp(string $mobile, string $otp): array
+{
+    try {
+        $message = $this->prepareOtpMessage($otp);
+        
+        $response = Http::post($this->apiUrl, [
+            'username' => $this->username,
+            'password' => $this->password,
+            'mobile' => $mobile,
+            'message' => $message,
+            'sender' => $this->senderId,
+        ]);
+
+        if ($response->successful()) {
+            Log::info('SMS sent successfully', [
+                'mobile' => $mobile,
+                'response' => $response->body()
+            ]);
+            
+            return [
+                'success' => true,
+                'message' => 'SMS sent successfully'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'SMS sending failed'
+            ];
+        }
+    } catch (\Exception $e) {
+        Log::error('SMS sending error', [
+            'mobile' => $mobile,
+            'error' => $e->getMessage()
+        ]);
+        
+        return [
+            'success' => false,
+            'message' => 'SMS service error'
+        ];
+    }
+}
+```
+
+## API Endpoints
+
+### Authentication Endpoints
+```php
+// User Registration
+POST /api/v1/register
+{
+    "name": "string",
+    "email": "string",
+    "mobile": "string",
+    "password": "string",
+    "password_confirmation": "string"
+}
+
+// User Login
+POST /api/v1/login
+{
+    "mobile": "string",
+    "password": "string"
+}
+
+// Password Reset Flow
+POST /api/v1/forget-password
+{
+    "mobile": "string"
+}
+
+POST /api/v1/check-code
+{
+    "mobile": "string",
+    "code": "string"
+}
+
+POST /api/v1/create-password
+{
+    "mobile": "string",
+    "code": "string",
+    "password": "string",
+    "password_confirmation": "string"
+}
+```
+
+### OTP Management Endpoints
+```php
+// Send OTP for mobile verification
+POST /api/v1/send-otp
+{
+    "mobile": "string"
+}
+
+// Verify mobile number
+POST /api/v1/verify-mobile
+{
+    "mobile": "string",
+    "code": "string"
+}
+
+// Resend OTP
+POST /api/v1/resend-otp
+{
+    "mobile": "string"
+}
+```
+
+### Protected Endpoints
+```php
+// User Profile Management
+GET /api/v1/profile
+POST /api/v1/update-profile
+POST /api/v1/logout
+POST /api/v1/delete-account
+
+// Pack Management
+GET /api/v1/history
+GET /api/v1/history/{id}
+GET /api/v1/active-pack
+POST /api/v1/starter-pack
+POST /api/v1/on-track-pack
+POST /api/v1/redeeming-pack
+
+// Event Management
+GET /api/v1/events
+POST /api/v1/events/attending
+
+// Photo Tracking
+GET /api/v1/photo-tracking-list
+POST /api/v1/photo-tracking-store
+POST /api/v1/photo-tracking-delete
+```
+
+## Response Format
+
+### Success Response
+```json
+{
+    "success": true,
+    "message": "Operation completed successfully",
+    "data": {
+        "field": "value"
+    }
+}
+```
+
+### Error Response
+```json
+{
+    "success": false,
+    "message": "Error description",
+    "errors": {
+        "field": ["Validation error message"]
+    }
+}
+```
+
+### OTP Response Examples
+```json
+// OTP Sent Successfully
+{
+    "success": true,
+    "message": "Verification code sent successfully",
+    "data": {
+        "expires_in": 600
+    }
+}
+
+// OTP Verification Failed
+{
+    "success": false,
+    "message": "Invalid verification code",
+    "remaining_attempts": 3
+}
+
+// Account Locked
+{
+    "success": false,
+    "message": "Account temporarily locked due to too many attempts",
+    "locked_until": "2024-01-01T12:00:00Z"
+}
+```
+
+## Configuration
+
+### OTP Configuration
+Configure OTP settings in [config/otp.php](mdc:config/otp.php):
+
+```php
+return [
+    'length' => env('OTP_LENGTH', 6),
+    'expiry_minutes' => env('OTP_EXPIRY_MINUTES', 10),
+    'max_attempts' => env('OTP_MAX_ATTEMPTS', 5),
+    'lockout_minutes' => env('OTP_LOCKOUT_MINUTES', 15),
+    'rate_limit_minutes' => env('OTP_RATE_LIMIT_MINUTES', 2),
+    'development_mode' => env('OTP_DEVELOPMENT_MODE', false),
+    'test_code' => env('OTP_TEST_CODE', '123456'),
+];
+```
+
+### SMS Service Configuration
+Configure SMS settings in [config/services.php](mdc:config/services.php):
+
+```php
+'emma_sms' => [
+    'username' => env('EMMA_SMS_USERNAME'),
+    'password' => env('EMMA_SMS_PASSWORD'),
+    'api_url' => env('EMMA_SMS_API_URL', 'https://api.emmasms.com/send'),
+    'sender_id' => env('EMMA_SMS_SENDER_ID', 'LUMIRIX'),
+    'enabled' => env('EMMA_SMS_ENABLED', true),
+],
+```
+
+## Security Best Practices
+
+### Rate Limiting
+- Implement rate limiting for OTP requests
+- Use cache-based rate limiting
+- Provide clear retry information
+
+### Input Validation
+- Validate all input parameters
+- Sanitize mobile numbers
+- Use proper validation rules
+
+### Error Handling
+- Don't expose sensitive information in errors
+- Log errors for debugging
+- Provide user-friendly error messages
+
+### Authentication
+- Use Laravel Sanctum for API authentication
+- Implement proper token management
+- Handle token expiration gracefully
+
+## Testing
+
+### OTP Testing
+Use the console command for testing:
+```bash
+php artisan sms:test 966501234567
+php artisan sms:test 966501234567 --otp=123456
+```
+
+### API Testing
+Test API endpoints using curl or Postman:
+```bash
+curl -X POST http://your-domain.com/api/v1/send-otp \
+  -H "Content-Type: application/json" \
+  -d '{"mobile": "966501234567"}'
+```
+
+## Documentation
+- **OTP System**: [docs/OTP_SYSTEM_IMPLEMENTATION.md](mdc:docs/OTP_SYSTEM_IMPLEMENTATION.md)
+- **Quick Setup**: [QUICK_SETUP.md](mdc:QUICK_SETUP.md)
+- **Environment Setup**: [docs/ENVIRONMENT_SETUP.md](mdc:docs/ENVIRONMENT_SETUP.md)

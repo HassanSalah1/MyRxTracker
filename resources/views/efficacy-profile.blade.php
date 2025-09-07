@@ -1,4 +1,15 @@
 @extends('layouts.app')
+
+@section('meta')
+<meta name="description" content="{{ $efficacyProfileSettings->getMetaDescription() }}">
+<meta name="keywords" content="{{ $efficacyProfileSettings->getMetaKeywords() }}">
+<meta property="og:title" content="{{ $efficacyProfileSettings->getOgTitle() }}">
+<meta property="og:description" content="{{ $efficacyProfileSettings->getOgDescription() }}">
+<meta property="og:image" content="{{ asset($efficacyProfileSettings->og_image) }}">
+<meta property="og:type" content="website">
+<title>{{ $efficacyProfileSettings->getMetaTitle() }}</title>
+@endsection
+
 @section("content")
     <header>
         <div class="container px-lg-5">
@@ -6,16 +17,16 @@
             <div class="row mt-4">
                 <div class="col-lg-6 my-auto pe-lg-5 text-center px-lg-5">
                     <h1 class="gradient-text fs-5 fw-bold text-uppercase">
-                        Efficacy PROFILE
+                        {{ $efficacyProfileSettings->getHeaderTitle() }}
                     </h1>
                     <h1 class="default-color lh-base text-center px-lg-5 din-next">
-                        Understand the Study Design
+                        {{ $efficacyProfileSettings->getHeaderSubtitle() }}
                     </h1>
-                    <img src="{{asset('front-end/images/EfficacyProfile2.png')}}" class="img-fluid headar-img" alt="headerImg"
+                    <img src="{{ asset($efficacyProfileSettings->getHeaderImage()) }}" class="img-fluid headar-img" alt="headerImg"
                         title="headerImg" loading="lazy" decoding="async">
                 </div>
                 <div class="col-lg-6">
-                    <img src="{{asset('front-end/images/EfficacyProfile.png')}}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
+                    <img src="{{ asset($efficacyProfileSettings->getHeaderSecondaryImage()) }}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
                         loading="lazy" decoding="async">
                 </div>
             </div>
@@ -26,11 +37,7 @@
             <div class="col-lg-9 mx-auto">
                 <div class="mt-4">
                     <h6 class="fw-bold text-center mb-4">
-                        Two Phase 3, double-blind, vehicle-controlled trials Topical Ruxolitinib Evaluation in Vitiligo
-                        Study 1
-                        [TRuE-V1] and [TRuE-V2] examined the efficacy of ruxolitinib cream for repigmentation of skin
-                        lesions in
-                        adolescents and adults with nonsegmental vitiligo.
+                        {{ $efficacyProfileSettings->getStudyDescription() }}
                     </h6>
                     <div class="gradient-bg p-lg-5 p-3 mb-5">
                         <p class="text-center mb-0">
@@ -43,7 +50,7 @@
                         </p>
                     </div>
                     <h4 class="mb-5  pe-lg-5  text-center">
-                        TRuE-V1 and TRuE-V2 Study Design ⁹
+                        {{ $efficacyProfileSettings->getStudyDesignTitle() }}
                     </h4>
                 </div>
             </div>
@@ -52,13 +59,13 @@
         <!--  -->
         <div class=" my-auto text-center mt-5">
 
-            <img src="{{asset('front-end/images/StudyDesign.png')}}" class="img-fluid" alt="StudyDesign" title="StudyDesign" loading="lazy"
+            <img src="{{ asset($efficacyProfileSettings->getStudyDesignImage()) }}" class="img-fluid" alt="StudyDesign" title="StudyDesign" loading="lazy"
                 decoding="async">
             <p class="text-center w-66 mx-auto mt-5 mb-0 px-lg-4">
-                *1 randomized patient who did not apply ≥1 dose of Ruxolitinib cream was excluded from safety analyses.
+                {{ $efficacyProfileSettings->getStudyNote(1) }}
             </p>
             <p class="text-center w-66 mx-auto  ">
-                13 patients from 1 study site were excluded from efficacy analyses for compliance issues.
+                {{ $efficacyProfileSettings->getStudyNote(2) }}
             </p>
             
         </div>
@@ -68,11 +75,11 @@
                 <div class="col-12 my-3">
                     <div class="gray-bg br-24 p-lg-4 p-3 mb-3">
                         <h4 class="gradient-text ">
-                            Primary Endpoint
+                            {{ $efficacyProfileSettings->getPrimaryEndpointTitle() }}
                         </h4>
                         <ul class="px-3 mb-0">
                             <li>
-                                % of patients achieving an F-VASI75 response  at week 24.
+                                {{ $efficacyProfileSettings->getPrimaryEndpointContent() }}
                             </li>
                         </ul>
                     </div>
@@ -81,73 +88,52 @@
 
                     <div class="gray-bg br-24 p-lg-4 p-3 h-100">
                         <h5 class="gradient-text mb-4 pb-2">
-                            Key Secondary Endpoints (all at week 24) ²
+                            {{ $efficacyProfileSettings->getKeySecondaryEndpointsTitle() }}
                         </h5>
                         <ul class="px-3 mb-0">
-                            <li>% of patients achieving F-VASI50 and F-VASI90 responses.</li>
-                            <li>% of patients achieving a T-VASI50 response.</li>
-                            <li> % of patients achieving a VNS response of 4 (‘a lot less noticeable’) or 5 (‘no longer
-                                noticeable’).</li>
-                            <li>% change from baseline in affected F-BSA. </li>
+                            {!! nl2br(e($efficacyProfileSettings->getKeySecondaryEndpointsContent())) !!}
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 my-3">
                     <div class="gray-bg br-24 p-lg-4 p-3 mb-3 h-100">
                         <h5 class="gradient-text mb-4 pb-2">
-                            Other Secondary Endpoints ²
+                            {{ $efficacyProfileSettings->getOtherSecondaryEndpointsTitle() }}
                         </h5>
                         <ul class="px-3 mb-0">
-                            <li>
-                                Safety and tolerability.
-                            </li>
-                            <li>% change from baseline in F-VASI, T-VASI, affected F-BSA and T-BSA during the treatment
-                                period.
-                            </li>
-                            <li>% of patients having F-VASI improvements or T-VASI improvements.
-                            </li>
-
+                            {!! nl2br(e($efficacyProfileSettings->getOtherSecondaryEndpointsContent())) !!}
                         </ul>
                     </div>
                 </div>
             </div>
             <p class="text-center w-66 mx-auto  px-lg-5 my-5">
-                The face includes the area on the forehead to the original hairline, on the cheek to the jawline
-                vertically and laterally from the corner of the mouth to the tragus. It includes the surface area of the
-                nose but not that of the lips, scalp, eyelids, ears, or neck.²
-                VNS was assessed for facial lesions only.²
+                {{ $efficacyProfileSettings->getFaceDefinition() }}
             </p>
         </div>
 
         <!--  -->
         <div class="pb-lg-5 pt-5">
             <h4 class=" text-center  mt-lg-5">
-                Patient Demographics and Clinical Characteristics ²
+                {{ $efficacyProfileSettings->getDemographicsTitle() }}
             </h4>
             <p class="text-center">
-                Baseline demographics and clinical characteristics were similar for TRuE-V1 and TRuE-V2.
+                {{ $efficacyProfileSettings->getDemographicsSubtitle() }}
             </p>
-            <img src="{{asset('front-end/images/Demographics.png')}}" class="img-fluid my-5" alt="Demographics" title="Demographics"
+            <img src="{{ asset($efficacyProfileSettings->getDemographicsImage()) }}" class="img-fluid my-5" alt="Demographics" title="Demographics"
                 loading="lazy" decoding="async">
         </div>
         <!--References  -->
         <div class="References mb-lg-5">
             <h6>
-                References
+                {{ $efficacyProfileSettings->getReferencesTitle() }}
             </h6>
             <ul class="px-0 mx-3 noType">
                 <li>
-                    2. Rosmarin D, Passeron T, Pandya AG, Grimes P, Harris JE, Desai SR, Lebwohl M, Ruer-Mulard M,
-                    Seneschal J, Wolkerstorfer A, Kornacki D. Two phase 3, randomized, controlled trials of Ruxolitinib
-                    cream for vitiligo. New England Journal of Medicine. 2022 Oct 20;387(16):1445-55.
+                    {{ $efficacyProfileSettings->getReference(1) }}
                 </li>
-                <li>9. Rosmarin D, Passeron T, Pandya AG, Grimes P, Harris JE, Desai SR, Lebwohl M, Ruer-Mulard M,
-                    Seneschal J, Wolkerstorfer A, Kornacki D. Two phase 3, randomized, controlled trials of ruxolitinib
-                    cream for vitiligo. New England Journal of Medicine. 2022 Oct 20;387(16):1445-55. Supplementary
-                    material.
-
+                <li>
+                    {{ $efficacyProfileSettings->getReference(2) }}
                 </li>
-
             </ul>
         </div>
 

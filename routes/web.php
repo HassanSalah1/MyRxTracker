@@ -2,22 +2,37 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MechanismOfActionController;
+use App\Http\Controllers\SafetyProfileController;
+use App\Http\Controllers\EfficacyProfileController;
+use App\Http\Controllers\ExploreEfficacyFvasiController;
+use App\Http\Controllers\ExploreEfficacyTvasiController;
+use App\Http\Controllers\RuxolitinibReportsController;
+use App\Http\Controllers\SettingExpectationsController;
+use App\Http\Controllers\DosingController;
+use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\PatientSupportController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 
-Route::get('/', function () {return view('home');})->name('home');
-Route::get('/mechanism-of-action', function () {return view('mechanism_of_action');})->name('mechanism-of-action');
-Route::get('/efficacy-profile', function () {return view('efficacy-profile');})->name('efficacy-profile');
-Route::get('/explore-lumirix-efficacy-f-vasi', function () {return view('explore-lumirix-efficacy-f-vasi');})->name('explore-lumirix-efficacy-f-vasi');
-Route::get('/explore-lumirix-efficacy-t-vasi', function () {return view('explore-lumirix-efficacy-t-vasi');})->name('explore-lumirix-efficacy-t-vasi');
-Route::get('/ruxolitinib-reports', function () {return view('ruxolitinib-reports');})->name('ruxolitinib-reports');
-Route::get('/safety-profile', function () {return view('safety-profile');})->name('safety-profile');
-Route::get('/dosing', function () {return view('dosing');})->name('dosing');
-Route::get('/setting-expectations', function () {return view('setting-expectations');})->name('setting-expectations');
-Route::get('/download', function () {return view('download');})->name('download');
-Route::get('/patient-support', function () {return view('patient-support');})->name('patient-support');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/mechanism-of-action', [MechanismOfActionController::class, 'index'])->name('mechanism-of-action');
+Route::get('/efficacy-profile', [EfficacyProfileController::class, 'index'])->name('efficacy-profile');
+Route::get('/explore-lumirix-efficacy-f-vasi', [ExploreEfficacyFvasiController::class, 'index'])->name('explore-lumirix-efficacy-f-vasi');
+Route::get('/explore-lumirix-efficacy-t-vasi', [ExploreEfficacyTvasiController::class, 'index'])->name('explore-lumirix-efficacy-t-vasi');
+Route::get('/ruxolitinib-reports', [RuxolitinibReportsController::class, 'index'])->name('ruxolitinib-reports');
+Route::get('/safety-profile', [SafetyProfileController::class, 'index'])->name('safety-profile');
+Route::get('/setting-expectations', [SettingExpectationsController::class, 'index'])->name('setting-expectations');
+Route::get('/dosing', [DosingController::class, 'index'])->name('dosing');
+Route::get('/download', [DownloadController::class, 'index'])->name('download');
+Route::get('/patient-support', [PatientSupportController::class, 'index'])->name('patient-support');
 Route::get('/terms-policy', function () {return view('terms-policy');})->name('terms-policy');
 Route::get('/privacy-policy', function () {return view('privacy-policy');})->name('privacy-policy');
+
+// Language switching route
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
 // Set access session
 Route::post('/set-access-session', function () {

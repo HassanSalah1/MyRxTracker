@@ -10,6 +10,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- title -->
     <title>Lumirix</title>
+    
+    @yield('meta')
 
     <link rel="shortcut icon" type="image/ico" href="{{asset('/front-end/images/fav.ico')}}" />
     <!-- Bootstrap -->

@@ -1,0 +1,370 @@
+---
+globs: app/Filament/**/*.php
+description: Filament admin panel development guidelines and conventions
+---
+
+# Filament Admin Panel Development
+
+## Filament Configuration
+
+### Panel Provider Setup
+The admin panel is configured in [app/Providers/Filament/AdminPanelProvider.php](mdc:app/Providers/Filament/AdminPanelProvider.php):
+
+```php
+return $panel
+    ->default()
+    ->id('admin')
+    ->path('admin')
+    ->brandLogo('/images/logo.png')
+    ->login()
+    ->viteTheme('resources/css/filament/theme.css')
+    ->colors([
+        'primary' => "#553782",
+        'secondary' => "#CC833D",
+    ])
+    ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+    ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+    ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets');
+```
+
+## Resource Development
+
+### Resource Structure
+Follow the pattern established in [app/Filament/Resources/UserResource.php](mdc:app/Filament/Resources/UserResource.php):
+
+```php
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\ResourceResource\Pages;
+use App\Models\Model;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+
+class ResourceResource extends Resource
+{
+    protected static ?string $model = Model::class;
+    protected static ?string $navigationIcon = 'heroicon-o-icon-name';
+
+    public static function form(Form $form): Form
+    {
+        return $form->schema([
+            // Form components
+        ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table->columns([
+            // Table columns
+        ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            // Relation managers
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListResources::route('/'),
+            'create' => Pages\CreateResource::route('/create'),
+            'edit' => Pages\EditResource::route('/{record}/edit'),
+        ];
+    }
+}
+```
+
+### Form Components
+
+#### Text Inputs
+```php
+TextInput::make('name')
+    ->required()
+    ->maxLength(255),
+
+TextInput::make('email')
+    ->email()
+    ->required()
+    ->unique(ignoreRecord: true),
+
+TextInput::make('password')
+    ->password()
+    ->required()
+    ->visibleOn('create'),
+```
+
+#### Select Fields
+```php
+Select::make('role')
+    ->options(Roles::class)
+    ->required(),
+
+Select::make('status')
+    ->options(UserStatus::class)
+    ->required(),
+```
+
+#### File Uploads
+```php
+FileUpload::make('image')
+    ->image()
+    ->directory('users')
+    ->nullable(),
+```
+
+#### Rich Text Editors
+```php
+Forms\Components\RichEditor::make('description_en'),
+Forms\Components\RichEditor::make('description_zh'),
+```
+
+### Table Components
+
+#### Basic Columns
+```php
+Tables\Columns\TextColumn::make('name'),
+Tables\Columns\TextColumn::make('email'),
+Tables\Columns\TextColumn::make('created_at')
+    ->dateTime(),
+```
+
+#### Image Columns
+```php
+Tables\Columns\ImageColumn::make('image')
+    ->disk('public'),
+```
+
+#### Status Columns
+```php
+Tables\Columns\TextColumn::make('status')
+    ->badge()
+    ->color(fn (string $state): string => match ($state) {
+        'active' => 'success',
+        'inactive' => 'danger',
+        default => 'gray',
+    }),
+```
+
+### Access Control
+
+#### Resource Access Control
+```php
+public static function canAccess(): bool
+{
+    return auth()->user() && auth()->user()->hasPermission('view-resource');
+}
+```
+
+#### Action Access Control
+```php
+Tables\Actions\EditAction::make()
+    ->visible(fn () => auth()->user()->hasPermission('edit-resource')),
+
+Tables\Actions\DeleteAction::make()
+    ->visible(fn () => auth()->user()->hasPermission('delete-resource')),
+```
+
+### Multilingual Support
+
+#### Dual Language Fields
+Follow the pattern in [app/Filament/Resources/EventResource.php](mdc:app/Filament/Resources/EventResource.php):
+
+```php
+TextInput::make('title_en')
+    ->required()
+    ->maxLength(255),
+
+TextInput::make('title_zh')
+    ->required()
+    ->maxLength(255),
+
+Forms\Components\RichEditor::make('description_en'),
+Forms\Components\RichEditor::make('description_zh'),
+```
+
+#### Dual Language Images
+```php
+Forms\Components\FileUpload::make('image')
+    ->label('Image English')
+    ->image()
+    ->directory('sliders')
+    ->required(),
+
+Forms\Components\FileUpload::make('image_zh')
+    ->label('Image Chinese')
+    ->image()
+    ->directory('sliders')
+    ->required(),
+```
+
+### Table Actions
+
+#### Modal Actions
+```php
+Tables\Actions\EditAction::make()
+    ->modal(),
+
+Tables\Actions\ViewAction::make()
+    ->modal(),
+```
+
+#### Bulk Actions
+```php
+Tables\Actions\BulkActionGroup::make([
+    Tables\Actions\DeleteBulkAction::make(),
+    Tables\Actions\RestoreBulkAction::make(),
+]),
+```
+
+### Filters
+
+#### Text Filters
+```php
+Tables\Filters\Filter::make('name')
+    ->form([
+        TextInput::make('name')
+            ->placeholder('Search by name'),
+    ])
+    ->query(function (Builder $query, array $data): Builder {
+        return $query
+            ->when(
+                $data['name'],
+                fn (Builder $query, $name): Builder => $query->where('name', 'like', "%{$name}%"),
+            );
+    }),
+```
+
+#### Select Filters
+```php
+Tables\Filters\SelectFilter::make('status')
+    ->options(UserStatus::class),
+```
+
+### Relation Managers
+
+#### Basic Relation Manager
+```php
+<?php
+
+namespace App\Filament\Resources\ResourceResource\RelationManagers;
+
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Table;
+
+class RelationManager extends RelationManager
+{
+    protected static string $relationship = 'relation';
+
+    public function form(Form $form): Form
+    {
+        return $form->schema([
+            // Form components
+        ]);
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table->columns([
+            // Table columns
+        ]);
+    }
+}
+```
+
+### Widgets
+
+#### Basic Widget Structure
+```php
+<?php
+
+namespace App\Filament\Widgets;
+
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+
+class StatsOverview extends BaseWidget
+{
+    protected function getStats(): array
+    {
+        return [
+            Stat::make('Total Users', User::count()),
+            Stat::make('Active Users', User::where('status', 'active')->count()),
+            Stat::make('Pending Applications', StarterPack::where('verification_status', 'pending')->count()),
+        ];
+    }
+}
+```
+
+### Custom Pages
+
+#### Basic Page Structure
+```php
+<?php
+
+namespace App\Filament\Pages;
+
+use Filament\Pages\Page;
+
+class CustomPage extends Page
+{
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string $view = 'filament.pages.custom-page';
+    protected static ?int $navigationSort = 3;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            // Header actions
+        ];
+    }
+}
+```
+
+## Best Practices
+
+### Resource Organization
+- Group related resources in logical sections
+- Use descriptive navigation labels
+- Implement proper access control for all resources
+- Use consistent icon naming
+
+### Form Design
+- Use sections to group related fields
+- Implement proper validation rules
+- Use appropriate input types for data
+- Provide helpful text and placeholders
+
+### Table Design
+- Show relevant columns by default
+- Implement search and filtering
+- Use appropriate column types
+- Implement proper sorting
+
+### Performance Optimization
+- Use eager loading for relationships
+- Implement proper database indexes
+- Use pagination for large datasets
+- Cache frequently accessed data
+
+### Security Considerations
+- Always implement access control
+- Validate all form inputs
+- Use proper authorization policies
+- Sanitize user inputs
+
+### Customization
+- Use custom themes for branding
+- Implement custom components when needed
+- Use plugins for extended functionality
+- Maintain consistent styling

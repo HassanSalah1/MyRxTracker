@@ -1,4 +1,8 @@
 
+@php
+    $headerFooterSettings = app(\App\Settings\HeaderFooterSettings::class);
+@endphp
+
 <!-- navbar -->
 <nav class="navbar navbar-expand-xl">
     <div class="container py-2">
@@ -13,12 +17,12 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'home' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('home')}}">
-                        Home
+                        {{ $headerFooterSettings->getNavHome() }}
                     </a>
                 </li>
                 <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'mechanism-of-action' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('mechanism-of-action')}}">
-                        Mechanism of Action
+                        {{ $headerFooterSettings->getNavMechanismOfAction() }}
                     </a>
                 </li>
                 <li class="nav-item  mx-2 mx-lg-1 dropdown
@@ -29,43 +33,45 @@
                 ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Efficacy Profile
+                        {{ $headerFooterSettings->getNavEfficacyProfile() }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{route('efficacy-profile')}}"> Efficacy Profile</a></li>
-                        <li><a class="dropdown-item" href="{{route('explore-lumirix-efficacy-f-vasi')}}">Efficacy F-VASI</a></li>
-                        <li><a class="dropdown-item" href="{{route('explore-lumirix-efficacy-t-vasi')}}">Efficacy T-VASI</a></li>
-                        <li><a class="dropdown-item" href="{{route('ruxolitinib-reports')}}">Ruxolitinib Cream Case Reports</a>
+                        <li><a class="dropdown-item" href="{{route('efficacy-profile')}}">{{ $headerFooterSettings->getNavEfficacyProfileSub() }}</a></li>
+                        <li><a class="dropdown-item" href="{{route('explore-lumirix-efficacy-f-vasi')}}">{{ $headerFooterSettings->getNavEfficacyFVasi() }}</a></li>
+                        <li><a class="dropdown-item" href="{{route('explore-lumirix-efficacy-t-vasi')}}">{{ $headerFooterSettings->getNavEfficacyTVasi() }}</a></li>
+                        <li><a class="dropdown-item" href="{{route('ruxolitinib-reports')}}">{{ $headerFooterSettings->getNavRuxolitinibReports() }}</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'safety-profile' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('safety-profile')}}">
-                        Safety Profile
+                        {{ $headerFooterSettings->getNavSafetyProfile() }}
                     </a>
                 </li>
                 <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'dosing' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('dosing')}}">
-                        Dosing
+                        {{ $headerFooterSettings->getNavDosing() }}
                     </a>
                 </li>
                 <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'setting-expectations' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('setting-expectations')}}">
-                        Setting Expectations
+                        {{ $headerFooterSettings->getNavSettingExpectations() }}
                     </a>
                 </li>
                 <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'download' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('download')}}">
-                        Download
+                        {{ $headerFooterSettings->getNavDownload() }}
                     </a>
                 </li>
                 <li class="nav-item mx-2 mx-lg-1 {{Route::currentRouteName() === 'patient-support' ? 'active' : '' }}">
                     <a class="nav-link " href="{{route('patient-support')}}">
-                        Patient Support
+                        {{ $headerFooterSettings->getNavPatientSupport() }}
                     </a>
                 </li>
             </ul>
+            <!-- Language Switcher -->
+            <x-language-switcher />
         </div>
     </div>
 </nav>

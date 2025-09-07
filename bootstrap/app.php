@@ -13,9 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
+        $middleware->web([
+            \App\Http\Middleware\SetLang::class
+        ]);
+        
         $middleware->api([
             \App\Http\Middleware\SetLang::class
         ]);
+        
         $middleware->alias([
             'setlang' => \App\Http\Middleware\SetLang::class,
         ]);

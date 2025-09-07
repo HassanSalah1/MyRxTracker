@@ -12,17 +12,17 @@
             <div class="row mt-4">
                 <div class="col-lg-6 my-auto pe-lg-5">
                     <h1 class="default-color lh-base">
-                        Reimagine Vitiligo Treatment with Lumirix®
+                        {{ $homeSettings->getHeaderTitle() }}
                     </h1>
                     <p class="default-color pe-lg-5 lh-base my-4 me-lg-5 fs-6 pb-lg-3">
-                        Lumirix® is the first topical treatment approved for vitiligo.
+                        {{ $homeSettings->getHeaderSubtitle() }}
                     </p>
-                    <a href="{{route('mechanism-of-action')}}" class="btn default-btn">
-                        Learn more
+                    <a href="{{ $homeSettings->header_button_link }}" class="btn default-btn">
+                        {{ $homeSettings->getHeaderButtonText() }}
                     </a>
                 </div>
                 <div class="col-lg-6">
-                    <img src="{{asset('/front-end/images/headerImg.png')}}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
+                    <img src="{{ asset($homeSettings->header_image) }}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
                          loading="lazy" decoding="async">
                 </div>
             </div>
@@ -32,7 +32,7 @@
     <div class="why-choose mt-5">
         <div class="container px-lg-5">
             <h2 class="default-color fw-normal w-lg-45 mb-5 pb-4">
-                Why Choose <span class="purple">Lumirix®</span> for Your Vitiligo Treatment?
+                {{ $homeSettings->getWhyChooseTitle() }}
             </h2>
             <div class="row">
                 <div class="col-lg-3 my-3">
@@ -41,20 +41,19 @@
                             1.
                         </h3>
                         <h3 class="fs-6 bold default-color">
-                            Clinically Proven Results
+                            {{ $homeSettings->getFeatureTitle(1) }}
                         </h3>
                         <p class="default-color mb-3">
-                            Lumirix® is supported by clinical studies that show significant improvements in skin
-                            repigmentation.²
+                            {{ $homeSettings->getFeatureDescription(1) }}
                         </p>
                         <div class="mt-auto">
                             <p class="bold default-color text-end mb-3">
-                            <a href="{{route('ruxolitinib-reports')}}" class="default-color text-decoration-none find-out-more-link">
-                                    Find out more >>
+                            <a href="{{ $homeSettings->getFeatureLinkUrl(1) }}" class="default-color text-decoration-none find-out-more-link">
+                                    {{ $homeSettings->getFeatureLinkText(1) }}
                                 </a>
                             </p>
-                            <img src="{{asset('front-end/images/choose/image (27).png')}}" class="img-fluid" title="Clinically Proven Results"
-                                loading="lazy" decoding="async" alt="Clinically Proven Results">
+                            <img src="{{ asset($homeSettings->getFeatureImage(1)) }}" class="img-fluid" title="{{ $homeSettings->getFeatureTitle(1) }}"
+                                loading="lazy" decoding="async" alt="{{ $homeSettings->getFeatureTitle(1) }}">
                         </div>
                     </div>
                 </div>
@@ -64,21 +63,19 @@
                             2.
                         </h3>
                         <h3 class="fs-6 bold default-color">
-                            Easy-to-Use
+                            {{ $homeSettings->getFeatureTitle(2) }}
                         </h3>
                         <p class="default-color mb-3">
-                            Designed for daily use, Lumirix® cream integrates easily into your patient's routine with a
-                            convenient twice-daily application.³
-
+                            {{ $homeSettings->getFeatureDescription(2) }}
                         </p>
                         <div class="mt-auto">
                             <p class="bold default-color text-end mb-3">
-                            <a href="{{route('dosing')}}" class="default-color text-decoration-none find-out-more-link">
-                                    Find out more >>
+                            <a href="{{ $homeSettings->getFeatureLinkUrl(2) }}" class="default-color text-decoration-none find-out-more-link">
+                                    {{ $homeSettings->getFeatureLinkText(2) }}
                                 </a>                                
                             </p>
-                            <img src="{{asset('front-end/images/choose/image (28).png')}}" class="img-fluid" title="Clinically Proven Results"
-                                loading="lazy" decoding="async" alt="Clinically Proven Results">
+                            <img src="{{ asset($homeSettings->getFeatureImage(2)) }}" class="img-fluid" title="{{ $homeSettings->getFeatureTitle(2) }}"
+                                loading="lazy" decoding="async" alt="{{ $homeSettings->getFeatureTitle(2) }}">
                         </div>
                     </div>
                 </div>
@@ -88,20 +85,19 @@
                             3.
                         </h3>
                         <h3 class="fs-6 bold default-color">
-                            Good Safety Profile
+                            {{ $homeSettings->getFeatureTitle(3) }}
                         </h3>
                         <p class="default-color mb-3">
-                            Lumirix® has a good safety and tolerability profile, making it a trusted choice for both
-                            patients and healthcare providers.²
+                            {{ $homeSettings->getFeatureDescription(3) }}
                         </p>
                         <div class="mt-auto">
                             <p class="bold default-color text-end mb-3">
-                            <a href="{{route('safety-profile')}}" class="default-color text-decoration-none find-out-more-link">
-                                    Find out more >>
+                            <a href="{{ $homeSettings->getFeatureLinkUrl(3) }}" class="default-color text-decoration-none find-out-more-link">
+                                    {{ $homeSettings->getFeatureLinkText(3) }}
                                 </a>                                
                             </p>
-                            <img src="{{asset('front-end/images/choose/image (29).png')}}" class="img-fluid" title="Clinically Proven Results"
-                                loading="lazy" decoding="async" alt="Clinically Proven Results">
+                            <img src="{{ asset($homeSettings->getFeatureImage(3)) }}" class="img-fluid" title="{{ $homeSettings->getFeatureTitle(3) }}"
+                                loading="lazy" decoding="async" alt="{{ $homeSettings->getFeatureTitle(3) }}">
                         </div>
                     </div>
                 </div>
@@ -111,20 +107,19 @@
                             4.
                         </h3>
                         <h3 class="fs-6 bold default-color">
-                            Patient Support
+                            {{ $homeSettings->getFeatureTitle(4) }}
                         </h3>
                         <p class="default-color mb-3">
-                            Find out more about the useful programs run by Vitiligo Support Group, a non-profit patient
-                            support group.
+                            {{ $homeSettings->getFeatureDescription(4) }}
                         </p>
                         <div class="mt-auto">
                             <p class="bold default-color text-end mb-3">
-                                <a href="{{route('patient-support')}}" class="default-color text-decoration-none find-out-more-link">
-                                    Find out more >>
+                                <a href="{{ $homeSettings->getFeatureLinkUrl(4) }}" class="default-color text-decoration-none find-out-more-link">
+                                    {{ $homeSettings->getFeatureLinkText(4) }}
                                 </a>
                             </p>
-                            <img src="{{asset('front-end/images/choose/Rectangle 5.png')}}" class="img-fluid" title="Clinically Proven Results"
-                                loading="lazy" decoding="async" alt="Clinically Proven Results">
+                            <img src="{{ asset($homeSettings->getFeatureImage(4)) }}" class="img-fluid" title="{{ $homeSettings->getFeatureTitle(4) }}"
+                                loading="lazy" decoding="async" alt="{{ $homeSettings->getFeatureTitle(4) }}">
                         </div>
 
                     </div>
@@ -136,23 +131,18 @@
     <div class="container px-lg-5 py-5">
         <div class="References mb-lg-5">
             <h6>
-                References:
+                {{ $homeSettings->getReferencesTitle() }}
             </h6>
             <ol class="px-0 mx-3">
                 <li>
-                    Grossmann MC, Haidari W, Feldman SR. A Review on the Use of Topical Ruxolitinib for the Treatment of
-                    Vitiligo. Journal of drugs in dermatology: JDD. 2023;22
-
-
-                </li>
-                <li>Rosmarin D, Passeron T, Pandya AG, Grimes P, Harris JE, Desai SR, Lebwohl M, Ruer-Mulard M,
-                    Seneschal J, Wolkerstorfer A, Kornacki D. Two phase 3, randomized, controlled trials of Ruxolitinib
-                    cream for vitiligo. New England Journal of Medicine. 2022 Oct 20;387(16):1445-55.
+                    {{ $homeSettings->getReference(1) }}
                 </li>
                 <li>
-                    Lumirix Prescribing information for Hong Kong.
+                    {{ $homeSettings->getReference(2) }}
                 </li>
-
+                <li>
+                    {{ $homeSettings->getReference(3) }}
+                </li>
             </ol>
         </div>
     </div>

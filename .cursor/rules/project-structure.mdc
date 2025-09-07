@@ -1,0 +1,97 @@
+---
+alwaysApply: true
+description: Project structure and architecture guidelines for Lumirix Laravel application
+---
+
+# Lumirix Project Structure & Architecture
+
+## Project Overview
+Lumirix is a Laravel 11 application with Filament admin panel, API endpoints, and multilingual support (English/Chinese). The application manages medical packs, user verification, events, and SMS-based OTP system.
+
+## Core Architecture
+
+### Main Entry Points
+- **Web Application**: [public/index.php](mdc:public/index.php) - Main web entry point
+- **API Routes**: [routes/api.php](mdc:routes/api.php) - REST API endpoints
+- **Admin Panel**: [app/Providers/Filament/AdminPanelProvider.php](mdc:app/Providers/Filament/AdminPanelProvider.php) - Filament admin configuration
+- **Bootstrap**: [bootstrap/app.php](mdc:bootstrap/app.php) - Application configuration
+
+### Key Directories Structure
+```
+app/
+├── Console/Commands/          # Artisan commands
+├── Enums/                     # Application enums (Roles, UserStatus, etc.)
+├── Filament/                  # Admin panel resources and pages
+├── Http/Controllers/         # API and web controllers
+├── Models/                    # Eloquent models
+├── Services/                  # Business logic services
+├── Settings/                  # Application settings
+└── Traits/                    # Reusable traits
+```
+
+### Configuration Files
+- [config/app.php](mdc:config/app.php) - Application configuration
+- [config/otp.php](mdc:config/otp.php) - OTP system configuration
+- [config/firebase.php](mdc:config/firebase.php) - Firebase integration
+- [config/services.php](mdc:config/services.php) - External services configuration
+
+### Database Structure
+- **Migrations**: [database/migrations/](mdc:database/migrations/) - Database schema definitions
+- **Seeders**: [database/seeders/](mdc:database/seeders/) - Database seeding
+- **Models**: [app/Models/](mdc:app/Models/) - Eloquent models with relationships
+
+## Key Features & Components
+
+### 1. User Management System
+- **User Model**: [app/Models/User.php](mdc:app/Models/User.php) - Core user entity with roles and OTP fields
+- **Roles & Permissions**: [app/Models/Role.php](mdc:app/Models/Role.php), [app/Models/Permission.php](mdc:app/Models/Permission.php)
+- **User Controller**: [app/Http/Controllers/Api/V1/UserController.php](mdc:app/Http/Controllers/Api/V1/UserController.php)
+
+### 2. OTP & SMS System
+- **OTP Service**: [app/Services/OtpService.php](mdc:app/Services/OtpService.php) - OTP generation and verification
+- **SMS Service**: [app/Services/EmmaSmsService.php](mdc:app/Services/EmmaSmsService.php) - EMMA SMS Gateway integration
+- **Documentation**: [docs/OTP_SYSTEM_IMPLEMENTATION.md](mdc:docs/OTP_SYSTEM_IMPLEMENTATION.md)
+
+### 3. Pack Management System
+- **Pack Models**: [app/Models/Pack.php](mdc:app/Models/Pack.php), [app/Models/StarterPack.php](mdc:app/Models/StarterPack.php), [app/Models/OnTrackPack.php](mdc:app/Models/OnTrackPack.php)
+- **Pack Controller**: [app/Http/Controllers/Api/V1/PackController.php](mdc:app/Http/Controllers/Api/V1/PackController.php)
+
+### 4. Filament Admin Panel
+- **Resources**: [app/Filament/Resources/](mdc:app/Filament/Resources/) - Admin CRUD interfaces
+- **Provider**: [app/Providers/Filament/AdminPanelProvider.php](mdc:app/Providers/Filament/AdminPanelProvider.php)
+
+### 5. Multilingual Support
+- **Language Files**: [lang/en/](mdc:lang/en/), [lang/zh/](mdc:lang/zh/)
+- **Middleware**: [app/Http/Middleware/SetLang.php](mdc:app/Http/Middleware/SetLang.php)
+
+## Development Guidelines
+
+### File Naming Conventions
+- **Controllers**: PascalCase with "Controller" suffix (e.g., `UserController.php`)
+- **Models**: PascalCase singular (e.g., `User.php`, `StarterPack.php`)
+- **Services**: PascalCase with "Service" suffix (e.g., `OtpService.php`)
+- **Enums**: PascalCase (e.g., `Roles.php`, `UserStatus.php`)
+- **Migrations**: Snake_case with timestamp prefix
+
+### Directory Organization
+- Keep related functionality grouped in appropriate directories
+- Use namespaces that match directory structure
+- Separate API controllers in `Api/V1/` subdirectory
+- Group Filament resources by feature
+
+### Dependencies & Packages
+- **Laravel Framework**: ^11.31
+- **Filament**: ^3.2 (Admin panel)
+- **Firebase**: ^7.16 (Push notifications)
+- **Laravel Sanctum**: ^4.0 (API authentication)
+- **Spatie Settings**: ^3.4 (Application settings)
+
+## Environment Setup
+- **PHP Version**: ^8.2
+- **Database**: MySQL/PostgreSQL
+- **Queue**: Redis/Database
+- **Cache**: Redis/Memcached
+- **Storage**: Local/S3
+
+## Quick Setup Reference
+See [QUICK_SETUP.md](mdc:QUICK_SETUP.md) for detailed setup instructions and [docs/ENVIRONMENT_SETUP.md](mdc:docs/ENVIRONMENT_SETUP.md) for comprehensive environment configuration.

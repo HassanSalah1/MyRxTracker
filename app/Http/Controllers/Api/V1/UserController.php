@@ -66,9 +66,14 @@ class UserController extends Controller
             'status' => UserStatus::ACTIVE,
         ]);
 
-        $accessToken = $user->createToken($request->device_name)->plainTextToken;
-
-        return $this->successResponse(trans('messages.register_success'), $this->userData($user, $accessToken));
+        //$accessToken = $user->createToken($request->device_name)->plainTextToken;
+        $result = $this->otpService->generateAndSendOtp($data['mobile'], 'mobile_verification');
+        
+        if ($result['success']) {
+            return $this->successResponse(trans('messages.register_success'));
+        } else {
+            return $this->errorResponse($result['message'], 422);
+        }
     }
 
     /**

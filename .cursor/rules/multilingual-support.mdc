@@ -1,0 +1,393 @@
+---
+globs: lang/**/*.php,app/Http/Middleware/SetLang.php
+description: Multilingual support implementation and language management
+---
+
+# Multilingual Support Implementation
+
+## Language Configuration
+
+### Supported Languages
+The application supports two languages:
+- **English (en)**: Default language
+- **Chinese (zh)**: Secondary language
+
+### Language Files Structure
+Language files are organized in [lang/](mdc:lang/) directory:
+
+```
+lang/
+├── en/
+│   ├── auth.php
+│   ├── messages.php
+│   ├── pagination.php
+│   ├── passwords.php
+│   └── validation.php
+└── zh/
+    ├── auth.php
+    ├── messages.php
+    ├── pagination.php
+    ├── passwords.php
+    └── validation.php
+```
+
+### Language Middleware
+The [app/Http/Middleware/SetLang.php](mdc:app/Http/Middleware/SetLang.php) middleware handles language switching:
+
+```php
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+
+class SetLang
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $locale = $request->header('Accept-Language', 'en');
+        
+        // Validate locale
+        if (!in_array($locale, ['en', 'zh'])) {
+            $locale = 'en';
+        }
+        
+        App::setLocale($locale);
+        Session::put('locale', $locale);
+        
+        return $next($request);
+    }
+}
+```
+
+## Database Multilingual Fields
+
+### Dual Language Fields Pattern
+For content that needs to be displayed in both languages, use separate fields:
+
+```php
+// Migration example
+Schema::create('events', function (Blueprint $table) {
+    $table->id();
+    $table->string('title_en');
+    $table->string('title_zh');
+    $table->text('description_en')->nullable();
+    $table->text('description_zh')->nullable();
+    $table->string('image')->nullable();
+    $table->timestamps();
+    $table->softDeletes();
+});
+```
+
+### Model Implementation
+```php
+class Event extends Model
+{
+    protected $fillable = [
+        'title_en', 'title_zh', 'description_en', 'description_zh', 'image'
+    ];
+
+    // Accessor for current locale title
+    public function getTitleAttribute()
+    {
+        $locale = app()->getLocale();
+        return $this->{"title_{$locale}"};
+    }
+
+    // Accessor for current locale description
+    public function getDescriptionAttribute()
+    {
+        $locale = app()->getLocale();
+        return $this->{"description_{$locale}"};
+    }
+}
+```
+
+## Filament Admin Multilingual Support
+
+### Form Components
+In Filament resources, use separate fields for each language:
+
+```php
+public static function form(Form $form): Form
+{
+    return $form->schema([
+        TextInput::make('title_en')
+            ->label('Title (English)')
+            ->required()
+            ->maxLength(255),
+            
+        TextInput::make('title_zh')
+            ->label('Title (Chinese)')
+            ->required()
+            ->maxLength(255),
+            
+        Forms\Components\RichEditor::make('description_en')
+            ->label('Description (English)'),
+            
+        Forms\Components\RichEditor::make('description_zh')
+            ->label('Description (Chinese)'),
+    ]);
+}
+```
+
+### Table Columns
+Display appropriate language content in table columns:
+
+```php
+public static function table(Table $table): Table
+{
+    return $table->columns([
+        Tables\Columns\TextColumn::make('title_en')
+            ->label('Title (English)'),
+            
+        Tables\Columns\TextColumn::make('title_zh')
+            ->label('Title (Chinese)'),
+            
+        Tables\Columns\TextColumn::make('created_at')
+            ->dateTime(),
+    ]);
+}
+```
+
+### Image Fields
+For images that need different versions per language:
+
+```php
+Forms\Components\FileUpload::make('image')
+    ->label('Image (English)')
+    ->image()
+    ->directory('sliders')
+    ->required(),
+    
+Forms\Components\FileUpload::make('image_zh')
+    ->label('Image (Chinese)')
+    ->image()
+    ->directory('sliders')
+    ->required(),
+```
+
+## API Multilingual Support
+
+### Language Detection
+The API automatically detects language from headers:
+
+```php
+// In API controllers
+public function banners()
+{
+    $locale = app()->getLocale();
+    $data = Slider::all()
+        ->map(function ($slider) use ($locale) {
+            $image = $locale == 'en' ? $slider->image : $slider->image_zh;
+            return url(Storage::url($image));
+        })->toArray();
+
+    return $this->successResponse(null, $data);
+}
+```
+
+### Response Localization
+Use Laravel's translation functions in API responses:
+
+```php
+public function sendOtp(Request $request)
+{
+    // ... OTP logic ...
+    
+    return $this->successResponse(
+        trans('messages.otp_sent_successfully'),
+        ['expires_in' => 600]
+    );
+}
+```
+
+## Translation Files
+
+### Messages File Structure
+The [lang/en/messages.php](mdc:lang/en/messages.php) and [lang/zh/messages.php](mdc:lang/zh/messages.php) contain application messages:
+
+```php
+// lang/en/messages.php
+return [
+    'otp_sent_successfully' => 'Verification code sent successfully',
+    'otp_verified_successfully' => 'Mobile number verified successfully',
+    'otp_invalid' => 'Invalid verification code',
+    'otp_expired' => 'Verification code has expired',
+    'otp_too_many_attempts' => 'Too many attempts. Please try again later.',
+    'user_not_found' => 'User not found',
+    'sms_balance_retrieved' => 'SMS balance retrieved successfully',
+    'sms_balance_check_failed' => 'Failed to retrieve SMS balance',
+];
+
+// lang/zh/messages.php
+return [
+    'otp_sent_successfully' => '验证码发送成功',
+    'otp_verified_successfully' => '手机号码验证成功',
+    'otp_invalid' => '验证码无效',
+    'otp_expired' => '验证码已过期',
+    'otp_too_many_attempts' => '尝试次数过多，请稍后再试',
+    'user_not_found' => '用户未找到',
+    'sms_balance_retrieved' => '短信余额获取成功',
+    'sms_balance_check_failed' => '短信余额获取失败',
+];
+```
+
+### Validation Messages
+Customize validation messages in [lang/en/validation.php](mdc:lang/en/validation.php) and [lang/zh/validation.php](mdc:lang/zh/validation.php):
+
+```php
+// lang/en/validation.php
+return [
+    'required' => 'The :attribute field is required.',
+    'email' => 'The :attribute must be a valid email address.',
+    'unique' => 'The :attribute has already been taken.',
+    'confirmed' => 'The :attribute confirmation does not match.',
+    'mobile.required' => 'Mobile number is required.',
+    'mobile.unique' => 'This mobile number is already registered.',
+];
+
+// lang/zh/validation.php
+return [
+    'required' => ':attribute 字段是必需的。',
+    'email' => ':attribute 必须是有效的电子邮件地址。',
+    'unique' => ':attribute 已被占用。',
+    'confirmed' => ':attribute 确认不匹配。',
+    'mobile.required' => '手机号码是必需的。',
+    'mobile.unique' => '此手机号码已注册。',
+];
+```
+
+## Frontend Multilingual Support
+
+### Language Switching
+Implement language switching in the frontend:
+
+```javascript
+// Set language via API header
+const setLanguage = (locale) => {
+    localStorage.setItem('locale', locale);
+    // Update API headers
+    axios.defaults.headers.common['Accept-Language'] = locale;
+};
+
+// Get current language
+const getCurrentLanguage = () => {
+    return localStorage.getItem('locale') || 'en';
+};
+```
+
+### Content Display
+Display appropriate language content based on current locale:
+
+```javascript
+// Example for displaying banners
+const displayBanners = (banners) => {
+    const locale = getCurrentLanguage();
+    return banners.map(banner => ({
+        ...banner,
+        image: locale === 'zh' ? banner.image_zh : banner.image
+    }));
+};
+```
+
+## Best Practices
+
+### Database Design
+- Use separate fields for each language (`title_en`, `title_zh`)
+- Always provide content in both languages
+- Use nullable fields for optional translations
+- Consider using JSON fields for complex multilingual data
+
+### Code Organization
+- Keep language files organized by feature
+- Use descriptive translation keys
+- Group related translations together
+- Maintain consistency in naming conventions
+
+### Performance Considerations
+- Cache translated content when appropriate
+- Use database indexes on language-specific fields
+- Consider using Redis for frequently accessed translations
+- Implement proper fallback mechanisms
+
+### Content Management
+- Provide admin interface for translation management
+- Implement translation validation
+- Use version control for translation files
+- Regular backup of translation data
+
+### Testing
+- Test all features in both languages
+- Verify proper fallback behavior
+- Test language switching functionality
+- Validate translation completeness
+
+## Implementation Examples
+
+### Controller with Multilingual Support
+```php
+public function getEvents(Request $request)
+{
+    $locale = app()->getLocale();
+    $events = Event::all()->map(function ($event) use ($locale) {
+        return [
+            'id' => $event->id,
+            'title' => $event->{"title_{$locale}"},
+            'description' => $event->{"description_{$locale}"},
+            'image' => $event->image,
+            'created_at' => $event->created_at,
+        ];
+    });
+
+    return $this->successResponse(
+        trans('messages.events_retrieved_successfully'),
+        $events
+    );
+}
+```
+
+### Model with Multilingual Accessors
+```php
+class Page extends Model
+{
+    protected $fillable = [
+        'title_en', 'title_zh', 'content_en', 'content_zh', 'slug'
+    ];
+
+    public function getTitleAttribute()
+    {
+        $locale = app()->getLocale();
+        return $this->{"title_{$locale}"};
+    }
+
+    public function getContentAttribute()
+    {
+        $locale = app()->getLocale();
+        return $this->{"content_{$locale}"};
+    }
+}
+```
+
+### Filament Resource with Multilingual Fields
+```php
+public static function form(Form $form): Form
+{
+    return $form->schema([
+        Section::make('English Content')
+            ->schema([
+                TextInput::make('title_en')->required(),
+                RichEditor::make('content_en'),
+            ]),
+            
+        Section::make('Chinese Content')
+            ->schema([
+                TextInput::make('title_zh')->required(),
+                RichEditor::make('content_zh'),
+            ]),
+    ]);
+}
+```
