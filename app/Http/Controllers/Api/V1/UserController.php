@@ -455,7 +455,8 @@ class UserController extends Controller
             $accessToken = $user->createToken($user->device_name ?? 'default')->plainTextToken;
             return $this->successResponse(trans('messages.mobile_verified_successfully'), $this->userData($user, $accessToken));
         } else {
-            $response = $this->errorResponse($result['message'], 422);
+            $message = $result['message'];
+            $response = $this->errorResponse($message, 422);
             
             if (isset($result['remaining_attempts'])) {
                 $response->setData(array_merge($response->getData(true), [
@@ -464,11 +465,22 @@ class UserController extends Controller
             }
             
             if (isset($result['locked_until'])) {
+                $humanSeconds = (int) $result['locked_until'];
+                $humanReadable = $humanSeconds >= 60
+                    ? trans('messages.time_in_minutes', ['minutes' => ceil($humanSeconds / 60)])
+                    : trans('messages.time_in_seconds', ['seconds' => $humanSeconds]);
+                $message = trans('messages.locked_until_message', [
+                    'base' => $result['message'],
+                    'time' => $humanReadable,
+                ]);
                 $response->setData(array_merge($response->getData(true), [
                     'locked_until' => $result['locked_until']
                 ]));
             }
             
+            $response->setData(array_merge($response->getData(true), [
+                'message' => $message,
+            ]));
             return $response;
         }
     }
