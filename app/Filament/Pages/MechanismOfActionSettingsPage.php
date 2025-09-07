@@ -14,7 +14,7 @@ class MechanismOfActionSettingsPage extends SettingsPage
 {
     protected static string $settings = MechanismOfActionSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $navigationLabel = 'Mechanism of Action Settings';
     protected static ?string $title = 'Mechanism of Action Page Settings';
 

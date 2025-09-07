@@ -14,6 +14,8 @@ use App\Http\Controllers\DosingController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PatientSupportController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\TermsPolicyController;
+use App\Http\Controllers\PrivacyPolicyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 
@@ -28,8 +30,8 @@ Route::get('/setting-expectations', [SettingExpectationsController::class, 'inde
 Route::get('/dosing', [DosingController::class, 'index'])->name('dosing');
 Route::get('/download', [DownloadController::class, 'index'])->name('download');
 Route::get('/patient-support', [PatientSupportController::class, 'index'])->name('patient-support');
-Route::get('/terms-policy', function () {return view('terms-policy');})->name('terms-policy');
-Route::get('/privacy-policy', function () {return view('privacy-policy');})->name('privacy-policy');
+Route::get('/terms-policy', [TermsPolicyController::class, 'index'])->name('terms-policy');
+Route::get('/privacy-policy', [PrivacyPolicyController::class, 'index'])->name('privacy-policy');
 
 // Language switching route
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');

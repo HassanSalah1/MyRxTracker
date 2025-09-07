@@ -14,7 +14,7 @@ class DownloadSettingsPage extends SettingsPage
 {
     protected static string $settings = DownloadSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-document';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $navigationLabel = 'Download Settings';
     protected static ?string $title = 'Download Resources Page Settings';
 

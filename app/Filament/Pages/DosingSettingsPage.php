@@ -14,7 +14,7 @@ class DosingSettingsPage extends SettingsPage
 {
     protected static string $settings = DosingSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-cube';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $navigationLabel = 'Dosing Settings';
     protected static ?string $title = 'Dosing Page Settings';
 

@@ -13,7 +13,7 @@ use Filament\Pages\SettingsPage;
 class HeaderFooterSettingsPage extends SettingsPage
 {
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $title = 'Header & Footer Settings';
     protected static ?string $navigationLabel = 'Header & Footer';
 

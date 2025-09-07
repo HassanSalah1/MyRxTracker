@@ -14,7 +14,7 @@ class SettingExpectationsSettingsPage extends SettingsPage
 {
     protected static string $settings = SettingExpectationsSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-clipboard';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $navigationLabel = 'Setting Expectations Settings';
     protected static ?string $title = 'Setting Expectations Page Settings';
 

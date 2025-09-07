@@ -14,7 +14,7 @@ class EfficacyProfileSettingsPage extends SettingsPage
 {
     protected static string $settings = EfficacyProfileSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $navigationLabel = 'Efficacy Profile Settings';
     protected static ?string $title = 'Efficacy Profile Page Settings';
 

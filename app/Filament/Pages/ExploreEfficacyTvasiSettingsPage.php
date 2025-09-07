@@ -14,7 +14,7 @@ class ExploreEfficacyTvasiSettingsPage extends SettingsPage
 {
     protected static string $settings = ExploreEfficacyTvasiSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $navigationLabel = 'Explore Efficacy T-VASI Settings';
     protected static ?string $title = 'Explore Efficacy T-VASI Page Settings';
 

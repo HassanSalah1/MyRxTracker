@@ -5,7 +5,7 @@
         <div class="row mt-4">
             <div class="col-lg-12 text-center my-auto pe-lg-5 text-center px-lg-5 mb-5">
                 <img src="{{asset('front-end/images/logo.png')}}" class="img-fluid logo" alt="logo">
-                <h1 class="default-color lh-base text-center my-5 px-lg-5">Privacy Policy</h1>
+                <h1 class="default-color lh-base text-center my-5 px-lg-5">{{ $privacyPolicySettings->getTitle() }}</h1>
                 <img src="{{asset('front-end/images/EfficacyProfile2.png')}}" class="img-fluid mb-5 headar-img" alt="headerImg" title="headerImg" loading="lazy" decoding="async">
             </div>
         </div>
@@ -13,47 +13,7 @@
 </header>
 
 <div class="container px-lg-5 py-5">
-    <section>
-        <p>This is the Privacy Policy (“Policy”) of RXILIENT MEDICAL (HONG KONG) LIMITED (“RXILIENT HK”) and its subsidiaries (collectively the “RXILIENT”).<br>
-        You have been directed to this Policy because a company within RXILIENT is collecting, using or disclosing your personal data.<br>
-        In this Policy, when we use “we”, “us” or “our”, we refer to the company (within RXILIENT) which is collecting your personal data, or which is operating the website which you are accessing or using.<br>
-        This Policy applies to all personal data that you may provide to us and the personal data we hold about you. By providing us with your personal data or by accessing, using or viewing the applicable website or any of its services, functions or contents (including transmitting, caching or storing of any such personal data), you shall be deemed to have agreed to each and all the terms, conditions, and notices in this Policy. If you do not agree, please cease use of the relevant website(s) and/or service(s) and DO NOT provide any personal data to us.</p>
-    </section>
-
-    <section>
-        <h2 class="h4 mt-4">1. What personal data is collected</h2>
-        <ol class="ps-3">
-            <li>
-                <strong>When you use our website, any service we provide or in your interaction with us, the personal data we may collect includes:</strong>
-                <ul>
-                    <li><strong>a) Data collected directly from you.</strong> This may be done through this website, over the phone, by email, or in person when you meet our staff or representatives. The data collected may include, but is not limited to:
-                        <ul>
-                            <li>your contact information, including your (first and last) name, (billing and/or delivery) address, birthdate, email address and, optionally, your telephone number. We need your e-mail address and telephone number so that we may contact you if we have questions or information for you regarding your order or the service (whichever is applicable) that we are providing or will provide to you;</li>
-                            <li>other information required to be able to process your order or to provide you with the service, such as information concerning the products you have ordered or the service we are providing to you, the billing and/or delivery address, banking and/or credit card details;</li>
-                            <li>if applicable, if you have created an online profile or account, the preferences and interests stored in such profile or account (please see below for further information concerning the profiles); and/or</li>
-                            <li>if you have contacted customer service, the details of this contact and the contact history; and/or</li>
-                            <li>If you provide information related to medical conditions, treatment history, or health status, we will obtain your explicit consent before collecting or using such data.</li>
-                        </ul>
-                    </li>
-                    <li><strong>b) Data collected by automated means.</strong> Various technologies may be used on our website and our mobile and web-based applications in order to make them more user-friendly, effective and secure. Such technologies may lead to data being collected automatically by us or by third parties on behalf of us. This data does not generally, but may, contain a user’s personal data. Examples of such technologies include:</li>
-                </ul>
-            </li>
-            <li>
-                <strong>Click-stream data.</strong> A visit to one of our websites results in data that is transmitted from your browser to our server being automatically collected and stored by us or by third parties on behalf of us. This data can include, in particular, the following:
-                <ul>
-                    <li>the visitor’s IP address</li>
-                    <li>the date and time of the visit</li>
-                    <li>the referral URL (the site from which the visitor has come)</li>
-                    <li>the pages visited on our website</li>
-                    <li>information about the browser used (browser type and version, operating system, etc).</li>
-                </ul>
-            </li>
-            <li><strong>Cookies.</strong> A number of places on our website and our mobile and web-based applications make use of cookies. These are essentially small text files that are stored on your computer’s hard drive or your user device by your web browser. We can use cookies to identify the owner of a user account and to store articles in a shopping basket during the purchasing process. In other words, cookies help to make our website or our (mobile and web-based) applications more user-friendly, more effective and more secure. The cookies usually used by us are so-called “session cookies”, which are automatically deleted at the end of the visit to the relevant website. By default, web browsers enable the use of cookies but this function can also be disabled. However, this will result in some services not being available. It is also possible to manually delete cookies after their use via the web browser. More information may be available from your web browser provider.</li>
-            <li><strong>Flash cookies.</strong> A particular form of cookie is the flash cookie. In contrast to normal cookies, these cookies are not created and saved by the web browser but are governed by the Adobe Flash plug-in. These can contain more information than normal cookies and cannot be deleted or disabled via the browser; this is only possible if you follow instructions available from the Adobe Flash Player website. You can also obtain more information about these cookies on that website.</li>
-            <li><strong>Web beacons and tracking links.</strong> Web beacons (also known as pixel tags and clear GIFs) involve graphics that are not apparent to the user. Tracking links and/or similar technologies consist of a few lines of programming code and can be embedded in our website or our (mobile) applications. In conjunction with cookies, these are primarily used for statistical analysis purposes. This technology can also be used for tracking traffic patterns on websites, as well as finding out if an e-mail has been received and opened and to see if there has been any response.</li>
-            <li><strong>Web analytics.</strong> Web analytics is the term given to a method for collecting and assessing the behaviour of visitors to websites and (mobile) applications. This includes the analysis of traffic patterns in order, for example, to determine the frequency of visits to certain parts of a website or (mobile) application, or to find out what information and/or services our visitors are most interested in. For these purposes, we primarily make use of click-stream data and the other techniques listed above. Web analytics are carried out by Google Analytics and/or other selected parties. You can find out more information about the processing of web analytics data by Google Analytics in paragraph 7 below.</li>
-        </ol>
-    </section>
+    {!! $privacyPolicySettings->getContent() !!}
 
     <section>
         <h2 class="h4 mt-4">2. How is the collected personal data used</h2>

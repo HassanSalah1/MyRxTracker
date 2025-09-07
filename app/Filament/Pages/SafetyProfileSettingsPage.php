@@ -14,7 +14,7 @@ class SafetyProfileSettingsPage extends SettingsPage
 {
     protected static string $settings = SafetyProfileSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $navigationLabel = 'Safety Profile Settings';
     protected static ?string $title = 'Safety Profile Page Settings';
 

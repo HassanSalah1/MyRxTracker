@@ -14,7 +14,7 @@ class PatientSupportSettingsPage extends SettingsPage
 {
     protected static string $settings = PatientSupportSettings::class;
     protected static ?string $navigationIcon = 'heroicon-o-heart';
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Website Management';
     protected static ?string $navigationLabel = 'Patient Support Settings';
     protected static ?string $title = 'Patient Support Page Settings';
 
