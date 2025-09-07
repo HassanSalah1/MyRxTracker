@@ -447,10 +447,10 @@ class UserController extends Controller
 
         if ($result['success']) {
             // Update user's mobile verification status if needed
-            $user = auth()->user();
+            $user = User::where('mobile', $request->mobile)->first();
             if ($user && $user->mobile === $request->mobile) {
                 // You can add a mobile_verified_at field if needed
-                // $user->update(['mobile_verified_at' => now()]);
+                 $user->update(['mobile_verified_at' => now()]);
             }
             $accessToken = $user->createToken($user->device_name ?? 'default')->plainTextToken;
             return $this->successResponse(trans('messages.mobile_verified_successfully'), $this->userData($user, $accessToken));
