@@ -91,6 +91,10 @@ class MechanismOfActionSettings extends Settings
     public string $reference_5_zh;
     public string $reference_6_zh;
 
+    // Abbreviations - localized
+    public string $abbreviations_en;
+    public string $abbreviations_zh;
+
     public static function group(): string
     {
         return 'mechanism_of_action';
@@ -170,5 +174,10 @@ class MechanismOfActionSettings extends Settings
     {
         $property = "reference_{$referenceNumber}_" . app()->getLocale();
         return $this->$property ?? $this->{"reference_{$referenceNumber}_en"};
+    }
+
+    public function getAbbreviations(): string
+    {
+        return app()->getLocale() === 'zh' ? $this->abbreviations_zh : $this->abbreviations_en;
     }
 }

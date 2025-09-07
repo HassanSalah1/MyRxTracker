@@ -353,6 +353,20 @@ class MechanismOfActionSettingsPage extends SettingsPage
                             ->rows(3),
                     ]),
                 ]),
+
+            Section::make('Abbreviations')
+                ->schema([
+                    Grid::make(2)->schema([
+                        Textarea::make('abbreviations_en')
+                            ->label('Abbreviations (English)')
+                            ->rows(3)
+                            ->maxLength(1000),
+                        Textarea::make('abbreviations_zh')
+                            ->label('Abbreviations (Chinese)')
+                            ->rows(3)
+                            ->maxLength(1000),
+                    ]),
+                ]),
         ];
     }
 
