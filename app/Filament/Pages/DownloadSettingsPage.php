@@ -39,13 +39,13 @@ class DownloadSettingsPage extends SettingsPage
                             ->image()
                             ->directory('download/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_image_zh')
                             ->label('Header Image (Chinese)')
                             ->image()
                             ->directory('download/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('header_secondary_image_en')
@@ -53,13 +53,13 @@ class DownloadSettingsPage extends SettingsPage
                             ->image()
                             ->directory('download/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_secondary_image_zh')
                             ->label('Secondary Image (Chinese)')
                             ->image()
                             ->directory('download/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -182,7 +182,7 @@ class DownloadSettingsPage extends SettingsPage
                         ->image()
                         ->directory('download/og')
                         ->visibility('public')
-                        ->required(),
+                        ,
                 ]),
         ];
     }

@@ -204,7 +204,7 @@ class DosingSettingsPage extends SettingsPage
                         ->image()
                         ->directory('dosing/og')
                         ->visibility('public')
-                        ->required(),
+                        ,
                 ]),
         ];
     }

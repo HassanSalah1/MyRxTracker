@@ -39,13 +39,13 @@ class SettingExpectationsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('setting-expectations/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_image_zh')
                             ->label('Header Image (Chinese)')
                             ->image()
                             ->directory('setting-expectations/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('header_secondary_image_en')
@@ -53,13 +53,13 @@ class SettingExpectationsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('setting-expectations/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_secondary_image_zh')
                             ->label('Secondary Image (Chinese)')
                             ->image()
                             ->directory('setting-expectations/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -245,13 +245,13 @@ class SettingExpectationsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('setting-expectations/patterns')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('perifollicular_image_zh')
                             ->label('Perifollicular Image (Chinese)')
                             ->image()
                             ->directory('setting-expectations/patterns')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         TextInput::make('marginal_title_en')
@@ -281,13 +281,13 @@ class SettingExpectationsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('setting-expectations/patterns')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('marginal_image_zh')
                             ->label('Marginal Image (Chinese)')
                             ->image()
                             ->directory('setting-expectations/patterns')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         TextInput::make('combined_title_en')
@@ -450,7 +450,7 @@ class SettingExpectationsSettingsPage extends SettingsPage
                         ->image()
                         ->directory('setting-expectations/og')
                         ->visibility('public')
-                        ->required(),
+                        ,
                 ]),
         ];
     }

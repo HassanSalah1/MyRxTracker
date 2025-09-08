@@ -49,13 +49,13 @@ class ExploreEfficacyFvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-fvasi/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_image_zh')
                             ->label('Header Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-fvasi/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('header_secondary_image_en')
@@ -63,13 +63,13 @@ class ExploreEfficacyFvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-fvasi/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_secondary_image_zh')
                             ->label('Secondary Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-fvasi/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -125,13 +125,13 @@ class ExploreEfficacyFvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-fvasi/study-design')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('study_design_image_zh')
                             ->label('Study Design Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-fvasi/study-design')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         Textarea::make('percentage_note_en')
@@ -163,13 +163,13 @@ class ExploreEfficacyFvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-fvasi/year-data')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('year_data_image_zh')
                             ->label('Year Data Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-fvasi/year-data')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         Textarea::make('f_vasi_definition_en')
@@ -296,7 +296,7 @@ class ExploreEfficacyFvasiSettingsPage extends SettingsPage
                         ->image()
                         ->directory('explore-efficacy-fvasi/og')
                         ->visibility('public')
-                        ->required(),
+                        ,
                 ]),
         ];
     }

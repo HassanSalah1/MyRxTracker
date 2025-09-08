@@ -49,13 +49,13 @@ class ExploreEfficacyTvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-tvasi/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_image_zh')
                             ->label('Header Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-tvasi/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('header_secondary_image_en')
@@ -63,13 +63,13 @@ class ExploreEfficacyTvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-tvasi/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_secondary_image_zh')
                             ->label('Secondary Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-tvasi/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -125,13 +125,13 @@ class ExploreEfficacyTvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-tvasi/study-design')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('study_design_image_zh')
                             ->label('Study Design Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-tvasi/study-design')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         Textarea::make('percentage_note_en')
@@ -151,13 +151,13 @@ class ExploreEfficacyTvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-tvasi/proportion')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('proportion_image_zh')
                             ->label('Proportion Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-tvasi/proportion')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         Textarea::make('proportion_caption_en')
@@ -189,13 +189,13 @@ class ExploreEfficacyTvasiSettingsPage extends SettingsPage
                             ->image()
                             ->directory('explore-efficacy-tvasi/year-data')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('year_data_image_zh')
                             ->label('Year Data Image (Chinese)')
                             ->image()
                             ->directory('explore-efficacy-tvasi/year-data')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         TextInput::make('chart_percentage_en')
@@ -334,7 +334,7 @@ class ExploreEfficacyTvasiSettingsPage extends SettingsPage
                         ->image()
                         ->directory('explore-efficacy-tvasi/og')
                         ->visibility('public')
-                        ->required(),
+                        ,
                 ]),
         ];
     }

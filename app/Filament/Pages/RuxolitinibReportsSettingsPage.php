@@ -49,13 +49,13 @@ class RuxolitinibReportsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('ruxolitinib-reports/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_image_zh')
                             ->label('Header Image (Chinese)')
                             ->image()
                             ->directory('ruxolitinib-reports/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -67,13 +67,13 @@ class RuxolitinibReportsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('ruxolitinib-reports/images')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('image_1_zh')
                             ->label('Image 1 (Chinese)')
                             ->image()
                             ->directory('ruxolitinib-reports/images')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('image_2_en')
@@ -81,13 +81,13 @@ class RuxolitinibReportsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('ruxolitinib-reports/images')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('image_2_zh')
                             ->label('Image 2 (Chinese)')
                             ->image()
                             ->directory('ruxolitinib-reports/images')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('image_3_en')
@@ -95,13 +95,13 @@ class RuxolitinibReportsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('ruxolitinib-reports/images')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('image_3_zh')
                             ->label('Image 3 (Chinese)')
                             ->image()
                             ->directory('ruxolitinib-reports/images')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('image_4_en')
@@ -109,13 +109,13 @@ class RuxolitinibReportsSettingsPage extends SettingsPage
                             ->image()
                             ->directory('ruxolitinib-reports/images')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('image_4_zh')
                             ->label('Image 4 (Chinese)')
                             ->image()
                             ->directory('ruxolitinib-reports/images')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -208,7 +208,7 @@ class RuxolitinibReportsSettingsPage extends SettingsPage
                         ->image()
                         ->directory('ruxolitinib-reports/og')
                         ->visibility('public')
-                        ->required(),
+                        ,
                 ]),
         ];
     }

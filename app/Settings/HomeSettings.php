@@ -11,7 +11,7 @@ class HomeSettings extends Settings
     public string $header_subtitle_en;
     public string $header_button_text_en;
     public string $header_button_link;
-    public string $header_image;
+    public ?string $header_image;
     
     // Header Section - Chinese
     public string $header_title_zh;
@@ -20,18 +20,18 @@ class HomeSettings extends Settings
     
     // Why Choose Section - English
     public string $why_choose_title_en;
-    public string $why_choose_subtitle_en;
+    //public string $why_choose_subtitle_en;
     
     // Why Choose Section - Chinese
     public string $why_choose_title_zh;
-    public string $why_choose_subtitle_zh;
+    //public string $why_choose_subtitle_zh;
     
     // Feature 1 - English
     public string $feature_1_title_en;
     public string $feature_1_description_en;
     public string $feature_1_link_text_en;
     public string $feature_1_link_url;
-    public string $feature_1_image;
+    public ?string $feature_1_image;
     
     // Feature 1 - Chinese
     public string $feature_1_title_zh;
@@ -43,7 +43,7 @@ class HomeSettings extends Settings
     public string $feature_2_description_en;
     public string $feature_2_link_text_en;
     public string $feature_2_link_url;
-    public string $feature_2_image;
+    public ?string $feature_2_image;
     
     // Feature 2 - Chinese
     public string $feature_2_title_zh;
@@ -55,7 +55,7 @@ class HomeSettings extends Settings
     public string $feature_3_description_en;
     public string $feature_3_link_text_en;
     public string $feature_3_link_url;
-    public string $feature_3_image;
+    public ?string $feature_3_image;
     
     // Feature 3 - Chinese
     public string $feature_3_title_zh;
@@ -67,7 +67,7 @@ class HomeSettings extends Settings
     public string $feature_4_description_en;
     public string $feature_4_link_text_en;
     public string $feature_4_link_url;
-    public string $feature_4_image;
+    public ?string $feature_4_image;
     
     // Feature 4 - Chinese
     public string $feature_4_title_zh;
@@ -77,19 +77,19 @@ class HomeSettings extends Settings
     // Meta Information - English
     public string $meta_title_en;
     public string $meta_description_en;
-    public string $meta_keywords_en;
+    public ?string $meta_keywords_en;
     
     // Meta Information - Chinese
     public string $meta_title_zh;
     public string $meta_description_zh;
-    public string $meta_keywords_zh;
+    public ?string $meta_keywords_zh;
     
     // SEO
-    public string $og_title_en;
-    public string $og_description_en;
-    public string $og_title_zh;
-    public string $og_description_zh;
-    public string $og_image;
+    public ?string $og_title_en;
+    public ?string $og_description_en;
+    public ?string $og_title_zh;
+    public ?string $og_description_zh;
+    public ?string $og_image;
 
     // References Section - English
     public string $references_title_en;
@@ -159,7 +159,17 @@ class HomeSettings extends Settings
 
     public function getFeatureImage(int $featureNumber): string
     {
-        return $this->{"feature_{$featureNumber}_image"};
+        $value = $this->{"feature_{$featureNumber}_image"} ?? null;
+        if (empty($value)) {
+            $value = match ($featureNumber) {
+                1 => '/front-end/images/choose/image (27).png',
+                2 => '/front-end/images/choose/image (28).png',
+                3 => '/front-end/images/choose/image (29).png',
+                4 => '/front-end/images/choose/Rectangle 5.png',
+                default => '',
+            };
+        }
+        return $this->toUrl($value);
     }
 
     public function getMetaTitle(): string
@@ -174,17 +184,43 @@ class HomeSettings extends Settings
 
     public function getMetaKeywords(): string
     {
-        return app()->getLocale() === 'zh' ? $this->meta_keywords_zh : $this->meta_keywords_en;
+        $value = app()->getLocale() === 'zh' ? $this->meta_keywords_zh : $this->meta_keywords_en;
+        return $value ?? '';
     }
 
     public function getOgTitle(): string
     {
-        return app()->getLocale() === 'zh' ? $this->og_title_zh : $this->og_title_en;
+        $value = app()->getLocale() === 'zh' ? $this->og_title_zh : $this->og_title_en;
+        return $value ?? '';
     }
 
     public function getOgDescription(): string
     {
-        return app()->getLocale() === 'zh' ? $this->og_description_zh : $this->og_description_en;
+        $value = app()->getLocale() === 'zh' ? $this->og_description_zh : $this->og_description_en;
+        return $value ?? '';
+    }
+
+    public function getHeaderImage(): string
+    {
+        $value = $this->header_image ?? null;
+        if (empty($value)) {
+            $value = '/front-end/images/headerImg.png';
+        }
+        return $this->toUrl($value);
+    }
+
+    protected function toUrl(?string $path): string
+    {
+        if (empty($path)) {
+            return '';
+        }
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+        if (str_starts_with($path, '/')) {
+            return asset($path);
+        }
+        return asset('storage/' . ltrim($path, '/'));
     }
 
     public function getReferencesTitle(): string

@@ -49,13 +49,13 @@ class EfficacyProfileSettingsPage extends SettingsPage
                             ->image()
                             ->directory('efficacy-profile/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_image_zh')
                             ->label('Header Image (Chinese)')
                             ->image()
                             ->directory('efficacy-profile/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('header_secondary_image_en')
@@ -63,13 +63,13 @@ class EfficacyProfileSettingsPage extends SettingsPage
                             ->image()
                             ->directory('efficacy-profile/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_secondary_image_zh')
                             ->label('Secondary Image (Chinese)')
                             ->image()
                             ->directory('efficacy-profile/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -103,13 +103,13 @@ class EfficacyProfileSettingsPage extends SettingsPage
                             ->image()
                             ->directory('efficacy-profile/study-design')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('study_design_image_zh')
                             ->label('Study Design Image (Chinese)')
                             ->image()
                             ->directory('efficacy-profile/study-design')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         Textarea::make('study_note_1_en')
@@ -249,13 +249,13 @@ class EfficacyProfileSettingsPage extends SettingsPage
                             ->image()
                             ->directory('efficacy-profile/demographics')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('demographics_image_zh')
                             ->label('Demographics Image (Chinese)')
                             ->image()
                             ->directory('efficacy-profile/demographics')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -360,7 +360,7 @@ class EfficacyProfileSettingsPage extends SettingsPage
                         ->image()
                         ->directory('efficacy-profile/og')
                         ->visibility('public')
-                        ->required(),
+                        ,
                 ]),
         ];
     }

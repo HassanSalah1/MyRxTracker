@@ -49,13 +49,13 @@ class SafetyProfileSettingsPage extends SettingsPage
                             ->image()
                             ->directory('safety-profile/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_image_zh')
                             ->label('Header Image (Chinese)')
                             ->image()
                             ->directory('safety-profile/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('header_secondary_image_en')
@@ -63,13 +63,13 @@ class SafetyProfileSettingsPage extends SettingsPage
                             ->image()
                             ->directory('safety-profile/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_secondary_image_zh')
                             ->label('Secondary Image (Chinese)')
                             ->image()
                             ->directory('safety-profile/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -131,13 +131,13 @@ class SafetyProfileSettingsPage extends SettingsPage
                             ->image()
                             ->directory('safety-profile/adverse')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('adverse_image_zh')
                             ->label('Adverse Reactions Image (Chinese)')
                             ->image()
                             ->directory('safety-profile/adverse')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         Textarea::make('adverse_note_1_en')
@@ -254,7 +254,7 @@ class SafetyProfileSettingsPage extends SettingsPage
                         ->image()
                         ->directory('safety-profile/og')
                         ->visibility('public')
-                        ->required(),
+                        ,
                 ]),
         ];
     }

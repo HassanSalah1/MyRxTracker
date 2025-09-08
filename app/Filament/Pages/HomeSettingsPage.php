@@ -59,14 +59,13 @@ class HomeSettingsPage extends SettingsPage
                         TextInput::make('header_button_link')
                             ->label('Button Link')
                             ->required()
-                            ->url()
                             ->maxLength(255),
                         FileUpload::make('header_image')
                             ->label('Header Image')
                             ->image()
                             ->directory('home/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -82,16 +81,7 @@ class HomeSettingsPage extends SettingsPage
                             ->required()
                             ->maxLength(255),
                     ]),
-                    Grid::make(2)->schema([
-                        Textarea::make('why_choose_subtitle_en')
-                            ->label('Section Subtitle (English)')
-                            ->maxLength(1000)
-                            ->rows(3),
-                        Textarea::make('why_choose_subtitle_zh')
-                            ->label('Section Subtitle (Chinese)')
-                            ->maxLength(1000)
-                            ->rows(3),
-                    ]),
+                     
                 ]),
 
             Section::make('Feature 1')
@@ -132,14 +122,14 @@ class HomeSettingsPage extends SettingsPage
                         TextInput::make('feature_1_link_url')
                             ->label('Link URL')
                             ->required()
-                            ->url()
+                            
                             ->maxLength(255),
                         FileUpload::make('feature_1_image')
                             ->label('Image')
                             ->image()
                             ->directory('home/features')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -181,14 +171,14 @@ class HomeSettingsPage extends SettingsPage
                         TextInput::make('feature_2_link_url')
                             ->label('Link URL')
                             ->required()
-                            ->url()
+                            
                             ->maxLength(255),
                         FileUpload::make('feature_2_image')
                             ->label('Image')
                             ->image()
                             ->directory('home/features')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -230,14 +220,14 @@ class HomeSettingsPage extends SettingsPage
                         TextInput::make('feature_3_link_url')
                             ->label('Link URL')
                             ->required()
-                            ->url()
+                            
                             ->maxLength(255),
                         FileUpload::make('feature_3_image')
                             ->label('Image')
                             ->image()
                             ->directory('home/features')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -279,14 +269,13 @@ class HomeSettingsPage extends SettingsPage
                         TextInput::make('feature_4_link_url')
                             ->label('Link URL')
                             ->required()
-                            ->url()
                             ->maxLength(255),
                         FileUpload::make('feature_4_image')
                             ->label('Image')
                             ->image()
                             ->directory('home/features')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
                 Section::make('References Section')

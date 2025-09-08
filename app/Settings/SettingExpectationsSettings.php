@@ -8,13 +8,13 @@ class SettingExpectationsSettings extends Settings
 {
     // Header Section - English
     public string $header_title_en;
-    public string $header_image_en;
-    public string $header_secondary_image_en;
+    public ?string $header_image_en;
+    public ?string $header_secondary_image_en;
     
     // Header Section - Chinese
     public string $header_title_zh;
-    public string $header_image_zh;
-    public string $header_secondary_image_zh;
+    public ?string $header_image_zh;
+    public ?string $header_secondary_image_zh;
     
     // Checklist Section - English
     public string $checklist_title_en;
@@ -52,10 +52,10 @@ class SettingExpectationsSettings extends Settings
     public string $patterns_title_en;
     public string $perifollicular_title_en;
     public string $perifollicular_description_en;
-    public string $perifollicular_image_en;
+    public ?string $perifollicular_image_en;
     public string $marginal_title_en;
     public string $marginal_description_en;
-    public string $marginal_image_en;
+    public ?string $marginal_image_en;
     public string $combined_title_en;
     public string $combined_description_en;
     
@@ -63,29 +63,29 @@ class SettingExpectationsSettings extends Settings
     public string $patterns_title_zh;
     public string $perifollicular_title_zh;
     public string $perifollicular_description_zh;
-    public string $perifollicular_image_zh;
+    public ?string $perifollicular_image_zh;
     public string $marginal_title_zh;
     public string $marginal_description_zh;
-    public string $marginal_image_zh;
+    public ?string $marginal_image_zh;
     public string $combined_title_zh;
     public string $combined_description_zh;
     
     // Meta Information - English
     public string $meta_title_en;
     public string $meta_description_en;
-    public string $meta_keywords_en;
+    public ?string $meta_keywords_en;
     
     // Meta Information - Chinese
     public string $meta_title_zh;
     public string $meta_description_zh;
-    public string $meta_keywords_zh;
+    public ?string $meta_keywords_zh;
     
     // SEO
-    public string $og_title_en;
-    public string $og_description_en;
-    public string $og_title_zh;
-    public string $og_description_zh;
-    public string $og_image;
+    public ?string $og_title_en;
+    public ?string $og_description_en;
+    public ?string $og_title_zh;
+    public ?string $og_description_zh;
+    public ?string $og_image;
 
     // References Section - English
     public string $references_title_en;
@@ -116,12 +116,20 @@ class SettingExpectationsSettings extends Settings
 
     public function getHeaderImage(): string
     {
-        return app()->getLocale() === 'zh' ? $this->header_image_zh : $this->header_image_en;
+        $value = app()->getLocale() === 'zh' ? ($this->header_image_zh ?? null) : ($this->header_image_en ?? null);
+        if (empty($value)) {
+            $value = '/front-end/images/EfficacyProfile2.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getHeaderSecondaryImage(): string
     {
-        return app()->getLocale() === 'zh' ? $this->header_secondary_image_zh : $this->header_secondary_image_en;
+        $value = app()->getLocale() === 'zh' ? ($this->header_secondary_image_zh ?? null) : ($this->header_secondary_image_en ?? null);
+        if (empty($value)) {
+            $value = '/front-end/images/Patient.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getChecklistTitle(): string
@@ -187,7 +195,11 @@ class SettingExpectationsSettings extends Settings
 
     public function getPerifollicularImage(): string
     {
-        return app()->getLocale() === 'zh' ? $this->perifollicular_image_zh : $this->perifollicular_image_en;
+        $value = app()->getLocale() === 'zh' ? ($this->perifollicular_image_zh ?? null) : ($this->perifollicular_image_en ?? null);
+        if (empty($value)) {
+            $value = '/front-end/images/Perifollicular.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getMarginalTitle(): string
@@ -202,7 +214,11 @@ class SettingExpectationsSettings extends Settings
 
     public function getMarginalImage(): string
     {
-        return app()->getLocale() === 'zh' ? $this->marginal_image_zh : $this->marginal_image_en;
+        $value = app()->getLocale() === 'zh' ? ($this->marginal_image_zh ?? null) : ($this->marginal_image_en ?? null);
+        if (empty($value)) {
+            $value = '/front-end/images/Marginal.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getCombinedTitle(): string
@@ -227,17 +243,20 @@ class SettingExpectationsSettings extends Settings
 
     public function getMetaKeywords(): string
     {
-        return app()->getLocale() === 'zh' ? $this->meta_keywords_zh : $this->meta_keywords_en;
+        $value = app()->getLocale() === 'zh' ? $this->meta_keywords_zh : $this->meta_keywords_en;
+        return $value ?? '';
     }
 
     public function getOgTitle(): string
     {
-        return app()->getLocale() === 'zh' ? $this->og_title_zh : $this->og_title_en;
+        $value = app()->getLocale() === 'zh' ? $this->og_title_zh : $this->og_title_en;
+        return $value ?? '';
     }
 
     public function getOgDescription(): string
     {
-        return app()->getLocale() === 'zh' ? $this->og_description_zh : $this->og_description_en;
+        $value = app()->getLocale() === 'zh' ? $this->og_description_zh : $this->og_description_en;
+        return $value ?? '';
     }
 
     public function getReferencesTitle(): string
@@ -249,5 +268,19 @@ class SettingExpectationsSettings extends Settings
     {
         $property = "reference_{$referenceNumber}_" . app()->getLocale();
         return $this->$property ?? $this->{"reference_{$referenceNumber}_en"};
+    }
+
+    protected function toUrl(?string $path): string
+    {
+        if (empty($path)) {
+            return '';
+        }
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+        if (str_starts_with($path, '/')) {
+            return asset($path);
+        }
+        return asset('storage/' . ltrim($path, '/'));
     }
 }

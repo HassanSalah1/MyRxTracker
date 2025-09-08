@@ -9,24 +9,24 @@ class ExploreEfficacyFvasiSettings extends Settings
     // Header Section - English
     public string $header_title_en;
     public string $header_subtitle_en;
-    public string $header_image_en;
-    public string $header_secondary_image_en;
+    public ?string $header_image_en;
+    public ?string $header_secondary_image_en;
     
     // Header Section - Chinese
     public string $header_title_zh;
     public string $header_subtitle_zh;
-    public string $header_image_zh;
-    public string $header_secondary_image_zh;
+    public ?string $header_image_zh;
+    public ?string $header_secondary_image_zh;
     
     // Tab Section - English
     public string $tab_1_title_en;
     public string $tab_2_title_en;
     public string $highlight_text_en;
     public string $efficacy_title_en;
-    public string $study_design_image_en;
+    public ?string $study_design_image_en;
     public string $percentage_note_en;
     public string $year_data_title_en;
-    public string $year_data_image_en;
+    public ?string $year_data_image_en;
     public string $f_vasi_definition_en;
     public string $chart_percentage_en;
     public string $chart_description_en;
@@ -36,10 +36,10 @@ class ExploreEfficacyFvasiSettings extends Settings
     public string $tab_2_title_zh;
     public string $highlight_text_zh;
     public string $efficacy_title_zh;
-    public string $study_design_image_zh;
+    public ?string $study_design_image_zh;
     public string $percentage_note_zh;
     public string $year_data_title_zh;
-    public string $year_data_image_zh;
+    public ?string $year_data_image_zh;
     public string $f_vasi_definition_zh;
     public string $chart_percentage_zh;
     public string $chart_description_zh;
@@ -47,19 +47,19 @@ class ExploreEfficacyFvasiSettings extends Settings
     // Meta Information - English
     public string $meta_title_en;
     public string $meta_description_en;
-    public string $meta_keywords_en;
+    public ?string $meta_keywords_en;
     
     // Meta Information - Chinese
     public string $meta_title_zh;
     public string $meta_description_zh;
-    public string $meta_keywords_zh;
+    public ?string $meta_keywords_zh;
     
     // SEO
-    public string $og_title_en;
-    public string $og_description_en;
-    public string $og_title_zh;
-    public string $og_description_zh;
-    public string $og_image;
+    public ?string $og_title_en;
+    public ?string $og_description_en;
+    public ?string $og_title_zh;
+    public ?string $og_description_zh;
+    public ?string $og_image;
 
     // References Section - English
     public string $references_title_en;
@@ -87,12 +87,20 @@ class ExploreEfficacyFvasiSettings extends Settings
 
     public function getHeaderImage(): string
     {
-        return app()->getLocale() === 'zh' ? $this->header_image_zh : $this->header_image_en;
+        $value = app()->getLocale() === 'zh' ? ($this->header_image_zh ?? null) : ($this->header_image_en ?? null);
+        if (empty($value)) {
+            $value = '/front-end/images/EfficacyProfile2.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getHeaderSecondaryImage(): string
     {
-        return app()->getLocale() === 'zh' ? $this->header_secondary_image_zh : $this->header_secondary_image_en;
+        $value = app()->getLocale() === 'zh' ? ($this->header_secondary_image_zh ?? null) : ($this->header_secondary_image_en ?? null);
+        if (empty($value)) {
+            $value = '/front-end/images/f-vasi.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getTabTitle(int $tabNumber): string
@@ -113,7 +121,11 @@ class ExploreEfficacyFvasiSettings extends Settings
 
     public function getStudyDesignImage(): string
     {
-        return app()->getLocale() === 'zh' ? $this->study_design_image_zh : $this->study_design_image_en;
+        $value = app()->getLocale() === 'zh' ? ($this->study_design_image_zh ?? null) : ($this->study_design_image_en ?? null);
+        if (empty($value)) {
+            $value = '/front-end/images/weekData.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getPercentageNote(): string
@@ -128,7 +140,11 @@ class ExploreEfficacyFvasiSettings extends Settings
 
     public function getYearDataImage(): string
     {
-        return app()->getLocale() === 'zh' ? $this->year_data_image_zh : $this->year_data_image_en;
+        $value = app()->getLocale() === 'zh' ? ($this->year_data_image_zh ?? null) : ($this->year_data_image_en ?? null);
+        if (empty($value)) {
+            $value = '/front-end/images/yearData.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getFVasiDefinition(): string
@@ -158,17 +174,34 @@ class ExploreEfficacyFvasiSettings extends Settings
 
     public function getMetaKeywords(): string
     {
-        return app()->getLocale() === 'zh' ? $this->meta_keywords_zh : $this->meta_keywords_en;
+        $value = app()->getLocale() === 'zh' ? $this->meta_keywords_zh : $this->meta_keywords_en;
+        return $value ?? '';
     }
 
     public function getOgTitle(): string
     {
-        return app()->getLocale() === 'zh' ? $this->og_title_zh : $this->og_title_en;
+        $value = app()->getLocale() === 'zh' ? $this->og_title_zh : $this->og_title_en;
+        return $value ?? '';
     }
 
     public function getOgDescription(): string
     {
-        return app()->getLocale() === 'zh' ? $this->og_description_zh : $this->og_description_en;
+        $value = app()->getLocale() === 'zh' ? $this->og_description_zh : $this->og_description_en;
+        return $value ?? '';
+    }
+
+    protected function toUrl(?string $path): string
+    {
+        if (empty($path)) {
+            return '';
+        }
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+        if (str_starts_with($path, '/')) {
+            return asset($path);
+        }
+        return asset('storage/' . ltrim($path, '/'));
     }
 
     public function getReferencesTitle(): string
