@@ -39,13 +39,13 @@ class MechanismOfActionSettingsPage extends SettingsPage
                             ->image()
                             ->directory('mechanism-of-action/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_image_zh')
                             ->label('Header Image (Chinese)')
                             ->image()
                             ->directory('mechanism-of-action/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         FileUpload::make('header_secondary_image_en')
