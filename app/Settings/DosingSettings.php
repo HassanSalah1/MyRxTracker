@@ -53,6 +53,9 @@ class DosingSettings extends Settings
     public string $references_title_zh;
     public string $reference_1_zh;
 
+    // Pack image shown mid page
+    public ?string $pack_image;
+
     public static function group(): string
     {
         return 'dosing';
@@ -125,6 +128,15 @@ class DosingSettings extends Settings
     {
         $property = "reference_{$referenceNumber}_" . app()->getLocale();
         return $this->$property ?? $this->{"reference_{$referenceNumber}_en"};
+    }
+
+    public function getPackImage(): string
+    {
+        $value = $this->pack_image ?? null;
+        if (empty($value)) {
+            $value = '/front-end/images/lumirix_pack.png';
+        }
+        return $this->toUrl($value);
     }
 
     protected function toUrl(?string $path): string

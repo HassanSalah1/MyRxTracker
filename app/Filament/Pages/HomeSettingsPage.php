@@ -81,7 +81,12 @@ class HomeSettingsPage extends SettingsPage
                             ->required()
                             ->maxLength(255),
                     ]),
-                     
+                    FileUpload::make('why_choose_image')
+                        ->label('Why Choose Image')
+                        ->image()
+                        ->directory('home/why-choose')
+                        ->visibility('public')
+                        ,
                 ]),
 
             Section::make('Feature 1')

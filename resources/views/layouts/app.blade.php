@@ -54,6 +54,7 @@
             }
         }
     </style>
+    @stack('styles')
 </head>
 
 <body>

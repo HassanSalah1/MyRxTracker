@@ -115,6 +115,16 @@ class DosingSettingsPage extends SettingsPage
                     ]),
                 ]),
 
+            Section::make('Mid Page Image')
+                ->schema([
+                    FileUpload::make('pack_image')
+                        ->label('Pack Image')
+                        ->image()
+                        ->directory('dosing/pack')
+                        ->visibility('public')
+                        ,
+                ]),
+
             Section::make('References Section')
                 ->schema([
                     Grid::make(2)->schema([

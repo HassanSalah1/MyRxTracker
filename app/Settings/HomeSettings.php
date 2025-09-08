@@ -21,6 +21,7 @@ class HomeSettings extends Settings
     // Why Choose Section - English
     public string $why_choose_title_en;
     //public string $why_choose_subtitle_en;
+    public ?string $why_choose_image;
     
     // Why Choose Section - Chinese
     public string $why_choose_title_zh;
@@ -198,6 +199,15 @@ class HomeSettings extends Settings
     {
         $value = app()->getLocale() === 'zh' ? $this->og_description_zh : $this->og_description_en;
         return $value ?? '';
+    }
+
+    public function getWhyChooseImage(): string
+    {
+        $value = $this->why_choose_image ?? null;
+        if (empty($value)) {
+            $value = '/front-end/images/home_why.png';
+        }
+        return $this->toUrl($value);
     }
 
     public function getHeaderImage(): string

@@ -1,5 +1,14 @@
 @extends("layouts.app")
 
+@push('styles')
+<style>
+    @media (min-width: 991px) {
+    .w-lg-65 {
+        width: 65%;
+    }
+    }   
+</style>
+@endpush
 @section("content")
     <header id="home-header" class="position-relative">
         <!-- <video autoplay muted loop>
@@ -31,9 +40,20 @@
     <!-- why choose -->
     <div class="why-choose mt-5">
         <div class="container px-lg-5">
-            <h2 class="default-color fw-normal w-lg-45 mb-5 pb-4">
-                {{ $homeSettings->getWhyChooseTitle() }}
-            </h2>
+            <div class="row">
+                <div class="col-lg-8">
+                <h2 class="default-color fw-normal w-lg-65 mb-5 pb-4">
+                    {{ $homeSettings->getWhyChooseTitle() }}
+                    
+                </h2>
+                </div>
+                <div class="col-lg-4">
+                    
+                <img src="{{ $homeSettings->getWhyChooseImage() }}" class="img-fluid" title="{{ $homeSettings->getWhyChooseTitle() }}"
+                    loading="lazy" decoding="async" alt="{{ $homeSettings->getWhyChooseTitle() }}">
+                </div>
+            </div>
+            
             <div class="row">
                 <div class="col-lg-3 my-3">
                     <div class="card">

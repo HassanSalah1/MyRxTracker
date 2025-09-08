@@ -51,6 +51,9 @@
             </div>
         </div>
 
+        <div class="container px-lg-5 py-5 text-center">
+            <img src="{{ $dosingSettings->getPackImage() }}" class="img-fluid" alt="Dosing" title="Dosing" loading="lazy" decoding="async">
+        </div>
         <!--References  -->
         <div class="References mb-lg-5">
             <h6>
