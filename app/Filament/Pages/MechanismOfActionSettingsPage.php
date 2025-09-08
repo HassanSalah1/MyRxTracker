@@ -53,13 +53,13 @@ class MechanismOfActionSettingsPage extends SettingsPage
                             ->image()
                             ->directory('mechanism-of-action/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('header_secondary_image_zh')
                             ->label('Secondary Image (Chinese)')
                             ->image()
                             ->directory('mechanism-of-action/header')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                 ]),
 
@@ -92,14 +92,12 @@ class MechanismOfActionSettingsPage extends SettingsPage
                             ->label('Image (English)')
                             ->image()
                             ->directory('mechanism-of-action/section1')
-                            ->visibility('public')
-                            ->required(),
+                            ->visibility('public'),
                         FileUpload::make('section_1_image_zh')
                             ->label('Image (Chinese)')
                             ->image()
                             ->directory('mechanism-of-action/section1')
-                            ->visibility('public')
-                            ->required(),
+                            ->visibility('public'),
                     ]),
                     Grid::make(2)->schema([
                         TextInput::make('section_1_caption_en')
@@ -167,13 +165,13 @@ class MechanismOfActionSettingsPage extends SettingsPage
                             ->image()
                             ->directory('mechanism-of-action/section3')
                             ->visibility('public')
-                            ->required(),
+                            ,
                         FileUpload::make('section_3_image_zh')
                             ->label('Image (Chinese)')
                             ->image()
                             ->directory('mechanism-of-action/section3')
                             ->visibility('public')
-                            ->required(),
+                            ,
                     ]),
                     Grid::make(2)->schema([
                         TextInput::make('section_3_caption_en')
