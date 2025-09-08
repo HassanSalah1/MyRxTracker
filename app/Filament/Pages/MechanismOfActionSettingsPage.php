@@ -209,63 +209,20 @@ class MechanismOfActionSettingsPage extends SettingsPage
                     ]),
                 ]),
 
-            Section::make('SEO & Meta Information')
+            
+                Section::make('Abbreviations')
                 ->schema([
                     Grid::make(2)->schema([
-                        TextInput::make('meta_title_en')
-                            ->label('Meta Title (English)')
-                            ->required()
-                            ->maxLength(60),
-                        TextInput::make('meta_title_zh')
-                            ->label('Meta Title (Chinese)')
-                            ->required()
-                            ->maxLength(60),
+                        Textarea::make('abbreviations_en')
+                            ->label('Abbreviations (English)')
+                            ->rows(3)
+                            ->maxLength(1000),
+                        Textarea::make('abbreviations_zh')
+                            ->label('Abbreviations (Chinese)')
+                            ->rows(3)
+                            ->maxLength(1000),
                     ]),
-                    Grid::make(2)->schema([
-                        Textarea::make('meta_description_en')
-                            ->label('Meta Description (English)')
-                            ->required()
-                            ->maxLength(160)
-                            ->rows(2),
-                        Textarea::make('meta_description_zh')
-                            ->label('Meta Description (Chinese)')
-                            ->required()
-                            ->maxLength(160)
-                            ->rows(2),
-                    ]),
-                    Grid::make(2)->schema([
-                        TextInput::make('meta_keywords_en')
-                            ->label('Meta Keywords (English)')
-                            ->maxLength(255),
-                        TextInput::make('meta_keywords_zh')
-                            ->label('Meta Keywords (Chinese)')
-                            ->maxLength(255),
-                    ]),
-                    Grid::make(2)->schema([
-                        TextInput::make('og_title_en')
-                            ->label('Open Graph Title (English)')
-                            ->maxLength(60),
-                        TextInput::make('og_title_zh')
-                            ->label('Open Graph Title (Chinese)')
-                            ->maxLength(60),
-                    ]),
-                    Grid::make(2)->schema([
-                        Textarea::make('og_description_en')
-                            ->label('Open Graph Description (English)')
-                            ->maxLength(160)
-                            ->rows(2),
-                        Textarea::make('og_description_zh')
-                            ->label('Open Graph Description (Chinese)')
-                            ->maxLength(160)
-                            ->rows(2),
-                    ]),
-                    FileUpload::make('og_image')
-                        ->label('Open Graph Image')
-                        ->image()
-                        ->directory('mechanism-of-action/og')
-                        ->visibility('public'),
                 ]),
-
             Section::make('References Section')
                 ->schema([
                     Grid::make(2)->schema([
@@ -352,19 +309,63 @@ class MechanismOfActionSettingsPage extends SettingsPage
                     ]),
                 ]),
 
-            Section::make('Abbreviations')
+                Section::make('SEO & Meta Information')
                 ->schema([
                     Grid::make(2)->schema([
-                        Textarea::make('abbreviations_en')
-                            ->label('Abbreviations (English)')
-                            ->rows(3)
-                            ->maxLength(1000),
-                        Textarea::make('abbreviations_zh')
-                            ->label('Abbreviations (Chinese)')
-                            ->rows(3)
-                            ->maxLength(1000),
+                        TextInput::make('meta_title_en')
+                            ->label('Meta Title (English)')
+                            ->required()
+                            ->maxLength(60),
+                        TextInput::make('meta_title_zh')
+                            ->label('Meta Title (Chinese)')
+                            ->required()
+                            ->maxLength(60),
                     ]),
-                ]),
+                    Grid::make(2)->schema([
+                        Textarea::make('meta_description_en')
+                            ->label('Meta Description (English)')
+                            ->required()
+                            ->maxLength(160)
+                            ->rows(2),
+                        Textarea::make('meta_description_zh')
+                            ->label('Meta Description (Chinese)')
+                            ->required()
+                            ->maxLength(160)
+                            ->rows(2),
+                    ]),
+                    Grid::make(2)->schema([
+                        TextInput::make('meta_keywords_en')
+                            ->label('Meta Keywords (English)')
+                            ->maxLength(255),
+                        TextInput::make('meta_keywords_zh')
+                            ->label('Meta Keywords (Chinese)')
+                            ->maxLength(255),
+                    ]),
+                    Grid::make(2)->schema([
+                        TextInput::make('og_title_en')
+                            ->label('Open Graph Title (English)')
+                            ->maxLength(60),
+                        TextInput::make('og_title_zh')
+                            ->label('Open Graph Title (Chinese)')
+                            ->maxLength(60),
+                    ]),
+                    Grid::make(2)->schema([
+                        Textarea::make('og_description_en')
+                            ->label('Open Graph Description (English)')
+                            ->maxLength(160)
+                            ->rows(2),
+                        Textarea::make('og_description_zh')
+                            ->label('Open Graph Description (Chinese)')
+                            ->maxLength(160)
+                            ->rows(2),
+                    ]),
+                    FileUpload::make('og_image')
+                        ->label('Open Graph Image')
+                        ->image()
+                        ->directory('mechanism-of-action/og')
+                        ->visibility('public'),
+                ])->collapsible()
+                ->collapsed(),
         ];
     }
 
