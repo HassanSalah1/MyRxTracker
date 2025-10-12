@@ -31,7 +31,7 @@
                     </a>
                 </div>
                 <div class="col-lg-6">
-                    <img src="{{ asset($homeSettings->header_image) }}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
+                    <img src="{{ asset('storage/'.$homeSettings->header_image) }}" class="img-fluid headar-img" alt="headerImg" title="headerImg"
                          loading="lazy" decoding="async">
                 </div>
             </div>
