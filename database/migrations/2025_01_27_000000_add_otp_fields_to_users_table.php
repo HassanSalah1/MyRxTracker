@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('otp_code')->nullable()->after('notification_permission');
+            $afterColumn = Schema::hasColumn('users', 'notification_permission')
+                ? 'notification_permission'
+                : 'email'; // fallback if notification_permission not present yet
+
+            $table->string('otp_code')->nullable()->after($afterColumn);
             $table->timestamp('otp_expires_at')->nullable()->after('otp_code');
             $table->integer('otp_attempts')->default(0)->after('otp_expires_at');
             $table->timestamp('otp_locked_until')->nullable()->after('otp_attempts');
