@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enums\RedeemingPacksStatus;
 return new class extends Migration
 {
     /**
@@ -15,8 +14,9 @@ return new class extends Migration
             $table->date('redemption_date')->nullable()->change();
             $table->string('serial_number')->nullable()->change();
             $table->date('next_consultation_date')->nullable()->after('redemption_date');
-            $table->enum('status', RedeemingPacksStatus::values())
-                ->default(RedeemingPacksStatus::REQUEST->value)
+            // Use string column to avoid dependency on removed enum
+            $table->string('status')
+                ->default('request')
                 ->nullable()
                 ->after('redemption_date');
         });
