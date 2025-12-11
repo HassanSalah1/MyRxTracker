@@ -2,15 +2,17 @@
 
 namespace App\Enums;
 
-enum UserStatus: string
+enum ProgramStatus: string
 {
-    case ACTIVE = 'active';
-    case INACTIVE = 'inactive';
-    case PENDING = 'pending';
+    case ELIGIBLE = 'eligible';
+    case PENDING_APPROVAL = 'pending_approval';
+    case APPROVED = 'approved';
     case COMPLETED = 'completed';
+    case REJECTED = 'rejected';
 
     public static function values(): array
     {
         return array_column(self::cases(), 'value');
     }
 }
+

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Event;
+use App\Observers\EventObserver;
 use App\Settings\AppSettings;
 use App\Settings\SiteSettings;
 use Illuminate\Support\ServiceProvider;
@@ -24,5 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
 //        app(SettingsContainer::class)->register(SiteSettings::class);
 //        app(SettingsContainer::class)->register(AppSettings::class);
+        
+        Event::observe(EventObserver::class);
     }
 }

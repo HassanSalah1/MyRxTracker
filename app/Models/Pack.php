@@ -23,17 +23,8 @@ class Pack extends Model
         return $this->{"name_{$locale}"}; // Dynamically access the name_en or name_zh attribute
     }
 
-    public function starterPacks()
+    public function purchases()
     {
-        return $this->hasMany(StarterPack::class);
-    }
-
-    public function onTrackPacks()
-    {
-        return $this->hasMany(OnTrackPack::class);
-    }
-    public function redeemingPacks()
-    {
-        return $this->hasMany(RedeemingPack::class);
+        return $this->hasMany(Purchase::class);
     }
 }

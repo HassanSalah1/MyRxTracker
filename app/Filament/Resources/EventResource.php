@@ -42,14 +42,15 @@ class EventResource extends Resource
     {
         return $form
             ->schema([
-                //
                 TextInput::make('title_en')->required()->maxLength(255),
                 TextInput::make('title_zh')->required()->maxLength(255),
                 Forms\Components\RichEditor::make('description_en'),
                 Forms\Components\RichEditor::make('description_zh'),
                 FileUpload::make('image')->image()->directory('events'),
-
-
+                Forms\Components\Toggle::make('send_notification')
+                    ->label('Send notification to all users')
+                    ->default(true)
+                    ->helperText('Send push notification when this event is created'),
             ]);
     }
 

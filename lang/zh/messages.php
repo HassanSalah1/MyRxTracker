@@ -67,4 +67,15 @@ return [
     'time_in_minutes' => ':minutes 分钟',
     'retry_after_message' => ':base 请在 :time 后重试。',
     'locked_until_message' => ':base 请在 :time 后重试。',
+
+    // Purchase Program Messages
+    'purchase_submitted_successfully' => '购买提交成功。等待管理员批准。',
+    'purchase_already_submitted' => '您已经提交了购买请求。',
+    'purchase_already_exists' => '您已经有一个活跃的购买。',
+    'purchase_not_approved' => '您的购买尚未获得批准。',
+    'purchase_already_redeemed' => '您已经兑换了免费管。',
+    'no_purchase_found' => '未找到此用户的购买记录。',
+    'redemption_successful' => '免费管兑换成功。计划已完成。',
+    'new_event_created' => '新活动可用',
+    'pack_not_found' => '未找到包装',
 ];

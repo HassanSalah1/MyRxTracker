@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\ProgramStatus;
 use App\Enums\Roles;
 use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,11 +39,13 @@ class User extends Authenticatable
         'otp_expires_at',
         'otp_attempts',
         'otp_locked_until',
+        'program_status',
     ];
 
     protected $casts = [
         'role' => Roles::class,
         'status' => UserStatus::class,
+        'program_status' => ProgramStatus::class,
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -77,18 +80,9 @@ class User extends Authenticatable
         return $this->hasManyThrough(Pack::class, 'user_packs');
     }
 
-    public function starterPacks()
+    public function purchase()
     {
-        return $this->hasOne(StarterPack::class);
-    }
-
-    public function onTrackApplications()
-    {
-        return $this->hasMany(OnTrackPack::class);
-    }
-    public function redeemingPacks()
-    {
-        return $this->hasMany(RedeemingPack::class);
+        return $this->hasOne(Purchase::class);
     }
     public function attendingEvents()
     {

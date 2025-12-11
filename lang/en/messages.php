@@ -80,4 +80,15 @@ return [
     'retry_after_message' => ':base Please try again after :time.',
     'locked_until_message' => ':base Please try again after :time.',
 
+    // Purchase Program Messages
+    'purchase_submitted_successfully' => 'Purchase submitted successfully. Waiting for admin approval.',
+    'purchase_already_submitted' => 'You have already submitted a purchase request.',
+    'purchase_already_exists' => 'You already have an active purchase.',
+    'purchase_not_approved' => 'Your purchase has not been approved yet.',
+    'purchase_already_redeemed' => 'You have already redeemed your free tube.',
+    'no_purchase_found' => 'No purchase found for this user.',
+    'redemption_successful' => 'Free tube redeemed successfully. Program completed.',
+    'new_event_created' => 'New Event Available',
+    'pack_not_found' => 'Pack not found',
+
 ];

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Enums\ApplicationMode;
-use App\Enums\PacksStatus;
 use App\Enums\Roles;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
@@ -550,21 +548,20 @@ class UserController extends Controller
     private function userData($user, $token)
     {
         $image_url = $user->image ? (str_contains($user->image, 'http') ? $user->image : url(Storage::url($user->image))) : url('/images/avatar.png');
-        $took_start_back = (bool) $user?->starterPacks()?->where('verification_status', PacksStatus::APPROVED)->count();
-
-        $appSettings = app(AppSettings::class);
-        //return  $appSettings;
+        
+        $purchase = $user->purchase;
+        $programStatus = $user->program_status ?? \App\Enums\ProgramStatus::ELIGIBLE;
+        
         return [
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
             'mobile' => $user->mobile,
-            'qr_code' => $took_start_back ? url(Storage::url($user?->starterPacks?->certificate_path)) : NULL,
             'identity_number' => $user->identity_number,
             'photo' => $image_url,
-            'request_starter_pack' => (bool) $user?->starterPacks,
-            'took_starter_pack' => $took_start_back,
-            'application_mode' => $appSettings->mode == ApplicationMode::STARTER_PACK->value,
+            'program_status' => $programStatus->value,
+            'can_submit_purchase' => $programStatus === \App\Enums\ProgramStatus::ELIGIBLE,
+            'can_redeem' => $purchase && $purchase->status === \App\Enums\ProgramStatus::APPROVED,
             'fcm_token' => $user->fcm_token,
             'access_token' => $token,
         ];

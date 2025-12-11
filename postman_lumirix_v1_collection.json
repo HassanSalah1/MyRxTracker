@@ -1,0 +1,707 @@
+{
+	"info": {
+		"_postman_id": "lumirix-v1-api-collection",
+		"name": "Lumirix V1 API Collection",
+		"description": "Complete API collection for Lumirix mobile backend V1 endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}",
+								"description": "en or zh"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"mobile\": \"+1234567890\",\n    \"password\": \"password123\",\n    \"device_name\": \"iPhone 14\",\n    \"identity_number\": \"12345\",\n    \"fcm_token\": \"optional_fcm_token\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\": \"+1234567890\",\n    \"password\": \"password123\",\n    \"device_name\": \"iPhone 14\",\n    \"fcm_token\": \"optional_fcm_token\",\n    \"notification_permission\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "login"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/logout",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "logout"]
+						}
+					}
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/forget-password",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "forget-password"]
+						}
+					}
+				},
+				{
+					"name": "Check Code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\": \"+1234567890\",\n    \"code\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/check-code",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "check-code"]
+						}
+					}
+				},
+				{
+					"name": "Create Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\": \"+1234567890\",\n    \"code\": \"123456\",\n    \"password\": \"newpassword123\",\n    \"password_confirmation\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/create-password",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "create-password"]
+						}
+					}
+				},
+				{
+					"name": "Send OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/send-otp",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "send-otp"]
+						}
+					}
+				},
+				{
+					"name": "Verify Mobile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\": \"+1234567890\",\n    \"code\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/verify-mobile",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "verify-mobile"]
+						}
+					}
+				},
+				{
+					"name": "Resend OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobile\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/resend-otp",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "resend-otp"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "User Profile",
+			"item": [
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/profile",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "profile"]
+						}
+					}
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "John Doe Updated",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "+1234567890",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/update-profile",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "update-profile"]
+						}
+					}
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"old_password\": \"oldpassword123\",\n    \"password\": \"newpassword123\",\n    \"password_confirmation\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/update-profile",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "update-profile"]
+						}
+					}
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/delete-account",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "delete-account"]
+						}
+					}
+				},
+				{
+					"name": "Add FCM Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fcm_token\": \"fcm_token_here\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/add-fcm-token",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "add-fcm-token"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Purchase Program",
+			"item": [
+				{
+					"name": "Get Purchase Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/purchase/status",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "purchase", "status"]
+						}
+					}
+				},
+				{
+					"name": "Submit Purchase",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "doctor_name",
+									"value": "Dr. Smith",
+									"type": "text"
+								},
+								{
+									"key": "serial_number",
+									"value": "SN123456",
+									"type": "text"
+								},
+								{
+									"key": "purchase_date",
+									"value": "2025-12-10",
+									"type": "text"
+								},
+								{
+									"key": "receipt",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/purchase/submit",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "purchase", "submit"]
+						}
+					}
+				},
+				{
+					"name": "Redeem Free Tube",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"redemption_serial_number\": \"SN789012\",\n    \"redemption_doctor_name\": \"Dr. Johnson\",\n    \"redemption_date\": \"2025-12-15\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/purchase/redeem",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "purchase", "redeem"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "List Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/events",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "events"]
+						}
+					}
+				},
+				{
+					"name": "Attend Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/events/attending",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "events", "attending"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Get Notifications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/notifications",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "notifications"]
+						}
+					}
+				},
+				{
+					"name": "Mark as Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/notifications/1/mark-as-read",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "notifications", "1", "mark-as-read"]
+						}
+					}
+				},
+				{
+					"name": "Mark All as Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/notifications/mark-all-as-read",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "notifications", "mark-all-as-read"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Doctors",
+			"item": [
+				{
+					"name": "Get Doctors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/doctors?search=Smith",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "doctors"],
+							"query": [
+								{
+									"key": "search",
+									"value": "Smith",
+									"description": "Optional search term"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Photo Tracking",
+			"item": [
+				{
+					"name": "List Photos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/photo-tracking-list",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "photo-tracking-list"]
+						}
+					}
+				},
+				{
+					"name": "Store Photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/photo-tracking-store",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "photo-tracking-store"]
+						}
+					}
+				},
+				{
+					"name": "Delete Photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"photo_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/photo-tracking-delete",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "photo-tracking-delete"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "Get Settings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/settings",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "settings"]
+						}
+					}
+				},
+				{
+					"name": "Get Banners",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "{{language}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/banners",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "banners"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://my-rx-tracker.intermarkfileup.com",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "language",
+			"value": "en",
+			"type": "string"
+		}
+	]
+}
+

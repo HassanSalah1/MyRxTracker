@@ -59,13 +59,12 @@ Route::group(['prefix' => 'v1','middleware' => "setlang"], function () {
 
         Route::get('/doctors', [V1\DoctorController::class, 'getDoctors']);
         Route::get('/banners', [V1\HomeController::class, 'banners']);
-        Route::get('/history', [V1\PackController::class, 'history']);
-        Route::get('/history/{id}', [V1\PackController::class, 'historyDetails']);
-        Route::get('/active-pack', [V1\PackController::class, 'activePack']);
-        Route::post('/starter-pack', [V1\PackController::class, 'starterPack']);
-        Route::post('/on-track-pack', [V1\PackController::class, 'onTrackPack']);
-        Route::post('/redeeming-pack', [V1\PackController::class, 'redeemingPack']);
-        Route::post('/request-redeeming-pack', [V1\PackController::class, 'requestRedeemingPack']);
+        
+        // Purchase Program Routes
+        Route::get('/purchase/status', [V1\PurchaseController::class, 'status']);
+        Route::post('/purchase/submit', [V1\PurchaseController::class, 'submit']);
+        Route::post('/purchase/redeem', [V1\PurchaseController::class, 'redeem']);
+        
         Route::get('/events', [V1\EventController::class, 'index']);
         Route::post('/events/attending', [V1\EventController::class, 'attending']);
         Route::get('/photo-tracking-list', [V1\PhotoTrackingController::class, 'index']);

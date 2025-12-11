@@ -5,8 +5,6 @@ namespace App\Filament\Widgets;
 
 use App\Enums\Roles;
 use App\Models\Doctor;
-use App\Models\OnTrackPack;
-use App\Models\StarterPack;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;

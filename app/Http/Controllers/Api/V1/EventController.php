@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Enums\RedeemingPacksStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
-use App\Models\Pack;
 use Illuminate\Http\Request;
-use App\Enums\PacksStatus;
-use App\Models\OnTrackPack;
-use App\Models\RedeemingPack;
-use App\Models\StarterPack;
-
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class EventController extends Controller
