@@ -35,6 +35,8 @@ class OtpService
     public function generateAndSendOtp(string $mobile, string $purpose = 'verification'): array
     {
         try {
+            $isLocalEnv = app()->environment('local');
+
             // Check if mobile number is locked
             if ($this->isMobileLocked($mobile)) {
                 return [
@@ -54,7 +56,7 @@ class OtpService
             }
 
             // Generate OTP
-            $otp = $this->generateOtp();
+            $otp = $isLocalEnv ? '123456' : $this->generateOtp();
             
             // Find or create user
             $user = User::where('mobile', $mobile)->first();
@@ -73,6 +75,23 @@ class OtpService
                 'otp_attempts' => 0,
                 'otp_locked_until' => null
             ]);
+
+            // In local environment, skip SMS delivery but keep normal flow
+            if ($isLocalEnv) {
+                $this->setRateLimit($mobile);
+
+                Log::info('OTP generated in local environment; SMS skipped', [
+                    'mobile' => $mobile,
+                    'purpose' => $purpose,
+                    'expires_at' => $user->otp_expires_at,
+                ]);
+
+                return [
+                    'success' => true,
+                    'message' => trans('messages.otp_sent_successfully'),
+                    'expires_in' => $this->otpExpiryMinutes * 60,
+                ];
+            }
 
             // Send OTP via SMS
             $smsResult = $this->emmaSmsService->sendOtp($mobile, $otp);
